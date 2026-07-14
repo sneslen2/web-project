@@ -1,0 +1,4 @@
+/* Minimal global styles. Bootstrap (imported in main.jsx) handles the rest. */
+body {
+  margin: 0;
+}
