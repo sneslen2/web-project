@@ -1,13 +1,18 @@
-# CS571 Web Project — Client-Side React SPA
+# The Christie Project — Client-Side React SPA
 
-A **pure client-side** React single-page application, built to be hosted on
-**GitHub Pages**. This document is the authoritative reference for the stack,
-the constraints, and how to develop, build, and deploy.
+An interactive reading tracker and mystery-solving companion for the complete
+works of Agatha Christie (302 stories), built as a **pure client-side** React
+SPA hosted on **GitHub Pages**. This document is the authoritative reference for
+the stack, the constraints, and how to work on it.
+
+For user-facing setup and feature docs, see [`README.md`](README.md). This file
+covers conventions and the reasoning behind the structure.
 
 ## Constraints (non-negotiable)
 
 - **Client-side only.** No server, no backend, no runtime code executes on a
-  host. Everything runs in the browser.
+  host. Everything runs in the browser. (Supabase is fine — the browser calls it
+  over HTTPS; it isn't a server of ours.)
 - **No Next.js. No server-side components.** GitHub Pages is a *static file
   host* — it serves HTML/JS/CSS and nothing else. Anything requiring a Node
   server (SSR, API routes, server components) will not work here.
@@ -22,34 +27,11 @@ the constraints, and how to develop, build, and deploy.
 | Routing      | **react-router-dom** (declarative) | `<Routes>` / `<Route>`, via **`HashRouter`**.  |
 | Backend      | **Supabase** (`@supabase/supabase-js`) | Auth + Postgres, called directly from the browser. |
 
-### Supabase (auth + database)
-
-Supabase is compatible with the client-side-only constraint: the browser talks
-to it over HTTPS, so there is still no server of our own. See
-[`supabase-schema.sql`](supabase-schema.sql) for the tables and policies.
-
-- `src/supabaseClient.js` — the single shared client. Project URL and
-  **publishable** key are hardcoded here; that is intended, as the publishable
-  key is designed to be public. **Never** put the secret / `service_role` key in
-  client code — it bypasses all access control.
-- `src/auth/AuthProvider.jsx` — session state and `signUp` / `signIn` /
-  `signOut`, via `useAuth()`. Wraps the app in `main.jsx`.
-- `src/auth/ProtectedRoute.jsx` — redirects to `/login` when signed out.
-- `src/pages/Login.jsx` — combined sign in / create account form.
-- `src/pages/Items.jsx` — **placeholder** CRUD example over the `items` table.
-  Rename table, columns, and component for the real domain.
-
-**Row Level Security is the actual access control.** Because the key ships in
-the bundle, anyone can issue queries against the project; RLS policies are what
-confine each user to their own rows. Every new table needs
-`alter table ... enable row level security` plus policies, or it is either fully
-exposed or fully inaccessible.
-
 ### Why `HashRouter` (important)
 
 GitHub Pages has no server to rewrite unknown paths back to `index.html`. With a
-`BrowserRouter`, deep-linking or refreshing on a route like `/about` returns a
-**404**. `HashRouter` puts the route after a `#` (e.g. `/#/about`), so the
+`BrowserRouter`, deep-linking or refreshing on a route like `/checklist` returns
+a **404**. `HashRouter` puts the route after a `#` (e.g. `/#/checklist`), so the
 browser only ever requests `index.html` and all routing stays client-side. This
 is the standard, zero-config choice for SPAs on static hosts.
 
@@ -57,35 +39,154 @@ is the standard, zero-config choice for SPAs on static hosts.
 
 ```
 .
-├── index.html              # App shell; Vite entry point
-├── vite.config.js          # base:'./' + build.outDir:'docs' (GH Pages config)
-├── package.json            # Dependencies + scripts
+├── index.html                    # App shell; Vite entry point
+├── vite.config.js                # base:'./' + build.outDir:'docs' (GH Pages config)
+├── package.json                  # Dependencies + scripts
 ├── public/
-│   └── favicon.svg         # Static assets copied verbatim into the build
-├── supabase-schema.sql     # Run this in the Supabase SQL Editor (tables + RLS)
+│   └── favicon.svg               # Static assets copied verbatim into the build
+├── supabase-schema.sql           # Run this in the Supabase SQL Editor (tables + RLS)
+├── scripts/
+│   └── scrape-stories.mjs        # Catalog scraper (standalone; own npm deps)
 ├── src/
-│   ├── main.jsx            # Entry: Bootstrap CSS, HashRouter, AuthProvider
-│   ├── App.jsx             # Navbar (auth-aware) + declarative <Routes>
-│   ├── index.css           # Minimal global styles (Bootstrap does the rest)
-│   ├── supabaseClient.js   # Shared Supabase client (URL + publishable key)
+│   ├── main.jsx                  # Entry: HashRouter > AuthProvider > ProgressProvider > App
+│   ├── App.jsx                   # Navbar (auth-aware) + declarative <Routes>
+│   ├── index.css                 # Minimal global styles (Bootstrap does the rest)
+│   ├── supabaseClient.js         # Shared Supabase client (URL + publishable key)
 │   ├── auth/
-│   │   ├── AuthProvider.jsx  # Session context + signUp/signIn/signOut
-│   │   └── ProtectedRoute.jsx # Redirects signed-out users to /login
+│   │   ├── AuthProvider.jsx      # Session context + signUp/signIn/signOut
+│   │   └── ProtectedRoute.jsx    # Redirects signed-out users to /login
+│   ├── progress/
+│   │   └── ProgressProvider.jsx  # Reading progress — THE SUPABASE SEAM
+│   ├── data/
+│   │   ├── stories.js            # Slugs, lookup map, derived facets, coverAt()
+│   │   └── story-cards.json      # Scraped catalog (302 stories)
+│   ├── components/
+│   │   └── StoryCard.jsx         # One story in the checklist grid
 │   └── pages/
-│       ├── Home.jsx        # Dummy page (Alert, Card, Button)
-│       ├── About.jsx       # Dummy page (ListGroup) describing the stack
-│       ├── Counter.jsx     # Dummy page: useState demo (React interactivity)
-│       ├── Login.jsx       # Sign in / create account
-│       └── Items.jsx       # PLACEHOLDER per-user CRUD over the items table
-├── docs/                   # BUILD OUTPUT — generated by `npm run build`
-└── claude-instructions.md  # This file
+│       ├── Home.jsx              # Hero, progress bar, next-up, section cards
+│       ├── Checklist.jsx         # Search / sort / group / filter over all stories
+│       ├── Story.jsx             # /story/:slug — full page + progress controls
+│       ├── Statistics.jsx        # Completion breakdowns, ratings, recent
+│       ├── About.jsx             # Agatha Christie biography + catalog figures
+│       ├── Login.jsx             # Sign in / create account
+│       └── NotFound.jsx          # Catch-all route
+├── docs/                         # BUILD OUTPUT — generated by `npm run build`
+├── README.md                     # User-facing documentation
+└── claude-instructions.md        # This file
 ```
+
+## The catalog data
+
+`src/data/story-cards.json` holds the scraped catalog. Import it through
+`src/data/stories.js` rather than reading the JSON directly — that module adds
+the `slug` field every route depends on.
+
+Current record shape (listing-level scrape):
+
+```json
+{
+  "title": "The Mysterious Affair at Styles",
+  "type": "Novel",
+  "character": "Hercule Poirot",
+  "year": 1920,
+  "url": "https://www.agathachristie.com/stories/the-mysterious-affair-at-styles",
+  "cover": "https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg"
+}
+```
+
+A richer detail-level scrape adds `synopsis`, `moreAbout`, `trivia`, `quote`,
+`extractPdf`, and `related`. **Nothing in `src/` requires those fields** —
+`Story.jsx` renders a placeholder when `synopsis` is absent — so dropping in the
+enriched JSON needs no code changes.
+
+Conventions that matter:
+
+- **`character` is `null` for standalone stories.** That's meaningful data, not a
+  gap. Filter state uses the `STANDALONE` sentinel from `stories.js` because
+  `null` can't be a checkbox value.
+- **Slugs come from the tail of `url`** (`/#/story/the-mysterious-affair-at-styles`).
+  All 302 are unique. One contains a non-ASCII character
+  (`the-last-séance-collection`), so **always** use `encodeSlug()` when building
+  links and let `getStory()` handle decoding — hand-rolled links to that story
+  will silently fail to match.
+- **`cover` is an imgix base URL** with its query stripped. Never hardcode a
+  size; call `coverAt(story, width)`.
+- **Facets are derived, not hardcoded.** `TYPES`, `CHARACTERS`, and `YEAR_RANGE`
+  are computed from the data, so a re-scrape that adds a new detective or format
+  appears in the filters automatically. Keep it that way.
+
+### Re-scraping
+
+`scripts/` is a standalone package with its own `node_modules` (gitignored) — it
+is not part of the app build.
+
+```bash
+cd scripts
+npm install cheerio
+node scrape-stories.mjs            # full run: ~330 requests, ~6 min
+node scrape-stories.mjs --limit=5  # smoke test a few detail pages
+node scrape-stories.mjs --listing  # listing pages only (6 fields)
+```
+
+Writes `stories.json` to the working directory; copy it over
+`src/data/story-cards.json` to use it.
+
+**The selectors are markup-dependent** and were verified against novel,
+short-story, and play pages on 2026-07-29. If a run returns 0 cards, or detail
+fields come back null across the board, re-inspect the page HTML rather than
+trusting the output. Two traps already handled, worth preserving:
+
+- The detail page's header metadata list is **positional and unlabeled**, and the
+  character entry is *absent* on standalones. Match on content (4-digit year,
+  known type names), never by index.
+- `trivia` and `quote` are missing on most non-novels; they must degrade to
+  `[]` / `null`.
+
+The scraper keeps a 1s delay between requests and sends a descriptive
+User-Agent. Keep both.
+
+## Reading progress
+
+`src/progress/ProgressProvider.jsx` owns per-story status, rating, finish date,
+and notes, keyed by slug, via the `useProgress()` hook.
+
+**This is the Supabase seam.** It currently persists to `localStorage` so the app
+works fully without signing in. To move it to per-user cloud storage, replace the
+load/persist internals with queries against a `reading_progress` table
+(`user_id`, `story_slug`, `status`, `rating`, `finished_on`, `notes`). The hook's
+public shape stays identical, so **no page should need editing** — if a change
+there forces edits across pages, the abstraction has leaked.
+
+## Supabase (auth + database)
+
+See [`supabase-schema.sql`](supabase-schema.sql) for tables and policies; it is
+safe to re-run.
+
+- `src/supabaseClient.js` — the single shared client. Project URL and
+  **publishable** key are hardcoded here; that is intended, as the publishable
+  key is designed to be public. **Never** put the secret / `service_role` key in
+  client code — it bypasses all access control.
+- `src/auth/AuthProvider.jsx` — session state and `signUp` / `signIn` /
+  `signOut`, via `useAuth()`.
+- `src/auth/ProtectedRoute.jsx` — redirects to `/login` when signed out. No page
+  currently uses it; progress is local-first and sign-in is optional.
+
+**Row Level Security is the actual access control.** Because the key ships in
+the bundle, anyone can issue queries against the project; RLS policies are what
+confine each user to their own rows. Every new table needs
+`alter table ... enable row level security` plus policies, or it is either fully
+exposed or fully inaccessible.
+
+No `.env` file is used — nothing reads environment variables, and a `.env`
+wouldn't add secrecy anyway, since Vite inlines `VITE_`-prefixed values into the
+public bundle at build time.
 
 ## Local development
 
 ```bash
 npm install      # once, to install dependencies
 npm run dev      # start the dev server (Vite prints a localhost URL)
+npm run lint     # oxlint
 ```
 
 Open the printed URL. Edits hot-reload.
@@ -117,20 +218,44 @@ and GitHub Pages serves the site from the **`main` branch `/docs` folder**.
 
 After each future change: `npm run build`, then commit & push `docs/`.
 
+Vite warns that the bundle exceeds 500 kB. That's expected — Supabase and the
+~90 kB catalog JSON are most of it. Fine for this project; code-split or fetch
+the catalog at runtime if it becomes a concern.
+
 ## Common tasks
 
 ### Add a new route/page
 
 1. Create `src/pages/MyPage.jsx` exporting a component.
 2. In `src/App.jsx`, add `<Route path="/my-page" element={<MyPage />} />` inside
-   `<Routes>`, and import the component at the top.
+   `<Routes>` — **above** the `path="*"` catch-all — and import it at the top.
 3. Add a nav link: `<Nav.Link as={NavLink} to="/my-page">My Page</Nav.Link>`.
+
+### Link to a story page
+
+```jsx
+import { encodeSlug } from '../data/stories.js'
+<Link to={`/story/${encodeSlug(story.slug)}`}>{story.title}</Link>
+```
 
 ### Use a Bootstrap component
 
 Import it from `react-bootstrap`, e.g.
 `import Button from 'react-bootstrap/Button'`, then use `<Button variant="primary">`.
 The Bootstrap CSS is already imported once in `src/main.jsx`.
+
+### Verify a change actually renders
+
+`npm run build` only proves it compiles. For anything touching rendering or
+routing, drive a real browser — Playwright (Python) is installed locally:
+
+```python
+page.goto('http://localhost:5173/#/checklist')
+page.wait_for_load_state('networkidle')   # required; the app renders client-side
+```
+
+Watch for console errors, not just visible text. Note Python on this machine
+resolves `/tmp` as `C:\tmp`.
 
 ## GitHub Pages gotchas (recap)
 

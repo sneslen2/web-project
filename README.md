@@ -1,16 +1,193 @@
-# React + Vite
+# The Christie Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+An interactive reading tracker and mystery-solving companion for the complete
+works of Agatha Christie — 302 novels, collections, plays, and short stories.
 
-Currently, two official plugins are available:
+Built for CS571 (UW) as a **pure client-side** React single-page app, hosted on
+GitHub Pages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Checklist** — every story, with title search, sorting by publication date or
+  title, grouping by format/detective/decade, and filtering by format,
+  detective, and reading status.
+- **Story pages** — each checklist card opens a full page with cover art,
+  metadata, and per-story progress: status, 1–5 rating, finish date, and notes.
+- **Statistics** — completion overall and broken down by format, detective, and
+  decade, plus average rating and recently finished stories.
+- **About Agatha Christie** — biography and catalog figures computed from the
+  data.
+- **Accounts** — Supabase email/password sign-in (optional; see *Reading
+  progress* below).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the Oxlint configuration
+| Concern      | Choice                                 |
+| ------------ | -------------------------------------- |
+| Build tool   | Vite                                   |
+| UI           | react-bootstrap + bootstrap            |
+| Routing      | react-router-dom (`HashRouter`)        |
+| Backend      | Supabase (`@supabase/supabase-js`)     |
+| Language     | React + JavaScript (no TypeScript)     |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+`HashRouter` is required: GitHub Pages has no server to rewrite unknown paths
+back to `index.html`, so routes live after a `#` (`/#/checklist`) and never 404
+on refresh.
+
+## Getting started
+
+```bash
+npm install
+npm run dev      # Vite prints a localhost URL
+```
+
+Other scripts:
+
+```bash
+npm run build    # production build into docs/
+npm run lint     # oxlint
+npm run preview  # serve the built output locally
+```
+
+## Project structure
+
+```
+├── index.html                    # App shell; Vite entry point
+├── vite.config.js                # base:'./' + build.outDir:'docs'
+├── supabase-schema.sql           # Run in the Supabase SQL Editor
+├── src/
+│   ├── main.jsx                  # Entry: HashRouter > AuthProvider > ProgressProvider
+│   ├── App.jsx                   # Navbar + routes
+│   ├── supabaseClient.js         # Shared Supabase client
+│   ├── auth/
+│   │   ├── AuthProvider.jsx      # Session state, signUp/signIn/signOut
+│   │   └── ProtectedRoute.jsx    # Redirects signed-out users to /login
+│   ├── progress/
+│   │   └── ProgressProvider.jsx  # Reading progress (the Supabase seam)
+│   ├── data/
+│   │   ├── stories.js            # Slugs, lookup, derived facets
+│   │   └── story-cards.json      # Scraped catalog (302 stories)
+│   ├── components/
+│   │   └── StoryCard.jsx         # One story in the checklist
+│   └── pages/                    # Home, Checklist, Story, Statistics, About, Login, NotFound
+├── scripts/
+│   └── scrape-stories.mjs        # Catalog scraper
+└── docs/                         # BUILD OUTPUT — committed, served by GitHub Pages
+```
+
+## The catalog data
+
+`src/data/story-cards.json` is scraped from agathachristie.com. Each record:
+
+```json
+{
+  "title": "The Mysterious Affair at Styles",
+  "type": "Novel",
+  "character": "Hercule Poirot",
+  "year": 1920,
+  "url": "https://www.agathachristie.com/stories/the-mysterious-affair-at-styles",
+  "cover": "https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg"
+}
+```
+
+`character` is `null` for standalone stories. `cover` is an imgix base URL with
+its query stripped, so any width can be requested on demand — `coverAt(story,
+400)` in `src/data/stories.js` does this.
+
+Story pages are addressed by a slug derived from the tail of `url`
+(`/#/story/the-mysterious-affair-at-styles`). All 302 slugs are unique.
+
+### Re-scraping
+
+```bash
+cd scripts
+npm install cheerio
+node scrape-stories.mjs            # full run: ~330 requests, ~6 min
+node scrape-stories.mjs --limit=5  # smoke test a few detail pages
+node scrape-stories.mjs --listing  # listing pages only, 6 fields
+```
+
+The scraper runs two passes: the paginated listing pages to enumerate every
+story, then each story's own page for `synopsis`, `moreAbout`, `trivia`,
+`quote`, `extractPdf`, and `related`. It writes `stories.json` to the working
+directory; copy it over `src/data/story-cards.json` to use it.
+
+`src/pages/Story.jsx` already handles both shapes — it renders the synopsis when
+present and a short placeholder when not, so dropping in the enriched file needs
+no code changes.
+
+Counts come out as 86 novels / 20 collections / 30 plays / 166 short stories.
+The novel and play totals run higher than commonly cited figures because the
+site includes Mary Westmacott titles and stage adaptations.
+
+**Selectors are markup-dependent.** They were verified against novel,
+short-story, and play pages on 2026-07-29. If a run returns 0 cards or the
+detail fields come back null across the board, re-inspect the page HTML rather
+than trusting the output — the script prints a field-coverage summary at the end
+to make that visible.
+
+## Supabase
+
+Project: `https://lskobysyxbngryxzkxez.supabase.co`
+
+1. Supabase dashboard → SQL Editor → paste `supabase-schema.sql` → Run. It's
+   safe to re-run.
+2. For faster local testing, turn off Authentication → Sign In / Up → *Confirm
+   email*. Otherwise new accounts must click a confirmation link before signing
+   in.
+
+The **publishable** key is hardcoded in `src/supabaseClient.js`. That is
+intended — it's designed to be public, and **Row Level Security is the actual
+access control**. Because the key ships in the JavaScript bundle, anyone can
+read it and issue queries against the project; the RLS policies are what confine
+each user to their own rows.
+
+Consequences:
+
+- Every new table needs `alter table … enable row level security` plus policies,
+  or it is either fully exposed or fully inaccessible.
+- Never put the **secret** / `service_role` key in client code — it bypasses RLS
+  entirely.
+- No `.env` file is needed; nothing reads environment variables. (A `.env`
+  wouldn't help anyway: Vite inlines `VITE_`-prefixed values into the bundle at
+  build time.)
+
+### Reading progress
+
+Progress currently persists to **localStorage**, so the app works fully without
+signing in, but data stays in one browser.
+
+`src/progress/ProgressProvider.jsx` is the seam for changing that. Replace its
+load/persist internals with queries against a `reading_progress` table
+(`user_id`, `story_slug`, `status`, `rating`, `finished_on`, `notes`) and the
+hook's public shape stays identical — no page needs editing.
+
+## Build & deploy
+
+The production build is written to `docs/`, and GitHub Pages serves the site
+from the `main` branch `/docs` folder.
+
+```bash
+npm run build
+git add docs
+git commit -m "Build site"
+git push
+```
+
+One-time GitHub setup: *Settings → Pages → Source: **Deploy from a branch**,
+Branch: **main**, Folder: **/docs**.*
+
+Gotchas:
+
+- **`base: './'`** in `vite.config.js` — required so asset URLs resolve under
+  the `/<repo>/` subpath. Without it the CSS/JS 404 on the deployed site.
+- **`HashRouter`** — required so route refreshes and deep links don't 404.
+- **`docs/` must be committed** — it's the deployed artifact.
+
+## Constraints
+
+- **Client-side only.** No server of our own; Supabase is reached over HTTPS
+  from the browser.
+- **No Next.js, no SSR, no server components.** GitHub Pages is a static file
+  host.
+- **React + JavaScript**, no TypeScript.
