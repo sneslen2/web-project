@@ -6,11 +6,12 @@ import Navbar from 'react-bootstrap/Navbar'
 
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
-import Counter from './pages/Counter.jsx'
+import Checklist from './pages/Checklist.jsx'
+import Statistics from './pages/Statistics.jsx'
+import Story from './pages/Story.jsx'
 import Login from './pages/Login.jsx'
-import Items from './pages/Items.jsx'
+import NotFound from './pages/NotFound.jsx'
 import { useAuth } from './auth/AuthProvider.jsx'
-import ProtectedRoute from './auth/ProtectedRoute.jsx'
 
 function App() {
   const { session, signOut } = useAuth()
@@ -26,7 +27,7 @@ function App() {
       <Navbar bg="dark" variant="dark" expand="md" sticky="top">
         <Container>
           <Navbar.Brand as={Link} to="/">
-            React + Bootstrap SPA
+            The Christie Project
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="main-nav" />
           <Navbar.Collapse id="main-nav">
@@ -35,18 +36,15 @@ function App() {
               <Nav.Link as={NavLink} to="/" end>
                 Home
               </Nav.Link>
+              <Nav.Link as={NavLink} to="/checklist">
+                Checklist
+              </Nav.Link>
+              <Nav.Link as={NavLink} to="/statistics">
+                Statistics
+              </Nav.Link>
               <Nav.Link as={NavLink} to="/about">
-                About
+                About Christie
               </Nav.Link>
-              <Nav.Link as={NavLink} to="/counter">
-                Counter
-              </Nav.Link>
-              {/* Only advertise the protected page once it's reachable. */}
-              {session && (
-                <Nav.Link as={NavLink} to="/items">
-                  My Items
-                </Nav.Link>
-              )}
             </Nav>
 
             <Nav>
@@ -73,19 +71,15 @@ function App() {
         {/* Declarative routing: each path renders one page component. */}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/checklist" element={<Checklist />} />
+          <Route path="/statistics" element={<Statistics />} />
           <Route path="/about" element={<About />} />
-          <Route path="/counter" element={<Counter />} />
+          {/* A checklist card opens into this. The slug comes from the story's
+              agathachristie.com URL; Story renders a not-found state if it
+              doesn't resolve. */}
+          <Route path="/story/:slug" element={<Story />} />
           <Route path="/login" element={<Login />} />
-          {/* ProtectedRoute redirects to /login when there's no session. The
-              real enforcement is the RLS policies on the table, not this. */}
-          <Route
-            path="/items"
-            element={
-              <ProtectedRoute>
-                <Items />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
     </>

@@ -7,6 +7,7 @@ import { HashRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import { AuthProvider } from './auth/AuthProvider.jsx'
+import { ProgressProvider } from './progress/ProgressProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -16,7 +17,11 @@ createRoot(document.getElementById('root')).render(
       {/* AuthProvider sits inside the router so its consumers can navigate,
           and outside App so every route shares one session. */}
       <AuthProvider>
-        <App />
+        {/* ProgressProvider is inside AuthProvider because reading progress will
+            eventually be scoped to the signed-in user. */}
+        <ProgressProvider>
+          <App />
+        </ProgressProvider>
       </AuthProvider>
     </HashRouter>
   </StrictMode>,

@@ -1,30 +1,98 @@
 import { Link } from 'react-router-dom'
-import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import ProgressBar from 'react-bootstrap/ProgressBar'
+import Row from 'react-bootstrap/Row'
+import { stories } from '../data/stories.js'
+import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 function Home() {
+  const { get } = useProgress()
+
+  const readCount = stories.filter((s) => get(s.slug).status === STATUS.READ).length
+  const readingCount = stories.filter((s) => get(s.slug).status === STATUS.READING).length
+  const pct = Math.round((readCount / stories.length) * 100)
+
+  // Next unread in publication order -- the obvious "what now?" answer.
+  const nextUp = stories
+    .filter((s) => get(s.slug).status === STATUS.UNREAD)
+    .sort((a, b) => (a.year ?? 0) - (b.year ?? 0))[0]
+
   return (
     <>
-      <h1 className="mb-3">Home</h1>
-
-      <Alert variant="success">
-        This is a pure client-side React SPA — no server, no Next.js. It's ready
-        to host on GitHub Pages.
-      </Alert>
-
-      <Card>
-        <Card.Body>
-          <Card.Title>Getting started</Card.Title>
-          <Card.Text>
-            Use the navigation bar to move between pages. Routing is handled
-            entirely in the browser, so links never hit a server.
-          </Card.Text>
-          <Button as={Link} to="/counter" variant="primary">
-            Try the Counter
+      <Card className="mb-4 bg-dark text-light border-0">
+        <Card.Body className="py-5 text-center">
+          <h1 className="display-5">The Christie Project</h1>
+          <p className="lead mb-4">
+            Track your way through Agatha Christie&rsquo;s complete works &mdash; {stories.length}{' '}
+            novels, collections, plays, and short stories.
+          </p>
+          <Button as={Link} to="/checklist" variant="light" size="lg">
+            Open the checklist
           </Button>
         </Card.Body>
       </Card>
+
+      <Card className="mb-4">
+        <Card.Body>
+          <div className="d-flex justify-content-between align-items-baseline mb-2">
+            <Card.Title as="h2" className="h5 mb-0">
+              Your progress
+            </Card.Title>
+            <span className="text-muted">
+              {readCount} of {stories.length} read
+              {readingCount > 0 && `, ${readingCount} in progress`}
+            </span>
+          </div>
+          <ProgressBar now={pct} label={pct >= 8 ? `${pct}%` : ''} style={{ height: '1.5rem' }} />
+
+          {nextUp && (
+            <p className="mt-3 mb-0">
+              <span className="text-muted">Next in publication order: </span>
+              <Link to={`/story/${encodeURIComponent(nextUp.slug)}`}>{nextUp.title}</Link>{' '}
+              <span className="text-muted">({nextUp.year})</span>
+            </p>
+          )}
+        </Card.Body>
+      </Card>
+
+      <Row className="g-3">
+        {[
+          {
+            title: 'Checklist',
+            body: 'Every story, filterable by format, detective, decade, and reading status.',
+            to: '/checklist',
+            cta: 'Browse stories',
+          },
+          {
+            title: 'My statistics',
+            body: 'Completion by format and detective, average rating, and what you finished recently.',
+            to: '/statistics',
+            cta: 'See statistics',
+          },
+          {
+            title: 'About Agatha Christie',
+            body: 'A short introduction to the best-selling novelist of all time and her recurring detectives.',
+            to: '/about',
+            cta: 'Read about her',
+          },
+        ].map((card) => (
+          <Col md={4} key={card.title}>
+            <Card className="h-100">
+              <Card.Body className="d-flex flex-column">
+                <Card.Title as="h3" className="h6">
+                  {card.title}
+                </Card.Title>
+                <Card.Text className="flex-grow-1 text-muted small">{card.body}</Card.Text>
+                <Button as={Link} to={card.to} variant="outline-primary" size="sm">
+                  {card.cta}
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
     </>
   )
 }
