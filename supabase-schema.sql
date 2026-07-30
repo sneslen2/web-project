@@ -37,6 +37,17 @@ create table if not exists public.stories (
   detective   text,
   year        integer check (year between 1900 and 2100),
 
+  -- Number of stories in a collection. NULL for every other format -- the site
+  -- only publishes it for collections, where it appears inside the type label
+  -- ("Collection (7 stories)").
+  story_count smallint check (story_count > 0),
+
+  -- Credit that occupies the detective slot on the source site but isn't a
+  -- recurring detective: "Mary Westmacott" (her romance pen name), "Detection
+  -- Club" (collaborative novels), "Inspired by" (novels other authors adapted
+  -- from Christie plays). Kept separate so the detective filter stays clean.
+  attribution text,
+
   url         text not null,
   -- imgix base URL with the query string stripped, so the client can request
   -- any width on demand (?w=200).
@@ -59,6 +70,12 @@ create table if not exists public.stories (
 
   imported_at timestamptz not null default now()
 );
+
+-- Migration for a table created before story_count/attribution existed.
+-- `create table if not exists` above is a no-op on an existing table, so new
+-- columns have to be added explicitly. Both are no-ops if already present.
+alter table public.stories add column if not exists story_count smallint;
+alter table public.stories add column if not exists attribution text;
 
 -- The checklist sorts by publication date and filters by format/detective.
 create index if not exists stories_year_idx on public.stories (year);

@@ -28,7 +28,7 @@ export function StoriesProvider({ children }) {
       const { data, error: queryError } = await supabase
         .from('stories')
         .select(
-          'slug, title, type, detective, year, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related',
+          'slug, title, type, detective, year, story_count, attribution, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related',
         )
         .order('year', { ascending: true })
 
@@ -49,6 +49,8 @@ export function StoriesProvider({ children }) {
           type: row.type,
           character: row.detective,
           year: row.year,
+          storyCount: row.story_count,
+          attribution: row.attribution,
           url: row.url,
           cover: row.cover,
           synopsis: row.synopsis,

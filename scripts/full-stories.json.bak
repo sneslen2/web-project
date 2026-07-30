@@ -30,9 +30,7 @@
         "title": "Death On The Nile",
         "url": "https://www.agathachristie.com/stories/death-on-the-nile"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Secret Adversary",
@@ -62,9 +60,7 @@
         "title": "Destination Unknown",
         "url": "https://www.agathachristie.com/stories/destination-unknown"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Murder on the Links",
@@ -97,9 +93,7 @@
         "title": "The Body in the Library",
         "url": "https://www.agathachristie.com/stories/the-body-in-the-library"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Man in the Brown Suit",
@@ -129,9 +123,7 @@
         "title": "They Came to Baghdad",
         "url": "https://www.agathachristie.com/stories/they-came-to-baghdad"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Secret of Chimneys",
@@ -161,9 +153,7 @@
         "title": "Cards on the Table",
         "url": "https://www.agathachristie.com/stories/cards-on-the-table"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Murder of Roger Ackroyd",
@@ -196,9 +186,7 @@
         "title": "Death On The Nile",
         "url": "https://www.agathachristie.com/stories/death-on-the-nile"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Big Four",
@@ -228,9 +216,7 @@
         "title": "The Pale Horse",
         "url": "https://www.agathachristie.com/stories/the-pale-horse"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mystery of the Blue Train",
@@ -257,9 +243,7 @@
         "title": "4.50 From Paddington",
         "url": "https://www.agathachristie.com/stories/450-from-paddington"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Seven Dials Mystery",
@@ -289,14 +273,12 @@
         "title": "They Came to Baghdad",
         "url": "https://www.agathachristie.com/stories/they-came-to-baghdad"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Giant's Bread",
     "type": "Novel",
-    "character": null,
+    "character": "Mary Westmacott",
     "year": 1930,
     "url": "https://www.agathachristie.com/stories/giants-bread",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_GiantsBread.jpg",
@@ -318,9 +300,7 @@
         "title": "Sad Cypress",
         "url": "https://www.agathachristie.com/stories/sad-cypress"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Mary Westmacott"
+    ]
   },
   {
     "title": "The Murder at the Vicarage",
@@ -347,14 +327,12 @@
         "title": "Marple : Twelve New Mysteries",
         "url": "https://www.agathachristie.com/stories/marple-collection"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Floating Admiral",
     "type": "Novel",
-    "character": null,
+    "character": "Detection Club",
     "year": 1931,
     "url": "https://www.agathachristie.com/stories/the-floating-admiral",
     "cover": "https://agathachristie.imgix.net/hcuk-paperback/Floating-Admiral.jpg",
@@ -379,9 +357,7 @@
         "title": "The Last Séance: Tales of the Supernatural",
         "url": "https://www.agathachristie.com/stories/the-last-séance-collection"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Detection Club"
+    ]
   },
   {
     "title": "The Sittaford Mystery",
@@ -411,9 +387,7 @@
         "title": "Midwinter Murder: Fireside Tales from the Queen of Mystery",
         "url": "https://www.agathachristie.com/stories/midwinter-murder"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Peril At End House",
@@ -443,14 +417,12 @@
         "title": "Death In The Clouds",
         "url": "https://www.agathachristie.com/stories/death-in-the-clouds"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Ask a Policeman",
     "type": "Novel",
-    "character": null,
+    "character": "Detection Club",
     "year": 1933,
     "url": "https://www.agathachristie.com/stories/ask-a-policeman",
     "cover": "https://agathachristie.imgix.net/hcuk-paperback/Ask-a-policeman.jpg",
@@ -475,9 +447,7 @@
         "title": "Midwinter Murder: Fireside Tales from the Queen of Mystery",
         "url": "https://www.agathachristie.com/stories/midwinter-murder"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Detection Club"
+    ]
   },
   {
     "title": "Lord Edgware Dies",
@@ -507,9 +477,7 @@
         "title": "The Mirror Crack'd from Side to Side",
         "url": "https://www.agathachristie.com/stories/the-mirror-crackd-from-side-to-side"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder on the Orient Express",
@@ -542,9 +510,7 @@
         "title": "And Then There Were None",
         "url": "https://www.agathachristie.com/stories/and-then-there-were-none"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Three Act Tragedy",
@@ -574,14 +540,12 @@
         "title": "Hallowe'en Party",
         "url": "https://www.agathachristie.com/stories/halloween-party"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Unfinished Portrait",
     "type": "Novel",
-    "character": null,
+    "character": "Mary Westmacott",
     "year": 1934,
     "url": "https://www.agathachristie.com/stories/unfinished-portrait",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_Unfinishedportrait.jpg",
@@ -606,9 +570,7 @@
         "title": "Murder at the Villa Rosa",
         "url": "https://www.agathachristie.com/stories/murder-at-the-villa-rosa"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Mary Westmacott"
+    ]
   },
   {
     "title": "Why Didn't They Ask Evans?",
@@ -638,9 +600,7 @@
         "title": "Murder is Easy",
         "url": "https://www.agathachristie.com/stories/murder-is-easy"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Death In The Clouds",
@@ -670,9 +630,7 @@
         "title": "The Mystery of Hunter's Lodge",
         "url": "https://www.agathachristie.com/stories/the-mystery-of-hunters-lodge"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Cards on the Table",
@@ -702,9 +660,7 @@
         "title": "The Pale Horse",
         "url": "https://www.agathachristie.com/stories/the-pale-horse"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder in Mesopotamia",
@@ -734,14 +690,12 @@
         "title": "The Murder of Roger Ackroyd",
         "url": "https://www.agathachristie.com/stories/the-murder-of-roger-ackroyd"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Six Against the Yard",
     "type": "Novel",
-    "character": null,
+    "character": "Detection Club",
     "year": 1936,
     "url": "https://www.agathachristie.com/stories/six-against-the-yard",
     "cover": "https://agathachristie.imgix.net/hcuk-paperback/Six-Against-the-Yard.jpg",
@@ -762,9 +716,7 @@
         "title": "The Floating Admiral",
         "url": "https://www.agathachristie.com/stories/the-floating-admiral"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Detection Club"
+    ]
   },
   {
     "title": "The ABC Murders",
@@ -797,9 +749,7 @@
         "title": "Death On The Nile",
         "url": "https://www.agathachristie.com/stories/death-on-the-nile"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Death On The Nile",
@@ -832,9 +782,7 @@
         "title": "Appointment With Death",
         "url": "https://www.agathachristie.com/stories/appointment-with-death"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Dumb Witness",
@@ -864,9 +812,7 @@
         "title": "A Pocket Full of Rye",
         "url": "https://www.agathachristie.com/stories/a-pocket-full-of-rye"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Appointment With Death",
@@ -896,9 +842,7 @@
         "title": "Black Coffee",
         "url": "https://www.agathachristie.com/stories/black-coffee"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Hercule Poirot's Christmas",
@@ -924,9 +868,7 @@
         "title": "Hallowe'en Party",
         "url": "https://www.agathachristie.com/stories/halloween-party"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder is Easy",
@@ -956,9 +898,7 @@
         "title": "The Pale Horse",
         "url": "https://www.agathachristie.com/stories/the-pale-horse"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "And Then There Were None",
@@ -992,9 +932,7 @@
         "title": "Death On The Nile",
         "url": "https://www.agathachristie.com/stories/death-on-the-nile"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Evil Under The Sun",
@@ -1024,9 +962,7 @@
         "title": "The Moving Finger",
         "url": "https://www.agathachristie.com/stories/the-moving-finger"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "One, Two, Buckle My Shoe",
@@ -1056,9 +992,7 @@
         "title": "The Labours of Hercules",
         "url": "https://www.agathachristie.com/stories/the-labours-of-hercules"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Sad Cypress",
@@ -1088,9 +1022,7 @@
         "title": "The Lernean Hydra",
         "url": "https://www.agathachristie.com/stories/the-lernean-hydra"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "N or M?",
@@ -1120,9 +1052,7 @@
         "title": "The Man Who was No. 16",
         "url": "https://www.agathachristie.com/stories/the-man-who-was-no6"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Five Little Pigs",
@@ -1155,9 +1085,7 @@
         "title": "Cards on the Table",
         "url": "https://www.agathachristie.com/stories/cards-on-the-table"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Body in the Library",
@@ -1187,9 +1115,7 @@
         "title": "The Mirror Crack'd from Side to Side",
         "url": "https://www.agathachristie.com/stories/the-mirror-crackd-from-side-to-side"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Moving Finger",
@@ -1216,14 +1142,12 @@
         "title": "The Second Murder at the Vicarage",
         "url": "https://www.agathachristie.com/stories/the-second-murder-at-the-vicarage"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Absent In The Spring",
     "type": "Novel",
-    "character": null,
+    "character": "Mary Westmacott",
     "year": 1944,
     "url": "https://www.agathachristie.com/stories/absent-in-the-spring",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_AbsentInTheSpring.jpg",
@@ -1248,9 +1172,7 @@
         "title": "And Then There Were None",
         "url": "https://www.agathachristie.com/stories/and-then-there-were-none"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Mary Westmacott"
+    ]
   },
   {
     "title": "Death Comes As The End",
@@ -1280,9 +1202,7 @@
         "title": "The Red House",
         "url": "https://www.agathachristie.com/stories/the-red-house"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Towards Zero",
@@ -1312,9 +1232,7 @@
         "title": "Sparkling Cyanide",
         "url": "https://www.agathachristie.com/stories/sparkling-cyanide"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Sparkling Cyanide",
@@ -1344,9 +1262,7 @@
         "title": "Sleeping Murder",
         "url": "https://www.agathachristie.com/stories/sleeping-murder"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Hollow",
@@ -1376,9 +1292,7 @@
         "title": "Yellow Iris - Play",
         "url": "https://www.agathachristie.com/stories/yellow-iris-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Taken at the Flood",
@@ -1408,14 +1322,12 @@
         "title": "The Apples of Hesperides",
         "url": "https://www.agathachristie.com/stories/the-apples-of-hesperides"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Rose and the Yew Tree",
     "type": "Novel",
-    "character": null,
+    "character": "Mary Westmacott",
     "year": 1948,
     "url": "https://www.agathachristie.com/stories/the-rose-and-the-yew-tree",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_TheRoseandtheYewTree.jpg",
@@ -1437,9 +1349,7 @@
         "title": "A Poirot Double Bill",
         "url": "https://www.agathachristie.com/stories/a-poirot-double-bill"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Mary Westmacott"
+    ]
   },
   {
     "title": "Crooked House",
@@ -1469,9 +1379,7 @@
         "title": "The Hollow",
         "url": "https://www.agathachristie.com/stories/the-hollow"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Murder is Announced",
@@ -1504,9 +1412,7 @@
         "title": "4.50 From Paddington",
         "url": "https://www.agathachristie.com/stories/450-from-paddington"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "They Came to Baghdad",
@@ -1536,14 +1442,12 @@
         "title": "Yellow Iris",
         "url": "https://www.agathachristie.com/stories/yellow-iris-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Daughter's A Daughter",
     "type": "Novel",
-    "character": null,
+    "character": "Mary Westmacott",
     "year": 1952,
     "url": "https://www.agathachristie.com/stories/a-daughters-a-daughter",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_ADaughtersADaughter.jpg",
@@ -1568,9 +1472,7 @@
         "title": "A Deadly Affair: Unexpected Love Stories from the Queen of Mystery",
         "url": "https://www.agathachristie.com/stories/a-deadly-affair"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Mary Westmacott"
+    ]
   },
   {
     "title": "Mrs McGinty's Dead",
@@ -1600,9 +1502,7 @@
         "title": "The Mysterious Affair at Styles",
         "url": "https://www.agathachristie.com/stories/the-mysterious-affair-at-styles"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "They Do it with Mirrors",
@@ -1632,9 +1532,7 @@
         "title": "Miss Marple Tells a Story",
         "url": "https://www.agathachristie.com/stories/miss-marple-tells-a-story"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Pocket Full of Rye",
@@ -1664,9 +1562,7 @@
         "title": "The Herb of Death",
         "url": "https://www.agathachristie.com/stories/the-herb-of-death"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "After the Funeral",
@@ -1696,9 +1592,7 @@
         "title": "The Apples of Hesperides",
         "url": "https://www.agathachristie.com/stories/the-apples-of-hesperides"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Destination Unknown",
@@ -1728,9 +1622,7 @@
         "title": "The Actress",
         "url": "https://www.agathachristie.com/stories/the-actress"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Hercule Poirot And The Greenshore Folly",
@@ -1757,9 +1649,7 @@
         "title": "Dead Man's Mirror",
         "url": "https://www.agathachristie.com/stories/dead-mans-mirror"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Hickory Dickory Dock",
@@ -1786,9 +1676,7 @@
         "title": "The ABC Murders",
         "url": "https://www.agathachristie.com/stories/the-abc-murders"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Dead Man's Folly",
@@ -1818,14 +1706,12 @@
         "title": "Triangle at Rhodes",
         "url": "https://www.agathachristie.com/stories/triangle-at-rhodes"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Burden",
     "type": "Novel",
-    "character": null,
+    "character": "Mary Westmacott",
     "year": 1956,
     "url": "https://www.agathachristie.com/stories/the-burden",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_TheBurden.jpg",
@@ -1847,9 +1733,7 @@
         "title": "Partners In Crime",
         "url": "https://www.agathachristie.com/stories/partners-in-crime"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Mary Westmacott"
+    ]
   },
   {
     "title": "4.50 From Paddington",
@@ -1879,9 +1763,7 @@
         "title": "Nemesis",
         "url": "https://www.agathachristie.com/stories/nemesis"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Ordeal By Innocence",
@@ -1912,9 +1794,7 @@
         "title": "After the Funeral",
         "url": "https://www.agathachristie.com/stories/after-the-funeral"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Cat Among the Pigeons",
@@ -1944,9 +1824,7 @@
         "title": "Appointment With Death",
         "url": "https://www.agathachristie.com/stories/appointment-with-death"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Pale Horse",
@@ -1976,9 +1854,7 @@
         "title": "Mrs McGinty's Dead",
         "url": "https://www.agathachristie.com/stories/mrs-mcgintys-dead"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mirror Crack'd from Side to Side",
@@ -2008,9 +1884,7 @@
         "title": "A Murder is Announced",
         "url": "https://www.agathachristie.com/stories/a-murder-is-announced"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Clocks",
@@ -2040,9 +1914,7 @@
         "title": "The Big Four",
         "url": "https://www.agathachristie.com/stories/the-big-four"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Caribbean Mystery",
@@ -2075,9 +1947,7 @@
         "title": "Miss Marple Takes Manhattan",
         "url": "https://www.agathachristie.com/stories/miss-marple-takes-manhattan"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "At Bertram's Hotel",
@@ -2107,9 +1977,7 @@
         "title": "The Thirteen Problems",
         "url": "https://www.agathachristie.com/stories/the-thirteen-problems"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Third Girl",
@@ -2139,9 +2007,7 @@
         "title": "The Third Floor Flat",
         "url": "https://www.agathachristie.com/stories/third-floor-flat"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Endless Night",
@@ -2174,9 +2040,7 @@
         "title": "The Pale Horse",
         "url": "https://www.agathachristie.com/stories/the-pale-horse"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "By The Pricking Of My Thumbs",
@@ -2206,9 +2070,7 @@
         "title": "N or M?",
         "url": "https://www.agathachristie.com/stories/n-or-m"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Hallowe'en Party",
@@ -2238,9 +2100,7 @@
         "title": "Endless Night",
         "url": "https://www.agathachristie.com/stories/endless-night"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Passenger to Frankfurt",
@@ -2267,9 +2127,7 @@
         "title": "The Ambassador's Boots",
         "url": "https://www.agathachristie.com/stories/the-ambassadors-boots"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Nemesis",
@@ -2299,9 +2157,7 @@
         "title": "A Caribbean Mystery",
         "url": "https://www.agathachristie.com/stories/a-caribbean-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Elephants Can Remember",
@@ -2331,9 +2187,7 @@
         "title": "Hallowe'en Party",
         "url": "https://www.agathachristie.com/stories/halloween-party"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Postern of Fate",
@@ -2363,9 +2217,7 @@
         "title": "The Unbreakable Alibi",
         "url": "https://www.agathachristie.com/stories/the-unbreakable-alibi"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Curtain: Poirot's Last Case",
@@ -2392,9 +2244,7 @@
         "title": "Murder on the Orient Express",
         "url": "https://www.agathachristie.com/stories/murder-on-the-orient-express"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Sleeping Murder",
@@ -2427,9 +2277,7 @@
         "title": "Motive vs. Opportunity",
         "url": "https://www.agathachristie.com/stories/motive-vs-opportunity"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Black Coffee",
@@ -2459,14 +2307,12 @@
         "title": "The Monogram Murders",
         "url": "https://www.agathachristie.com/stories/the-monogram-murders"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Unexpected Guest",
     "type": "Novel",
-    "character": null,
+    "character": "Inspired by",
     "year": 1999,
     "url": "https://www.agathachristie.com/stories/the-unexpected-guest",
     "cover": "https://agathachristie.imgix.net/hcuk-paperback/The-Unexpected-Guest.JPG",
@@ -2491,14 +2337,12 @@
         "title": "Hercule Poirot's Christmas",
         "url": "https://www.agathachristie.com/stories/hercule-poirots-christmas"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Inspired by"
+    ]
   },
   {
     "title": "Spider's Web",
     "type": "Novel",
-    "character": null,
+    "character": "Inspired by",
     "year": 2000,
     "url": "https://www.agathachristie.com/stories/spiders-web",
     "cover": "https://agathachristie.imgix.net/hcuk-paperback/Spiders-Web.JPG",
@@ -2520,9 +2364,7 @@
         "title": "The Labours of Hercules",
         "url": "https://www.agathachristie.com/stories/the-labours-of-hercules"
       }
-    ],
-    "storyCount": null,
-    "attribution": "Inspired by"
+    ]
   },
   {
     "title": "The Monogram Murders",
@@ -2552,9 +2394,7 @@
         "title": "After the Funeral",
         "url": "https://www.agathachristie.com/stories/after-the-funeral"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Closed Casket",
@@ -2584,9 +2424,7 @@
         "title": "Murder on the Orient Express",
         "url": "https://www.agathachristie.com/stories/murder-on-the-orient-express"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mystery of Three Quarters",
@@ -2616,9 +2454,7 @@
         "title": "Murder on the Orient Express",
         "url": "https://www.agathachristie.com/stories/murder-on-the-orient-express"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Killings at Kingfisher Hill",
@@ -2648,9 +2484,7 @@
         "title": "The Mystery of Three Quarters",
         "url": "https://www.agathachristie.com/stories/the-mystery-of-three-quarters"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Hercule Poirot's Silent Night",
@@ -2677,9 +2511,7 @@
         "title": "The Killings at Kingfisher Hill",
         "url": "https://www.agathachristie.com/stories/the-killings-at-kingfisher-hill"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Last Death of the Year",
@@ -2706,9 +2538,7 @@
         "title": "Midwinter Murder: Fireside Tales from the Queen of Mystery",
         "url": "https://www.agathachristie.com/stories/midwinter-murder"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder at the Grand Alpine Hotel",
@@ -2735,9 +2565,7 @@
         "title": "Agatha Christie's Marple: Expert on Wickedness",
         "url": "https://www.agathachristie.com/stories/agatha-christies-marple-expert-on-wickedness"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Poirot Investigates",
@@ -2796,9 +2624,7 @@
         "title": "The Case of the Missing Will",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-missing-will"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Partners In Crime",
@@ -2881,9 +2707,7 @@
         "title": "The Man Who was No. 16",
         "url": "https://www.agathachristie.com/stories/the-man-who-was-no6"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mysterious Mr Quin",
@@ -2952,9 +2776,7 @@
         "title": "Harlequin's Lane",
         "url": "https://www.agathachristie.com/stories/harlequins-lane"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Thirteen Problems",
@@ -3024,9 +2846,7 @@
         "title": "Death by Drowning",
         "url": "https://www.agathachristie.com/stories/death-by-drowning"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Parker Pyne Investigates",
@@ -3089,9 +2909,7 @@
         "title": "The Oracle at Delphi",
         "url": "https://www.agathachristie.com/stories/the-oracle-at-delphi-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder in the Mews",
@@ -3122,9 +2940,7 @@
         "title": "Triangle at Rhodes",
         "url": "https://www.agathachristie.com/stories/triangle-at-rhodes"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Regatta Mystery and Other Stories",
@@ -3175,9 +2991,7 @@
         "title": "Problem at Sea",
         "url": "https://www.agathachristie.com/stories/problem-at-sea-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Labours of Hercules",
@@ -3240,14 +3054,12 @@
         "title": "The Capture of Cerberus",
         "url": "https://www.agathachristie.com/stories/the-capture-of-cerberus"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Witness for the Prosecution and Other Stories",
     "type": "Collection",
-    "character": null,
+    "character": "Collection (11 stories)",
     "year": 1948,
     "url": "https://www.agathachristie.com/stories/the-witness-for-the-prosecution-and-other-stories",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/The-Witness-for-the-Prosecution-and-other-stories-US.jpg",
@@ -3301,14 +3113,12 @@
         "title": "The Second Gong",
         "url": "https://www.agathachristie.com/stories/the-second-gong"
       }
-    ],
-    "storyCount": 11,
-    "attribution": null
+    ]
   },
   {
     "title": "Three Blind Mice and Other Stories",
     "type": "Collection",
-    "character": null,
+    "character": "Collection (9 stories)",
     "year": 1950,
     "url": "https://www.agathachristie.com/stories/three-blind-mice-and-other-stories",
     "cover": "https://agathachristie.imgix.net/image-store/three-blind-mice-and-other-stories-PB.jpg",
@@ -3354,9 +3164,7 @@
         "title": "The Love Detectives",
         "url": "https://www.agathachristie.com/stories/the-love-detectives"
       }
-    ],
-    "storyCount": 9,
-    "attribution": null
+    ]
   },
   {
     "title": "The Under Dog and Other Stories",
@@ -3407,14 +3215,12 @@
         "title": "The Adventure of the Clapham Cook",
         "url": "https://www.agathachristie.com/stories/the-adventure-of-the-clapham-cook"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Double Sin and Other Stories",
     "type": "Collection",
-    "character": null,
+    "character": "Collection (7 stories)",
     "year": 1961,
     "url": "https://www.agathachristie.com/stories/double-sin-and-other-stories",
     "cover": "https://agathachristie.imgix.net/image-store/double_sin_PB.jpg",
@@ -3452,14 +3258,12 @@
         "title": "Sanctuary",
         "url": "https://www.agathachristie.com/stories/sanctuary"
       }
-    ],
-    "storyCount": 7,
-    "attribution": null
+    ]
   },
   {
     "title": "The Golden Ball and Other Stories",
     "type": "Collection",
-    "character": null,
+    "character": "Collection (15 stories)",
     "year": 1971,
     "url": "https://www.agathachristie.com/stories/the-golden-ball-and-other-stories",
     "cover": "https://agathachristie.imgix.net/hcuk-paperback/golden-ball-other-stories-agatha-christie-paperback-cover-art.jpg",
@@ -3529,14 +3333,12 @@
         "title": "Next to a Dog",
         "url": "https://www.agathachristie.com/stories/next-to-a-dog"
       }
-    ],
-    "storyCount": 15,
-    "attribution": null
+    ]
   },
   {
     "title": "The Harlequin Tea Set and Other Stories",
     "type": "Collection",
-    "character": null,
+    "character": "Collection (9 stories)",
     "year": 1997,
     "url": "https://www.agathachristie.com/stories/the-harlequin-tea-set-and-other-stories-1",
     "cover": "https://agathachristie.imgix.net/hcuk-paperback/harlequin-tea-set-other-stories-agatha-christie-paperback-cover-art.jpg",
@@ -3582,9 +3384,7 @@
         "title": "The Harlequin Tea Set",
         "url": "https://www.agathachristie.com/stories/the-harlequin-tea-set"
       }
-    ],
-    "storyCount": 9,
-    "attribution": null
+    ]
   },
   {
     "title": "Miss Marple: The Complete Short Stories",
@@ -3682,14 +3482,12 @@
         "title": "Sanctuary",
         "url": "https://www.agathachristie.com/stories/sanctuary"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Last Séance: Tales of the Supernatural",
     "type": "Collection",
-    "character": null,
+    "character": "Collection (19 stories)",
     "year": 2019,
     "url": "https://www.agathachristie.com/stories/the-last-séance-collection",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_USLastSeance.jpg",
@@ -3775,9 +3573,7 @@
         "title": "The Hound of Death",
         "url": "https://www.agathachristie.com/stories/the-hound-of-death"
       }
-    ],
-    "storyCount": 19,
-    "attribution": null
+    ]
   },
   {
     "title": "Midwinter Murder: Fireside Tales from the Queen of Mystery",
@@ -3831,9 +3627,7 @@
         "title": "The Manhood of Edward Robinson",
         "url": "https://www.agathachristie.com/stories/the-manhood-of-edward-robinson"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Midsummer Mysteries",
@@ -3899,14 +3693,12 @@
         "title": "The Incredible Theft",
         "url": "https://www.agathachristie.com/stories/the-incredible-theft"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Deadly Affair: Unexpected Love Stories from the Queen of Mystery",
     "type": "Collection",
-    "character": null,
+    "character": "Collection (14 stories)",
     "year": 2022,
     "url": "https://www.agathachristie.com/stories/a-deadly-affair",
     "cover": "https://agathachristie.imgix.net/hcus-paperback/Jacket_ADeadlyAffairUS.jpg",
@@ -3972,9 +3764,7 @@
         "title": "The Love Detectives",
         "url": "https://www.agathachristie.com/stories/the-love-detectives"
       }
-    ],
-    "storyCount": 14,
-    "attribution": null
+    ]
   },
   {
     "title": "Marple : Twelve New Mysteries",
@@ -4037,9 +3827,7 @@
         "title": "The Disappearance",
         "url": "https://www.agathachristie.com/stories/the-disappearance"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Black Coffee - Play",
@@ -4066,9 +3854,7 @@
         "title": "Black Coffee",
         "url": "https://www.agathachristie.com/stories/black-coffee"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Love From A Stranger - Play",
@@ -4095,9 +3881,7 @@
         "title": "Philomel Cottage",
         "url": "https://www.agathachristie.com/stories/philomel-cottage"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "And Then There Were None - Play",
@@ -4124,9 +3908,7 @@
         "title": "The Rule of Three",
         "url": "https://www.agathachristie.com/stories/rule-of-three-afternoon-at-the-seaside-the-patient"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Appointment With Death - Play",
@@ -4156,9 +3938,7 @@
         "title": "Black Coffee - Play",
         "url": "https://www.agathachristie.com/stories/black-coffee-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder On The Nile - Play",
@@ -4177,9 +3957,7 @@
         "title": "Death On The Nile",
         "url": "https://www.agathachristie.com/stories/death-on-the-nile"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Hollow - Play",
@@ -4209,9 +3987,7 @@
         "title": "The Mousetrap",
         "url": "https://www.agathachristie.com/stories/the-mousetrap"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mousetrap",
@@ -4241,9 +4017,7 @@
         "title": "A Murder is Announced",
         "url": "https://www.agathachristie.com/stories/a-murder-is-announced"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Witness For The Prosecution - Play",
@@ -4270,9 +4044,7 @@
         "title": "The Mousetrap",
         "url": "https://www.agathachristie.com/stories/the-mousetrap"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Spider's Web - Play",
@@ -4299,9 +4071,7 @@
         "title": "The Unexpected Guest - Play",
         "url": "https://www.agathachristie.com/stories/the-unexpected-guest-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Towards Zero - 1956 Play",
@@ -4331,9 +4101,7 @@
         "title": "The Mystery of the Acid Soil",
         "url": "https://www.agathachristie.com/stories/the-mystery-of-the-acid-soil"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Unexpected Guest - Play",
@@ -4363,9 +4131,7 @@
         "title": "Appointment With Death - Play",
         "url": "https://www.agathachristie.com/stories/appointment-with-death-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Verdict - Play",
@@ -4395,9 +4161,7 @@
         "title": "The Mousetrap",
         "url": "https://www.agathachristie.com/stories/the-mousetrap"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Go Back for Murder - Play",
@@ -4427,9 +4191,7 @@
         "title": "And Then There Were None - Play",
         "url": "https://www.agathachristie.com/stories/and-then-there-were-none-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Afternoon at the Seaside - Play",
@@ -4459,9 +4221,7 @@
         "title": "Spider's Web - Play",
         "url": "https://www.agathachristie.com/stories/spiders-web-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Patient - Play",
@@ -4491,9 +4251,7 @@
         "title": "Problem at Sea",
         "url": "https://www.agathachristie.com/stories/problem-at-sea-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Rats - Play",
@@ -4519,9 +4277,7 @@
         "title": "The Patient - Play",
         "url": "https://www.agathachristie.com/stories/the-patient-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Rule of Three",
@@ -4547,9 +4303,7 @@
         "title": "The Hollow - Play",
         "url": "https://www.agathachristie.com/stories/the-hollow-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Akhnaton - Play",
@@ -4576,9 +4330,7 @@
         "title": "Manx Gold",
         "url": "https://www.agathachristie.com/stories/manx-gold"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Daughter's A Daughter - Play",
@@ -4605,9 +4357,7 @@
         "title": "Spider's Web - Play",
         "url": "https://www.agathachristie.com/stories/spiders-web-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Poirot Double Bill",
@@ -4634,9 +4384,7 @@
         "title": "The Unexpected Guest - Play",
         "url": "https://www.agathachristie.com/stories/the-unexpected-guest-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Butter in a Lordly Dish - Play",
@@ -4663,9 +4411,7 @@
         "title": "Triangle at Rhodes",
         "url": "https://www.agathachristie.com/stories/triangle-at-rhodes"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Fiddlers Three - Play",
@@ -4692,9 +4438,7 @@
         "title": "The Murder at the Vicarage",
         "url": "https://www.agathachristie.com/stories/the-murder-at-the-vicarage"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder in the Studio",
@@ -4721,9 +4465,7 @@
         "title": "Butter in a Lordly Dish - Play",
         "url": "https://www.agathachristie.com/stories/butter-in-a-lordly-dish-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Personal Call - Play",
@@ -4753,9 +4495,7 @@
         "title": "The Third Floor Flat",
         "url": "https://www.agathachristie.com/stories/third-floor-flat"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Rule of Thumb - Play",
@@ -4782,9 +4522,7 @@
         "title": "The Monogram Murders",
         "url": "https://www.agathachristie.com/stories/the-monogram-murders"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Secret of Chimneys - Play",
@@ -4811,9 +4549,7 @@
         "title": "The Big Four",
         "url": "https://www.agathachristie.com/stories/the-big-four"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Stranger - Play",
@@ -4843,9 +4579,7 @@
         "title": "Witness For The Prosecution - Play",
         "url": "https://www.agathachristie.com/stories/witness-for-the-prosecution-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Wasp's Nest - Play",
@@ -4875,9 +4609,7 @@
         "title": "Dead Man's Folly",
         "url": "https://www.agathachristie.com/stories/dead-mans-folly"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Towards Zero - 1945 Play",
@@ -4904,9 +4636,7 @@
         "title": "The Mystery of the Spanish Chest",
         "url": "https://www.agathachristie.com/stories/the-mystery-of-the-spanish-chest-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Yellow Iris - Play",
@@ -4936,9 +4666,7 @@
         "title": "The Cornish Mystery",
         "url": "https://www.agathachristie.com/stories/the-cornish-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Actress",
@@ -4965,9 +4693,7 @@
         "title": "The Pale Horse",
         "url": "https://www.agathachristie.com/stories/the-pale-horse"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of Johnnie Waverly",
@@ -4994,9 +4720,7 @@
         "title": "The Mystery of Hunter's Lodge",
         "url": "https://www.agathachristie.com/stories/the-mystery-of-hunters-lodge"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of The 'Western Star'",
@@ -5023,9 +4747,7 @@
         "title": "The Hollow",
         "url": "https://www.agathachristie.com/stories/the-hollow"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of the Cheap Flat",
@@ -5052,9 +4774,7 @@
         "title": "The Adventure of the Christmas Pudding",
         "url": "https://www.agathachristie.com/stories/the-adventure-of-the-christmas-pudding-2"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of the Clapham Cook",
@@ -5081,9 +4801,7 @@
         "title": "The Nemean Lion",
         "url": "https://www.agathachristie.com/stories/the-nemean-lion"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of the Egyptian Tomb",
@@ -5110,9 +4828,7 @@
         "title": "The Lost Mine",
         "url": "https://www.agathachristie.com/stories/the-lost-mine"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of the Italian Nobleman",
@@ -5139,9 +4855,7 @@
         "title": "Dumb Witness",
         "url": "https://www.agathachristie.com/stories/dumb-witness"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Affair at the Victory Ball",
@@ -5168,9 +4882,7 @@
         "title": "The Veiled Lady",
         "url": "https://www.agathachristie.com/stories/the-veiled-lady"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Missing Will",
@@ -5197,9 +4909,7 @@
         "title": "The Killings at Kingfisher Hill",
         "url": "https://www.agathachristie.com/stories/the-killings-at-kingfisher-hill"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Chocolate Box",
@@ -5226,9 +4936,7 @@
         "title": "Curtain: Poirot's Last Case",
         "url": "https://www.agathachristie.com/stories/curtain-poirots-last-case"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Cornish Mystery",
@@ -5255,9 +4963,7 @@
         "title": "The Last Death of the Year",
         "url": "https://www.agathachristie.com/stories/the-last-death-of-the-year"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Disappearance of Mr Davenheim",
@@ -5284,9 +4990,7 @@
         "title": "The Big Four",
         "url": "https://www.agathachristie.com/stories/the-big-four"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Double Clue",
@@ -5313,9 +5017,7 @@
         "title": "One, Two, Buckle My Shoe",
         "url": "https://www.agathachristie.com/stories/one-two-buckle-my-shoe"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Jewel Robbery at the Grand Metropolitan",
@@ -5342,9 +5044,7 @@
         "title": "The Stymphalean Birds",
         "url": "https://www.agathachristie.com/stories/the-stymphalean-birds"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Kidnapped Prime Minister",
@@ -5371,9 +5071,7 @@
         "title": "Little Grey Cells : The Quotable Poirot",
         "url": "https://www.agathachristie.com/stories/little-grey-cells-the-quotable-poirot"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The King of Clubs",
@@ -5400,9 +5098,7 @@
         "title": "The Plymouth Express",
         "url": "https://www.agathachristie.com/stories/the-mystery-of-the-plymouth-express"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Lemesurier Inheritance",
@@ -5429,9 +5125,7 @@
         "title": "The Case of the Missing Will",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-missing-will"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Million Dollar Bond Robbery",
@@ -5458,9 +5152,7 @@
         "title": "The Jewel Robbery at the Grand Metropolitan",
         "url": "https://www.agathachristie.com/stories/the-jewel-robbery-at-the-grand-metropolitan"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mystery of Hunter's Lodge",
@@ -5487,9 +5179,7 @@
         "title": "Hercule Poirot's Christmas",
         "url": "https://www.agathachristie.com/stories/hercule-poirots-christmas"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Plymouth Express",
@@ -5516,9 +5206,7 @@
         "title": "The Double Clue",
         "url": "https://www.agathachristie.com/stories/the-double-clue"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Submarine Plans",
@@ -5545,9 +5233,7 @@
         "title": "The Monogram Murders",
         "url": "https://www.agathachristie.com/stories/the-monogram-murders"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Tragedy at Marsdon Manor",
@@ -5574,9 +5260,7 @@
         "title": "The Apples of Hesperides",
         "url": "https://www.agathachristie.com/stories/the-apples-of-hesperides"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Veiled Lady",
@@ -5603,9 +5287,7 @@
         "title": "Hercule Poirot's Silent Night",
         "url": "https://www.agathachristie.com/stories/hercule-poirots-silent-night"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Fairy in the Flat",
@@ -5632,9 +5314,7 @@
         "title": "By The Pricking Of My Thumbs",
         "url": "https://www.agathachristie.com/stories/by-the-pricking-of-my-thumbs"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Pot of Tea",
@@ -5661,9 +5341,7 @@
         "title": "The Affair of the Pink Pearl",
         "url": "https://www.agathachristie.com/stories/the-affair-of-the-pink-pearl"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Blindman's Buff",
@@ -5690,9 +5368,7 @@
         "title": "N or M?",
         "url": "https://www.agathachristie.com/stories/n-or-m"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Finessing the King",
@@ -5719,9 +5395,7 @@
         "title": "The Man in the Mist",
         "url": "https://www.agathachristie.com/stories/the-man-in-the-mist"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Jane In Search Of A Job",
@@ -5748,9 +5422,7 @@
         "title": "Double Sin",
         "url": "https://www.agathachristie.com/stories/double-sin"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Mr Eastwood's Adventure",
@@ -5777,9 +5449,7 @@
         "title": "The Man from the Sea",
         "url": "https://www.agathachristie.com/stories/the-man-from-the-sea"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Philomel Cottage",
@@ -5806,9 +5476,7 @@
         "title": "The Lernean Hydra",
         "url": "https://www.agathachristie.com/stories/the-lernean-hydra"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of the Sinister Stranger",
@@ -5835,9 +5503,7 @@
         "title": "N or M?",
         "url": "https://www.agathachristie.com/stories/n-or-m"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Affair of the Pink Pearl",
@@ -5864,9 +5530,7 @@
         "title": "Partners In Crime",
         "url": "https://www.agathachristie.com/stories/partners-in-crime"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Ambassador's Boots",
@@ -5893,9 +5557,7 @@
         "title": "Finessing the King",
         "url": "https://www.agathachristie.com/stories/finessing-the-king"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Missing Lady",
@@ -5922,9 +5584,7 @@
         "title": "A Fairy in the Flat",
         "url": "https://www.agathachristie.com/stories/a-fairy-in-the-flat"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Clergyman's Daughter",
@@ -5951,9 +5611,7 @@
         "title": "Postern of Fate",
         "url": "https://www.agathachristie.com/stories/postern-of-fate"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Coming of Mr Quin",
@@ -5980,9 +5638,7 @@
         "title": "The Soul of the Croupier",
         "url": "https://www.agathachristie.com/stories/the-soul-of-the-croupier"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Crackler",
@@ -6009,9 +5665,7 @@
         "title": "Finessing the King",
         "url": "https://www.agathachristie.com/stories/finessing-the-king"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Gentleman Dressed in Newspaper",
@@ -6038,9 +5692,7 @@
         "title": "The Adventure of the Sinister Stranger",
         "url": "https://www.agathachristie.com/stories/the-adventure-of-the-sinister-stranger"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Girl in the Train",
@@ -6067,9 +5719,7 @@
         "title": "The Killings at Kingfisher Hill",
         "url": "https://www.agathachristie.com/stories/the-killings-at-kingfisher-hill"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The House of Lurking Death",
@@ -6096,9 +5746,7 @@
         "title": "N or M?",
         "url": "https://www.agathachristie.com/stories/n-or-m"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Lost Mine",
@@ -6125,9 +5773,7 @@
         "title": "Death In The Clouds",
         "url": "https://www.agathachristie.com/stories/death-in-the-clouds"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Man in the Mist",
@@ -6154,9 +5800,7 @@
         "title": "Blindman's Buff",
         "url": "https://www.agathachristie.com/stories/blindmans-buff"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Man Who was No. 16",
@@ -6183,9 +5827,7 @@
         "title": "The Affair of the Pink Pearl",
         "url": "https://www.agathachristie.com/stories/the-affair-of-the-pink-pearl"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Manhood of Edward Robinson",
@@ -6212,9 +5854,7 @@
         "title": "Next to a Dog",
         "url": "https://www.agathachristie.com/stories/next-to-a-dog"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mystery of the Blue Jar",
@@ -6241,9 +5881,7 @@
         "title": "And Then There Were None",
         "url": "https://www.agathachristie.com/stories/and-then-there-were-none"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Red House",
@@ -6270,9 +5908,7 @@
         "title": "The Man Who was No. 16",
         "url": "https://www.agathachristie.com/stories/the-man-who-was-no6"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Red Signal",
@@ -6299,9 +5935,7 @@
         "title": "Yellow Iris - Play",
         "url": "https://www.agathachristie.com/stories/yellow-iris-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Shadow on the Glass",
@@ -6328,9 +5962,7 @@
         "title": "The Mysterious Mr Quin",
         "url": "https://www.agathachristie.com/stories/the-myserious-mr-quin"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Sunningdale Mystery",
@@ -6357,9 +5989,7 @@
         "title": "The Man Who was No. 16",
         "url": "https://www.agathachristie.com/stories/the-man-who-was-no6"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Unbreakable Alibi",
@@ -6386,9 +6016,7 @@
         "title": "The Man Who was No. 16",
         "url": "https://www.agathachristie.com/stories/the-man-who-was-no6"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "While the Light Lasts",
@@ -6415,9 +6043,7 @@
         "title": "The Case of the Discontented Husband",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-discontented-husband"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "At the 'Bells and Motley'",
@@ -6444,9 +6070,7 @@
         "title": "The Harlequin Tea Set and Other Stories",
         "url": "https://www.agathachristie.com/stories/the-harlequin-tea-set-and-other-stories-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Fourth Man",
@@ -6473,9 +6097,7 @@
         "title": "The Pale Horse",
         "url": "https://www.agathachristie.com/stories/the-pale-horse"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Listerdale Mystery [Short Story]",
@@ -6502,9 +6124,7 @@
         "title": "The Seven Dials Mystery",
         "url": "https://www.agathachristie.com/stories/the-seven-dials-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Sign in the Sky",
@@ -6531,9 +6151,7 @@
         "title": "The Shadow on the Glass",
         "url": "https://www.agathachristie.com/stories/shadow-on-the-glass"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Witness for the Prosecution",
@@ -6563,9 +6181,7 @@
         "title": "Murder on the Orient Express",
         "url": "https://www.agathachristie.com/stories/murder-on-the-orient-express"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Within a Wall",
@@ -6592,9 +6208,7 @@
         "title": "Murder On The Nile - Play",
         "url": "https://www.agathachristie.com/stories/murder-on-the-nile"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Magnolia Blossom",
@@ -6621,9 +6235,7 @@
         "title": "Sad Cypress",
         "url": "https://www.agathachristie.com/stories/sad-cypress"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "S.O.S.",
@@ -6650,9 +6262,7 @@
         "title": "The Flock of Geryon",
         "url": "https://www.agathachristie.com/stories/the-flock-of-geryon"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Swan Song",
@@ -6679,9 +6289,7 @@
         "title": "Mothers of the Mind",
         "url": "https://www.agathachristie.com/stories/mothers-of-the-mind"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The House of Dreams",
@@ -6708,9 +6316,7 @@
         "title": "Ingots of Gold",
         "url": "https://www.agathachristie.com/stories/ingots-of-gold"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Last Séance",
@@ -6737,9 +6343,7 @@
         "title": "The Tuesday Night Club",
         "url": "https://www.agathachristie.com/stories/the-tuesday-night-club"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Lonely God",
@@ -6766,9 +6370,7 @@
         "title": "The Nemean Lion",
         "url": "https://www.agathachristie.com/stories/the-nemean-lion"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Love Detectives",
@@ -6795,9 +6397,7 @@
         "title": "The World's End",
         "url": "https://www.agathachristie.com/stories/the-worlds-end"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Rajah's Emerald",
@@ -6824,9 +6424,7 @@
         "title": "The Shadow on the Glass",
         "url": "https://www.agathachristie.com/stories/shadow-on-the-glass"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Under Dog",
@@ -6853,9 +6451,7 @@
         "title": "Hercule Poirot's Silent Night",
         "url": "https://www.agathachristie.com/stories/hercule-poirots-silent-night"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Voice in the Dark",
@@ -6882,9 +6478,7 @@
         "title": "The Shadow on the Glass",
         "url": "https://www.agathachristie.com/stories/shadow-on-the-glass"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Wireless",
@@ -6911,9 +6505,7 @@
         "title": "The Girl in the Train",
         "url": "https://www.agathachristie.com/stories/the-girl-in-the-train"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Harlequin's Lane",
@@ -6940,9 +6532,7 @@
         "title": "The Sign in the Sky",
         "url": "https://www.agathachristie.com/stories/the-sign-in-the-sky"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Edge",
@@ -6969,9 +6559,7 @@
         "title": "The Tuesday Night Club",
         "url": "https://www.agathachristie.com/stories/the-tuesday-night-club"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Face of Helen",
@@ -6998,9 +6586,7 @@
         "title": "The Harlequin Tea Set",
         "url": "https://www.agathachristie.com/stories/the-harlequin-tea-set"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Soul of the Croupier",
@@ -7027,9 +6613,7 @@
         "title": "The Dead Harlequin",
         "url": "https://www.agathachristie.com/stories/the-dead-harlequin"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Tuesday Night Club",
@@ -7056,9 +6640,7 @@
         "title": "Strange Jest",
         "url": "https://www.agathachristie.com/stories/strange-jest-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The World's End",
@@ -7085,9 +6667,7 @@
         "title": "The Harlequin Tea Set and Other Stories",
         "url": "https://www.agathachristie.com/stories/the-harlequin-tea-set-and-other-stories-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Fruitful Sunday",
@@ -7114,9 +6694,7 @@
         "title": "The Market Basing Mystery",
         "url": "https://www.agathachristie.com/stories/the-market-basing-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Double Sin",
@@ -7143,9 +6721,7 @@
         "title": "The Tragedy at Marsdon Manor",
         "url": "https://www.agathachristie.com/stories/tragedy-at-marsdon-manor"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Ingots of Gold",
@@ -7172,9 +6748,7 @@
         "title": "The Bloodstained Pavement",
         "url": "https://www.agathachristie.com/stories/the-bloodstained-pavement"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Motive vs. Opportunity",
@@ -7201,9 +6775,7 @@
         "title": "Strange Jest",
         "url": "https://www.agathachristie.com/stories/strange-jest-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Bloodstained Pavement",
@@ -7230,9 +6802,7 @@
         "title": "Midwinter Murder: Fireside Tales from the Queen of Mystery",
         "url": "https://www.agathachristie.com/stories/midwinter-murder"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Idol House of Astarte",
@@ -7259,9 +6829,7 @@
         "title": "The Regatta Mystery and Other Stories",
         "url": "https://www.agathachristie.com/stories/the-regatta-mystery-and-other-stories"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Thumb Mark of St. Peter",
@@ -7288,9 +6856,7 @@
         "title": "Murder at the Grand Alpine Hotel",
         "url": "https://www.agathachristie.com/stories/murder-at-the-grand-alpine-hotel"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Wasps' Nest",
@@ -7317,9 +6883,7 @@
         "title": "Midsummer Mysteries",
         "url": "https://www.agathachristie.com/stories/midsummer-mysteries"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Accident",
@@ -7346,9 +6910,7 @@
         "title": "The Edge",
         "url": "https://www.agathachristie.com/stories/the-edge"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Next to a Dog",
@@ -7375,9 +6937,7 @@
         "title": "The Rule of Three",
         "url": "https://www.agathachristie.com/stories/rule-of-three-afternoon-at-the-seaside-the-patient"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Sing a Song of Sixpence",
@@ -7404,9 +6964,7 @@
         "title": "In a Glass Darkly",
         "url": "https://www.agathachristie.com/stories/in-a-glass-darkly"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Blue Geranium",
@@ -7433,9 +6991,7 @@
         "title": "The Regatta Mystery and Other Stories",
         "url": "https://www.agathachristie.com/stories/the-regatta-mystery-and-other-stories"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Dead Harlequin",
@@ -7462,9 +7018,7 @@
         "title": "The Soul of the Croupier",
         "url": "https://www.agathachristie.com/stories/the-soul-of-the-croupier"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Golden Ball",
@@ -7491,9 +7045,7 @@
         "title": "The Red House",
         "url": "https://www.agathachristie.com/stories/the-red-house"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Man from the Sea",
@@ -7520,9 +7072,7 @@
         "title": "The Shadow on the Glass",
         "url": "https://www.agathachristie.com/stories/shadow-on-the-glass"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Third Floor Flat",
@@ -7549,9 +7099,7 @@
         "title": "The Adventure of Johnnie Waverly",
         "url": "https://www.agathachristie.com/stories/the-adventure-of-johnnie-waverly"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Christmas Tragedy",
@@ -7581,9 +7129,7 @@
         "title": "Strange Jest",
         "url": "https://www.agathachristie.com/stories/strange-jest-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Manx Gold",
@@ -7610,9 +7156,7 @@
         "title": "The Adventure of the Cheap Flat",
         "url": "https://www.agathachristie.com/stories/the-adventure-of-the-cheap-flat"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Affair at the Bungalow",
@@ -7639,9 +7183,7 @@
         "title": "The Four Suspects",
         "url": "https://www.agathachristie.com/stories/the-four-suspects"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Bird with the Broken Wing",
@@ -7668,9 +7210,7 @@
         "title": "At the 'Bells and Motley'",
         "url": "https://www.agathachristie.com/stories/at-the-bells-and-motley"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Companion",
@@ -7697,9 +7237,7 @@
         "title": "Evil in Small Places",
         "url": "https://www.agathachristie.com/stories/evil-in-small-places"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Four Suspects",
@@ -7726,9 +7264,7 @@
         "title": "The Unravelling",
         "url": "https://www.agathachristie.com/stories/the-unravelling"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Herb of Death",
@@ -7755,9 +7291,7 @@
         "title": "The Murder at the Vicarage",
         "url": "https://www.agathachristie.com/stories/the-murder-at-the-vicarage"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Death by Drowning",
@@ -7784,9 +7318,7 @@
         "title": "Miss Marple Takes Manhattan",
         "url": "https://www.agathachristie.com/stories/miss-marple-takes-manhattan"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the City Clerk",
@@ -7813,9 +7345,7 @@
         "title": "The Regatta Mystery",
         "url": "https://www.agathachristie.com/stories/the-regatta-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Discontented Husband",
@@ -7842,9 +7372,7 @@
         "title": "The Case of the Discontented Soldier",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-discontented-soldier"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Discontented Soldier",
@@ -7871,9 +7399,7 @@
         "title": "The Gate of Baghdad",
         "url": "https://www.agathachristie.com/stories/the-gate-of-baghdad"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Distressed Lady",
@@ -7900,9 +7426,7 @@
         "title": "Have You Got Everything You Want?",
         "url": "https://www.agathachristie.com/stories/have-you-got-everything-you-want"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Rich Woman",
@@ -7929,9 +7453,7 @@
         "title": "The Case of the Middle-Aged Wife",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-middle-aged-wife"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mystery of the Baghdad Chest",
@@ -7958,9 +7480,7 @@
         "title": "The Cretan Bull",
         "url": "https://www.agathachristie.com/stories/the-cretan-bull"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Second Gong",
@@ -7987,9 +7507,7 @@
         "title": "Yellow Iris - Play",
         "url": "https://www.agathachristie.com/stories/yellow-iris-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Death on the Nile [Parker Pyne Short Story]",
@@ -8016,9 +7534,7 @@
         "title": "The Grand Tour",
         "url": "https://www.agathachristie.com/stories/the-grand-tour"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Have You Got Everything You Want?",
@@ -8045,9 +7561,7 @@
         "title": "The Gate of Baghdad",
         "url": "https://www.agathachristie.com/stories/the-gate-of-baghdad"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Call of Wings",
@@ -8077,9 +7591,7 @@
         "title": "Wireless",
         "url": "https://www.agathachristie.com/stories/wireless"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Gate of Baghdad",
@@ -8106,9 +7618,7 @@
         "title": "The Case of the City Clerk",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-city-clerk"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Gipsy",
@@ -8135,9 +7645,7 @@
         "title": "Come, Tell Me How You Live",
         "url": "https://www.agathachristie.com/stories/come-tell-me-how-you-live"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Hound of Death",
@@ -8164,9 +7672,7 @@
         "title": "Six Against the Yard",
         "url": "https://www.agathachristie.com/stories/six-against-the-yard"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The House at Shiraz",
@@ -8193,9 +7699,7 @@
         "title": "The Case of the Distressed Lady",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-distressed-lady"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Lamp",
@@ -8222,9 +7726,7 @@
         "title": "Murder in Mesopotamia",
         "url": "https://www.agathachristie.com/stories/murder-in-mesopotamia"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Oracle at Delphi",
@@ -8251,9 +7753,7 @@
         "title": "Problem at Pollensa Bay",
         "url": "https://www.agathachristie.com/stories/problem-at-pollensa-bay-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Pearl of Price",
@@ -8280,9 +7780,7 @@
         "title": "The Case of the Middle-Aged Wife",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-middle-aged-wife"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Strange Case of Sir Arthur Carmichael",
@@ -8309,9 +7807,7 @@
         "title": "Harlequin's Lane",
         "url": "https://www.agathachristie.com/stories/harlequins-lane"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "In a Glass Darkly",
@@ -8338,9 +7834,7 @@
         "title": "The Mystery of the Blue Jar",
         "url": "https://www.agathachristie.com/stories/the-mystery-of-the-blue-jar"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Miss Marple Tells a Story",
@@ -8367,9 +7861,7 @@
         "title": "The Blue Geranium",
         "url": "https://www.agathachristie.com/stories/the-blue-geranium"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Middle-Aged Wife",
@@ -8396,9 +7888,7 @@
         "title": "Problem at Pollensa Bay",
         "url": "https://www.agathachristie.com/stories/problem-at-pollensa-bay-1"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "How Does Your Garden Grow?",
@@ -8425,9 +7915,7 @@
         "title": "Poirot and the Regatta Mystery",
         "url": "https://www.agathachristie.com/stories/poirot-and-the-regatta-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Problem at Pollensa Bay",
@@ -8454,9 +7942,7 @@
         "title": "The House at Shiraz",
         "url": "https://www.agathachristie.com/stories/the-house-at-shiraz"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Poirot and the Regatta Mystery",
@@ -8483,9 +7969,7 @@
         "title": "Yellow Iris - Play",
         "url": "https://www.agathachristie.com/stories/yellow-iris-play"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Triangle at Rhodes",
@@ -8512,9 +7996,7 @@
         "title": "The Girdle of Hyppolita",
         "url": "https://www.agathachristie.com/stories/the-girdle-of-hyppolita"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Dead Man's Mirror",
@@ -8541,9 +8023,7 @@
         "title": "The Cretan Bull",
         "url": "https://www.agathachristie.com/stories/the-cretan-bull"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder in the Mews",
@@ -8570,9 +8050,7 @@
         "title": "After the Funeral",
         "url": "https://www.agathachristie.com/stories/after-the-funeral"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Incredible Theft",
@@ -8599,9 +8077,7 @@
         "title": "The Case of the Missing Will",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-missing-will"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Yellow Iris",
@@ -8628,9 +8104,7 @@
         "title": "After the Funeral",
         "url": "https://www.agathachristie.com/stories/after-the-funeral"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Problem at Sea",
@@ -8657,9 +8131,7 @@
         "title": "The Affair at the Victory Ball",
         "url": "https://www.agathachristie.com/stories/the-affair-at-the-victory-ball"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Cretan Bull",
@@ -8686,9 +8158,7 @@
         "title": "Elephants Can Remember",
         "url": "https://www.agathachristie.com/stories/elephants-can-remember"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Dream",
@@ -8715,9 +8185,7 @@
         "title": "The Under Dog and Other Stories",
         "url": "https://www.agathachristie.com/stories/the-under-dog-and-other-stories"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Girdle of Hyppolita",
@@ -8744,9 +8212,7 @@
         "title": "Third Girl",
         "url": "https://www.agathachristie.com/stories/third-girl"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Lernean Hydra",
@@ -8773,9 +8239,7 @@
         "title": "The Under Dog and Other Stories",
         "url": "https://www.agathachristie.com/stories/the-under-dog-and-other-stories"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Nemean Lion",
@@ -8802,9 +8266,7 @@
         "title": "The Tragedy at Marsdon Manor",
         "url": "https://www.agathachristie.com/stories/tragedy-at-marsdon-manor"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Regatta Mystery",
@@ -8831,9 +8293,7 @@
         "title": "A Caribbean Mystery",
         "url": "https://www.agathachristie.com/stories/a-caribbean-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Stymphalean Birds",
@@ -8860,9 +8320,7 @@
         "title": "Triangle at Rhodes",
         "url": "https://www.agathachristie.com/stories/triangle-at-rhodes"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Four and Twenty Blackbirds",
@@ -8889,9 +8347,7 @@
         "title": "The ABC Murders",
         "url": "https://www.agathachristie.com/stories/the-abc-murders"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Apples of Hesperides",
@@ -8918,9 +8374,7 @@
         "title": "Little Grey Cells : The Quotable Poirot",
         "url": "https://www.agathachristie.com/stories/little-grey-cells-the-quotable-poirot"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Arcadian Deer",
@@ -8947,9 +8401,7 @@
         "title": "The Adventure of Johnnie Waverly",
         "url": "https://www.agathachristie.com/stories/the-adventure-of-johnnie-waverly"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Augean Stables",
@@ -8976,9 +8428,7 @@
         "title": "The Million Dollar Bond Robbery",
         "url": "https://www.agathachristie.com/stories/the-million-dollar-bond-robbery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Erymanthian Boar",
@@ -9005,9 +8455,7 @@
         "title": "The Monogram Murders",
         "url": "https://www.agathachristie.com/stories/the-monogram-murders"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Flock of Geryon",
@@ -9034,9 +8482,7 @@
         "title": "The Affair of the Pink Pearl",
         "url": "https://www.agathachristie.com/stories/the-affair-of-the-pink-pearl"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Horses of Diomedes",
@@ -9063,9 +8509,7 @@
         "title": "Triangle at Rhodes",
         "url": "https://www.agathachristie.com/stories/triangle-at-rhodes"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Strange Jest",
@@ -9092,9 +8536,7 @@
         "title": "Miss Marple Tells a Story",
         "url": "https://www.agathachristie.com/stories/miss-marple-tells-a-story"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Tape-Measure Murder",
@@ -9121,9 +8563,7 @@
         "title": "The Thirteen Problems",
         "url": "https://www.agathachristie.com/stories/the-thirteen-problems"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Caretaker",
@@ -9150,9 +8590,7 @@
         "title": "A Murder is Announced",
         "url": "https://www.agathachristie.com/stories/a-murder-is-announced"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Case of the Perfect Maid",
@@ -9179,9 +8617,7 @@
         "title": "The Case of the Caretaker",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-caretaker"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Capture of Cerberus",
@@ -9208,9 +8644,7 @@
         "title": "Black Coffee",
         "url": "https://www.agathachristie.com/stories/black-coffee"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Three Blind Mice",
@@ -9229,9 +8663,7 @@
         "title": "The Mousetrap",
         "url": "https://www.agathachristie.com/stories/the-mousetrap"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Sanctuary",
@@ -9258,9 +8690,7 @@
         "title": "The Case of the Perfect Maid",
         "url": "https://www.agathachristie.com/stories/the-case-of-the-perfect-maid"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Greenshaw's Folly",
@@ -9287,9 +8717,7 @@
         "title": "The Thumb Mark of St. Peter",
         "url": "https://www.agathachristie.com/stories/the-thumb-mark-of-st-peter"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Dressmaker's Doll",
@@ -9316,9 +8744,7 @@
         "title": "The Wasp's Nest - Play",
         "url": "https://www.agathachristie.com/stories/the-wasps-nest"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Adventure of the Christmas Pudding",
@@ -9345,9 +8771,7 @@
         "title": "After the Funeral",
         "url": "https://www.agathachristie.com/stories/after-the-funeral"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mystery of the Spanish Chest",
@@ -9374,9 +8798,7 @@
         "title": "The Horses of Diomedes",
         "url": "https://www.agathachristie.com/stories/the-horses-of-diomedes"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Harlequin Tea Set",
@@ -9403,9 +8825,7 @@
         "title": "The Bird with the Broken Wing",
         "url": "https://www.agathachristie.com/stories/the-bird-with-the-broken-wing"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "A Deadly Wedding Day",
@@ -9432,9 +8852,7 @@
         "title": "Sparkling Cyanide",
         "url": "https://www.agathachristie.com/stories/sparkling-cyanide"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Evil in Small Places",
@@ -9461,9 +8879,7 @@
         "title": "A Murder is Announced",
         "url": "https://www.agathachristie.com/stories/a-murder-is-announced"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Miss Marple Takes Manhattan",
@@ -9490,9 +8906,7 @@
         "title": "Nemesis",
         "url": "https://www.agathachristie.com/stories/nemesis"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Miss Marple's Christmas",
@@ -9519,9 +8933,7 @@
         "title": "4.50 From Paddington",
         "url": "https://www.agathachristie.com/stories/450-from-paddington"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "Murder at the Villa Rosa",
@@ -9548,9 +8960,7 @@
         "title": "Nemesis",
         "url": "https://www.agathachristie.com/stories/nemesis"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Disappearance",
@@ -9577,9 +8987,7 @@
         "title": "The Mirror Crack'd from Side to Side",
         "url": "https://www.agathachristie.com/stories/the-mirror-crackd-from-side-to-side"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Jade Empress",
@@ -9606,9 +9014,7 @@
         "title": "4.50 From Paddington",
         "url": "https://www.agathachristie.com/stories/450-from-paddington"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Murdering Sort",
@@ -9635,9 +9041,7 @@
         "title": "The Moving Finger",
         "url": "https://www.agathachristie.com/stories/the-moving-finger"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Mystery of the Acid Soil",
@@ -9664,9 +9068,7 @@
         "title": "4.50 From Paddington",
         "url": "https://www.agathachristie.com/stories/450-from-paddington"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Open Mind",
@@ -9693,9 +9095,7 @@
         "title": "A Caribbean Mystery",
         "url": "https://www.agathachristie.com/stories/a-caribbean-mystery"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Second Murder at the Vicarage",
@@ -9722,9 +9122,7 @@
         "title": "The Mirror Crack'd from Side to Side",
         "url": "https://www.agathachristie.com/stories/the-mirror-crackd-from-side-to-side"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   },
   {
     "title": "The Unravelling",
@@ -9751,8 +9149,6 @@
         "title": "They Do it with Mirrors",
         "url": "https://www.agathachristie.com/stories/they-do-it-with-mirrors"
       }
-    ],
-    "storyCount": null,
-    "attribution": null
+    ]
   }
 ]

@@ -55,6 +55,10 @@ function toRow(story) {
     type: story.type,
     detective: story.character ?? null,
     year: story.year ?? null,
+    // Collections only; null for other formats.
+    story_count: story.storyCount ?? null,
+    // Pen name / collaboration / adaptation credit -- deliberately not a detective.
+    attribution: story.attribution ?? null,
     url: story.url,
     cover: story.cover ?? null,
     synopsis: story.synopsis ?? null,

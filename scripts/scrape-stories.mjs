@@ -20,6 +20,11 @@ const FORMATS = ["novel", "collection", "play", "short-story"];
 const UA = "CS571-student-project/1.0 (educational scraper)";
 const DELAY_MS = 1000; // be polite between requests
 const KNOWN_TYPES = new Set(["Novel", "Collection", "Play", "Short Story"]);
+// Header-meta labels that occupy the detective slot but aren't recurring
+// detectives: her romance pen name, collaborative Detection Club novels, and
+// "Inspired by" (marking novels other authors adapted from Christie plays).
+// Real metadata, so kept -- just not as a detective.
+const ATTRIBUTIONS = new Set(["Mary Westmacott", "Detection Club", "Inspired by"]);
 
 const args = new Set(process.argv.slice(2));
 const limitArg = [...args].find((a) => a.startsWith("--limit="));
@@ -138,10 +143,31 @@ function parseDetail(html) {
   let character = null;
   let type = null;
   let year = null;
+  let storyCount = null;
+  let attribution = null;
   for (const item of metaItems) {
-    if (/^\d{4}$/.test(item)) year = Number(item);
-    else if (KNOWN_TYPES.has(item)) type = item;
-    else character = item; // whatever's left is the recurring character
+    // Collection pages append a story count to the type: "Collection (7
+    // stories)". Strip it before matching, or the whole string falls through to
+    // the character slot and a format ends up filed as a detective.
+    const countMatch = item.match(/^(.*?)\s*\((\d+)\s+stor(?:y|ies)\)$/i);
+    const bare = countMatch ? countMatch[1].trim() : item;
+
+    if (/^\d{4}$/.test(item)) {
+      year = Number(item);
+    } else if (KNOWN_TYPES.has(bare)) {
+      type = bare;
+      if (countMatch) storyCount = Number(countMatch[2]);
+    } else if (ATTRIBUTIONS.has(bare)) {
+      attribution = bare;
+    } else {
+      // Whatever's left should be the recurring detective. Anything that looks
+      // like a format instead is a parsing miss, so surface it rather than
+      // silently filing it as a detective.
+      character = item;
+      if (/\bstor(y|ies)\b|\bnovel\b|\bplay\b/i.test(item)) {
+        console.warn(`  ! suspicious character value, check selectors: ${JSON.stringify(item)}`);
+      }
+    }
   }
 
   // Synopsis: the first .section after the book header. It has no class of its
@@ -192,6 +218,10 @@ function parseDetail(html) {
     character,
     type,
     year,
+    // Only collections carry this; null everywhere else.
+    storyCount,
+    // Pen name / collaboration / adaptation credit; null for most stories.
+    attribution,
     synopsis: synopsisParas.join("\n\n") || null,
     moreAbout: moreParas.join("\n\n") || null,
     trivia,

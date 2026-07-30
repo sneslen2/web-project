@@ -101,6 +101,18 @@ function Story() {
                 Standalone
               </Badge>
             )}
+            {/* Collections only. */}
+            {story.storyCount && (
+              <Badge bg="light" text="dark">
+                {story.storyCount} stories
+              </Badge>
+            )}
+            {/* Pen name, collaboration, or adaptation credit. */}
+            {story.attribution && (
+              <Badge bg="warning" text="dark">
+                {story.attribution}
+              </Badge>
+            )}
           </div>
 
           {/* Prose fields store paragraphs separated by a blank line. Coverage
