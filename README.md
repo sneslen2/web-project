@@ -3,8 +3,50 @@
 An interactive reading tracker and mystery-solving companion for the complete
 works of Agatha Christie — 302 novels, collections, plays, and short stories.
 
-Built for CS571 (UW) as a **pure client-side** React single-page app, hosted on
-GitHub Pages.
+Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
+
+## Todo
+
+- Mystery solver activity!
+- Get info for the About page
+- Clean up design and formatting
+- Restructure Collections as not separate works, just groupings of short stories
+- Enable marking in progress from the checklist
+- Collapse the filters
+- Quick button filters
+- Rename the page
+- Not completely satisfied with the home page, keep tweaking
+  - Links to the activities, meh
+  - Add recently read
+- Easier check-off
+- Add count to filters
+- Username instead of email for registration
+- Email confirmation link doesn't work, get rid of
+- Sign in directs to obsolete Notes page
+- Author field for inspired by
+- Short stories link to a description of the collection(s)
+- Scrap Read an extract (PDF)
+- Make finished date editable
+- Easy back button from story
+- Recently finished only pulls the first few
+
+**Tentative**
+- Separate inspired by and/or Mary Westmacott
+- Add biography works
+- Remove Ariadne Oliver and/or Harley Quin
+- Scrape additional data from Goodreads (cover photos for short stories?)
+- Add star rating filter
+- Some kind of scroll or quick jump function on the checklist
+  (timeline, alphabet, groupings, etc dynamic sidebar)
+- More discrete fields on each story
+- Customize what counts towards completion
+- Not sure about related stories, may scrap
+
+
+**Nice to have**
+- Add film/TV works (or a checklist?)
+- Wikipedia links
+- Ancillary characters like Japp, Hastings, etc
 
 ## Features
 
