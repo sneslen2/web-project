@@ -6,13 +6,18 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { HashRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
+import { AuthProvider } from './auth/AuthProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/* HashRouter keeps routing fully client-side (URLs like /#/about), which
         works on GitHub Pages' static host with no server-side rewrite. */}
     <HashRouter>
-      <App />
+      {/* AuthProvider sits inside the router so its consumers can navigate,
+          and outside App so every route shares one session. */}
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </HashRouter>
   </StrictMode>,
 )
