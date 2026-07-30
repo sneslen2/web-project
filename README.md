@@ -47,6 +47,7 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Add film/TV works (or a checklist?)
 - Wikipedia links
 - Ancillary characters like Japp, Hastings, etc
+- Links to public domain ebooks
 
 ## Features
 
