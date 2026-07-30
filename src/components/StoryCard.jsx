@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
-import { coverAt, encodeSlug } from '../data/stories.js'
+import { coverAt, encodeSlug } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 /**

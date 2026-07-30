@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import StoryCard from '../components/StoryCard.jsx'
-import { CHARACTERS, STANDALONE, TYPES, stories } from '../data/stories.js'
+import { STANDALONE, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 const SORTS = {
@@ -25,10 +25,13 @@ const GROUP_BY = {
 
 function Checklist() {
   const { get } = useProgress()
+  const { stories, types, characters } = useStories()
 
   const [search, setSearch] = useState('')
-  const [types, setTypes] = useState([]) // empty == all
-  const [characters, setCharacters] = useState([]) // empty == all
+  // Selected filter values. Named distinctly from the `types`/`characters`
+  // facet lists above, which are the full sets available.
+  const [selectedTypes, setSelectedTypes] = useState([]) // empty == all
+  const [selectedCharacters, setSelectedCharacters] = useState([]) // empty == all
   const [statuses, setStatuses] = useState([]) // empty == all
   const [sort, setSort] = useState('year-asc')
   const [groupBy, setGroupBy] = useState('none')
@@ -42,12 +45,12 @@ function Checklist() {
 
     const filtered = stories.filter((story) => {
       if (needle && !story.title.toLowerCase().includes(needle)) return false
-      if (types.length && !types.includes(story.type)) return false
+      if (selectedTypes.length && !selectedTypes.includes(story.type)) return false
 
-      if (characters.length) {
+      if (selectedCharacters.length) {
         // STANDALONE is a sentinel: the data uses null for "no detective".
         const key = story.character ?? STANDALONE
-        if (!characters.includes(key)) return false
+        if (!selectedCharacters.includes(key)) return false
       }
 
       if (statuses.length && !statuses.includes(get(story.slug).status)) return false
@@ -56,7 +59,9 @@ function Checklist() {
     })
 
     return [...filtered].sort(SORTS[sort].compare)
-  }, [search, types, characters, statuses, sort, get])
+    // `stories` arrives asynchronously, so it must be a dependency -- otherwise
+    // the list stays empty after the fetch resolves.
+  }, [stories, search, selectedTypes, selectedCharacters, statuses, sort, get])
 
   const grouped = useMemo(() => {
     if (groupBy === 'none') return [['', visible]]
@@ -78,12 +83,13 @@ function Checklist() {
     )
   }, [visible, groupBy])
 
-  const activeFilters = types.length + characters.length + statuses.length + (search ? 1 : 0)
+  const activeFilters =
+    selectedTypes.length + selectedCharacters.length + statuses.length + (search ? 1 : 0)
 
   function clearFilters() {
     setSearch('')
-    setTypes([])
-    setCharacters([])
+    setSelectedTypes([])
+    setSelectedCharacters([])
     setStatuses([])
   }
 
@@ -139,14 +145,14 @@ function Checklist() {
             <Col md={4}>
               <fieldset>
                 <legend className="fs-6 fw-semibold">Format</legend>
-                {TYPES.map((type) => (
+                {types.map((type) => (
                   <Form.Check
                     key={type}
                     type="checkbox"
                     id={`type-${type}`}
                     label={type}
-                    checked={types.includes(type)}
-                    onChange={() => toggleIn(types, setTypes, type)}
+                    checked={selectedTypes.includes(type)}
+                    onChange={() => toggleIn(selectedTypes, setSelectedTypes, type)}
                   />
                 ))}
               </fieldset>
@@ -155,22 +161,22 @@ function Checklist() {
             <Col md={4}>
               <fieldset>
                 <legend className="fs-6 fw-semibold">Detective</legend>
-                {CHARACTERS.map((character) => (
+                {characters.map((character) => (
                   <Form.Check
                     key={character}
                     type="checkbox"
                     id={`char-${character}`}
                     label={character}
-                    checked={characters.includes(character)}
-                    onChange={() => toggleIn(characters, setCharacters, character)}
+                    checked={selectedCharacters.includes(character)}
+                    onChange={() => toggleIn(selectedCharacters, setSelectedCharacters, character)}
                   />
                 ))}
                 <Form.Check
                   type="checkbox"
                   id="char-standalone"
                   label="Standalone"
-                  checked={characters.includes(STANDALONE)}
-                  onChange={() => toggleIn(characters, setCharacters, STANDALONE)}
+                  checked={selectedCharacters.includes(STANDALONE)}
+                  onChange={() => toggleIn(selectedCharacters, setSelectedCharacters, STANDALONE)}
                 />
               </fieldset>
             </Col>

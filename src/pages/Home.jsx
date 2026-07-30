@@ -4,15 +4,18 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Row from 'react-bootstrap/Row'
-import { stories } from '../data/stories.js'
+import { useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 function Home() {
   const { get } = useProgress()
+  const { stories } = useStories()
 
   const readCount = stories.filter((s) => get(s.slug).status === STATUS.READ).length
   const readingCount = stories.filter((s) => get(s.slug).status === STATUS.READING).length
-  const pct = Math.round((readCount / stories.length) * 100)
+  // Guard the divisor: CatalogGate normally prevents an empty catalog reaching
+  // here, but NaN in a progress bar is a bad failure mode to leave possible.
+  const pct = stories.length ? Math.round((readCount / stories.length) * 100) : 0
 
   // Next unread in publication order -- the obvious "what now?" answer.
   const nextUp = stories

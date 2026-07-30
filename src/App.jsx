@@ -11,6 +11,7 @@ import Statistics from './pages/Statistics.jsx'
 import Story from './pages/Story.jsx'
 import Login from './pages/Login.jsx'
 import NotFound from './pages/NotFound.jsx'
+import CatalogGate from './components/CatalogGate.jsx'
 import { useAuth } from './auth/AuthProvider.jsx'
 
 function App() {
@@ -70,14 +71,52 @@ function App() {
       <Container className="py-4">
         {/* Declarative routing: each path renders one page component. */}
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/checklist" element={<Checklist />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/about" element={<About />} />
+          {/* CatalogGate holds each catalog-dependent page until the Supabase
+              fetch resolves, and shows one shared error/empty state instead of
+              five copies. Login and NotFound don't need the catalog. */}
+          <Route
+            path="/"
+            element={
+              <CatalogGate>
+                <Home />
+              </CatalogGate>
+            }
+          />
+          <Route
+            path="/checklist"
+            element={
+              <CatalogGate>
+                <Checklist />
+              </CatalogGate>
+            }
+          />
+          <Route
+            path="/statistics"
+            element={
+              <CatalogGate>
+                <Statistics />
+              </CatalogGate>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <CatalogGate>
+                <About />
+              </CatalogGate>
+            }
+          />
           {/* A checklist card opens into this. The slug comes from the story's
               agathachristie.com URL; Story renders a not-found state if it
               doesn't resolve. */}
-          <Route path="/story/:slug" element={<Story />} />
+          <Route
+            path="/story/:slug"
+            element={
+              <CatalogGate>
+                <Story />
+              </CatalogGate>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

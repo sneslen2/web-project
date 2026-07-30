@@ -8,7 +8,7 @@ import Modal from 'react-bootstrap/Modal'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
-import { CHARACTERS, TYPES, stories } from '../data/stories.js'
+import { useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 /** A labelled completion bar, reused for each breakdown row. */
@@ -29,6 +29,7 @@ function CompletionRow({ label, read, total }) {
 
 function Statistics() {
   const { records, get, reset } = useProgress()
+  const { stories, types, characters } = useStories()
   const [confirming, setConfirming] = useState(false)
 
   const stats = useMemo(() => {
@@ -72,8 +73,8 @@ function Statistics() {
       total: stories.length,
       read: read.length,
       reading: reading.length,
-      byType: countBy((s) => s.type, TYPES),
-      byCharacter: countBy((s) => s.character, CHARACTERS),
+      byType: countBy((s) => s.type, types),
+      byCharacter: countBy((s) => s.character, characters),
       byDecade: countBy((s) => (s.year ? Math.floor(s.year / 10) * 10 : null), decades).map((row) => ({
         ...row,
         label: `${row.label}s`,
@@ -83,9 +84,13 @@ function Statistics() {
       notesCount: Object.values(records).filter((r) => r.notes?.trim()).length,
       recentlyFinished,
     }
-  }, [records, get])
+    // `stories` and the facet lists arrive asynchronously from Supabase, so they
+    // must be dependencies -- otherwise the stats compute once against an empty
+    // catalog and never refresh.
+  }, [stories, types, characters, records, get])
 
-  const overallPct = Math.round((stats.read / stats.total) * 100)
+  // Guard the divisor: an empty catalog would otherwise render NaN%.
+  const overallPct = stats.total ? Math.round((stats.read / stats.total) * 100) : 0
 
   return (
     <>

@@ -8,6 +8,7 @@ import './index.css'
 import App from './App.jsx'
 import { AuthProvider } from './auth/AuthProvider.jsx'
 import { ProgressProvider } from './progress/ProgressProvider.jsx'
+import { StoriesProvider } from './data/StoriesProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -20,7 +21,10 @@ createRoot(document.getElementById('root')).render(
         {/* ProgressProvider is inside AuthProvider because reading progress will
             eventually be scoped to the signed-in user. */}
         <ProgressProvider>
-          <App />
+          {/* StoriesProvider fetches the catalog from Supabase once, at startup. */}
+          <StoriesProvider>
+            <App />
+          </StoriesProvider>
         </ProgressProvider>
       </AuthProvider>
     </HashRouter>

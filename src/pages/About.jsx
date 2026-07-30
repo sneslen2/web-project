@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
-import { CHARACTERS, TYPES, YEAR_RANGE, stories } from '../data/stories.js'
+import { useStories } from '../data/StoriesProvider.jsx'
 
 /**
  * About Agatha Christie.
@@ -14,6 +14,7 @@ import { CHARACTERS, TYPES, YEAR_RANGE, stories } from '../data/stories.js'
  * with the checklist.
  */
 function About() {
+  const { stories, types, characters, yearRange } = useStories()
   const countOf = (type) => stories.filter((s) => s.type === type).length
 
   return (
@@ -35,7 +36,7 @@ function About() {
                 <em>The Mysterious Affair at Styles</em>, was written while she volunteered in a
                 hospital dispensary during the First World War &mdash; work that gave her the
                 knowledge of poisons recurring throughout her fiction. It was rejected by six
-                publishers before appearing in {YEAR_RANGE.min}, introducing the Belgian detective
+                publishers before appearing in {yearRange.min}, introducing the Belgian detective
                 Hercule Poirot.
               </p>
               <p>
@@ -50,7 +51,7 @@ function About() {
           <Card className="mb-4">
             <Card.Header>Her recurring detectives</Card.Header>
             <ListGroup variant="flush">
-              {CHARACTERS.map((character) => {
+              {characters.map((character) => {
                 const count = stories.filter((s) => s.character === character).length
                 return (
                   <ListGroup.Item
@@ -81,7 +82,7 @@ function About() {
           <Card className="mb-4">
             <Card.Header>The catalog at a glance</Card.Header>
             <ListGroup variant="flush">
-              {TYPES.map((type) => (
+              {types.map((type) => (
                 <ListGroup.Item key={type} className="d-flex justify-content-between">
                   <span>{type}</span>
                   <strong>{countOf(type)}</strong>
@@ -94,7 +95,7 @@ function About() {
               <ListGroup.Item className="d-flex justify-content-between">
                 <span>Published</span>
                 <strong>
-                  {YEAR_RANGE.min}&ndash;{YEAR_RANGE.max}
+                  {yearRange.min}&ndash;{yearRange.max}
                 </strong>
               </ListGroup.Item>
             </ListGroup>

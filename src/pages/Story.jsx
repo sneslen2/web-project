@@ -7,9 +7,10 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
+import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 import ToggleButton from 'react-bootstrap/ToggleButton'
-import { coverAt, getStory } from '../data/stories.js'
+import { coverAt, encodeSlug, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, STATUS_LABELS, useProgress } from '../progress/ProgressProvider.jsx'
 
 /** 1-5 stars. Rendered as buttons so it works by keyboard. */
@@ -39,6 +40,7 @@ function RatingPicker({ value, onChange }) {
 
 function Story() {
   const { slug } = useParams()
+  const { getStory } = useStories()
   const story = getStory(slug)
   const { get, setStatus, setRating, setNotes } = useProgress()
 
@@ -101,19 +103,32 @@ function Story() {
             )}
           </div>
 
-          {/* The detail scrape will add synopsis / moreAbout / trivia / quote /
-              extractPdf / related. Until then, say so plainly rather than
-              rendering an empty region. */}
-          {story.synopsis ? (
+          {/* Prose fields store paragraphs separated by a blank line. Coverage
+              varies -- synopsis is on every story, moreAbout on ~93%, quote on
+              ~30%, trivia on ~5% -- so each section renders only when present. */}
+          {story.synopsis && (
             <div className="mb-4">
               {story.synopsis.split('\n\n').map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
-          ) : (
-            <Alert variant="light" className="border">
-              Synopsis and story details will appear here once the detail scrape finishes.
-            </Alert>
+          )}
+
+          {story.extractPdf && (
+            <p>
+              <a href={story.extractPdf} target="_blank" rel="noreferrer" className="btn btn-outline-primary btn-sm">
+                Read an extract (PDF)
+              </a>
+            </p>
+          )}
+
+          {story.quote?.text && (
+            <figure className="border-start border-4 ps-3 my-4">
+              <blockquote className="mb-1 fst-italic">{story.quote.text}</blockquote>
+              {story.quote.author && (
+                <figcaption className="text-muted small">&mdash; {story.quote.author}</figcaption>
+              )}
+            </figure>
           )}
 
           <Card className="mb-4">
@@ -168,6 +183,53 @@ function Story() {
               </Form.Group>
             </Card.Body>
           </Card>
+
+          {story.moreAbout && (
+            <section className="mb-4">
+              <h2 className="h5">More about this story</h2>
+              {story.moreAbout.split('\n\n').map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </section>
+          )}
+
+          {story.trivia?.length > 0 && (
+            <Card className="mb-4">
+              <Card.Header>Did you know?</Card.Header>
+              <ListGroup variant="flush">
+                {story.trivia.map((fact, i) => (
+                  <ListGroup.Item key={i}>{fact}</ListGroup.Item>
+                ))}
+              </ListGroup>
+            </Card>
+          )}
+
+          {story.related?.length > 0 && (
+            <section className="mb-4">
+              <h2 className="h5">Other stories you might enjoy</h2>
+              <ListGroup>
+                {story.related.map((item) => {
+                  // Some related titles (graphic novels, non-fiction) fall outside
+                  // the four scraped formats, so they have no page here -- link
+                  // those out to the source site instead of a dead route.
+                  const relatedSlug = (item.url || '').split('/').filter(Boolean).pop()
+                  const inCatalog = relatedSlug && getStory(relatedSlug)
+
+                  return (
+                    <ListGroup.Item key={item.url || item.title}>
+                      {inCatalog ? (
+                        <Link to={`/story/${encodeSlug(relatedSlug)}`}>{item.title}</Link>
+                      ) : (
+                        <a href={item.url} target="_blank" rel="noreferrer">
+                          {item.title} <span className="text-muted small">(external)</span>
+                        </a>
+                      )}
+                    </ListGroup.Item>
+                  )
+                })}
+              </ListGroup>
+            </section>
+          )}
 
           {story.url && (
             <p>
