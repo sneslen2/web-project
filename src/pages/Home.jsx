@@ -9,7 +9,7 @@ import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 function Home() {
   const { get, summarise } = useProgress()
-  const { stories, distinctWorks, distinctWorkSlugs } = useStories()
+  const { distinctWorks, distinctWorkSlugs } = useStories()
 
   // The same catalog-wide summary the statistics page shows, from the same
   // helper, so the two can never disagree. Collections are excluded from the
@@ -28,8 +28,8 @@ function Home() {
         <Card.Body className="py-5 text-center">
           <h1 className="display-5">The Christie Project</h1>
           <p className="lead mb-4">
-            Track your way through Agatha Christie&rsquo;s complete works &mdash; {stories.length}{' '}
-            novels, collections, plays, and short stories.
+            Track your way through Agatha Christie&rsquo;s complete works &mdash;{' '}
+            {distinctWorks.length} novels, plays, and short stories.
           </p>
           <Button as={Link} to="/checklist" variant="light" size="lg">
             Open the checklist

@@ -14,8 +14,11 @@ import { useStories } from '../data/StoriesProvider.jsx'
  * with the checklist.
  */
 function About() {
-  const { stories, types, characters, yearRange } = useStories()
-  const countOf = (type) => stories.filter((s) => s.type === type).length
+  // Counts run over distinct works, not the raw catalog: a collection and the
+  // short stories inside it are the same reading, so counting both would
+  // inflate every figure on this page.
+  const { distinctWorks, types, characters, yearRange } = useStories()
+  const countOf = (type) => distinctWorks.filter((s) => s.type === type).length
 
   return (
     <>
@@ -52,7 +55,7 @@ function About() {
             <Card.Header>Her recurring detectives</Card.Header>
             <ListGroup variant="flush">
               {characters.map((character) => {
-                const count = stories.filter((s) => s.character === character).length
+                const count = distinctWorks.filter((s) => s.character === character).length
                 return (
                   <ListGroup.Item
                     key={character}
@@ -66,7 +69,7 @@ function About() {
               <ListGroup.Item className="d-flex justify-content-between align-items-center">
                 <span className="text-muted">Standalone (no recurring detective)</span>
                 <span className="text-muted small">
-                  {stories.filter((s) => !s.character).length} stories
+                  {distinctWorks.filter((s) => !s.character).length} stories
                 </span>
               </ListGroup.Item>
             </ListGroup>
@@ -88,9 +91,13 @@ function About() {
                   <strong>{countOf(type)}</strong>
                 </ListGroup.Item>
               ))}
+              {/* Sums the rows above. Collections are not listed as a format --
+                  they hold short stories that are already counted -- so this
+                  must not use the raw catalog length or it would exceed the
+                  visible breakdown by the 20 collections. */}
               <ListGroup.Item className="d-flex justify-content-between bg-body-secondary">
                 <span>Total</span>
-                <strong>{stories.length}</strong>
+                <strong>{distinctWorks.length}</strong>
               </ListGroup.Item>
               <ListGroup.Item className="d-flex justify-content-between">
                 <span>Published</span>
