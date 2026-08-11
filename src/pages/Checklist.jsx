@@ -147,6 +147,7 @@ function Checklist() {
       .map((collection) => {
         const all = membersOfCollection(collection.slug)
         return {
+          kind: 'collection',
           collection,
           members: all.filter(passes),
           memberTotal: all.length,
@@ -156,18 +157,23 @@ function Checklist() {
         }
       })
       .filter((entry) => passes(entry.collection) || entry.members.length > 0)
-      .sort((a, b) => SORTS[sort].compare(a.collection, b.collection))
 
-    // Everything shown as a standalone card: novels, plays, and the short
-    // stories that belong to no collection. The uncollected shorts keep their
-    // Short Story label -- they are listed independently, not relabelled.
+    // Standalone cards: novels, plays, and the short stories that belong to no
+    // collection. The uncollected shorts keep their Short Story label -- they
+    // are listed independently, not relabelled.
     const uncollected = new Set(uncollectedStories().map((s) => s.slug))
     const others = visible
       .filter((story) => story.type !== COLLECTION)
       .filter((story) => story.type !== SHORT_STORY || uncollected.has(story.slug))
-      .sort(SORTS[sort].compare)
+      .map((story) => ({ kind: 'story', story }))
 
-    return { collections, others }
+    // One list so collections and other works interleave under the chosen sort
+    // rather than sitting in separate blocks.
+    const entries = [...collections, ...others].sort((a, b) =>
+      SORTS[sort].compare(a.collection ?? a.story, b.collection ?? b.story),
+    )
+
+    return { entries, collectionCount: collections.length, otherCount: others.length }
   }, [shortStoryMode, visible, stories, membersOfCollection, uncollectedStories, sort])
 
   const grouped = useMemo(() => {
@@ -207,8 +213,8 @@ function Checklist() {
         <span className="text-muted">
           {collectionView ? (
             <>
-              <strong>{collectionView.collections.length}</strong> collections,{' '}
-              <strong>{collectionView.others.length}</strong> other works
+              <strong>{collectionView.collectionCount}</strong> collections,{' '}
+              <strong>{collectionView.otherCount}</strong> other works
             </>
           ) : (
             <>
@@ -368,35 +374,27 @@ function Checklist() {
           No stories match these filters.
         </Card>
       ) : collectionView ? (
-        <>
-          {collectionView.collections.map((entry) => (
-            <CollectionGroup
-              key={entry.collection.slug}
-              collection={entry.collection}
-              members={entry.members}
-              memberTotal={entry.memberTotal}
-              allMemberSlugs={entry.allMemberSlugs}
-            />
-          ))}
-
-          {/* Novels, plays, and any short story with no collection -- all as
-              standalone cards, so switching modes never hides a story. */}
-          {collectionView.others.length > 0 && (
-            <section className="mb-4">
-              <h2 className="h5 border-bottom pb-2 mb-3">
-                Other works{' '}
-                <span className="text-muted fw-normal">({collectionView.others.length})</span>
-              </h2>
-              <Row xs={1} md={2} xl={3} className="g-3">
-                {collectionView.others.map((story) => (
-                  <Col key={story.slug}>
-                    <StoryCard story={story} />
-                  </Col>
-                ))}
-              </Row>
-            </section>
+        // Collections sit in the same grid as the novels and plays, sorted
+        // together, so grouped mode reorganises the short stories without
+        // rearranging everything else.
+        <Row xs={1} md={2} xl={3} className="g-3">
+          {collectionView.entries.map((entry) =>
+            entry.kind === 'collection' ? (
+              <Col key={entry.collection.slug}>
+                <CollectionGroup
+                  collection={entry.collection}
+                  members={entry.members}
+                  memberTotal={entry.memberTotal}
+                  allMemberSlugs={entry.allMemberSlugs}
+                />
+              </Col>
+            ) : (
+              <Col key={entry.story.slug}>
+                <StoryCard story={entry.story} />
+              </Col>
+            ),
           )}
-        </>
+        </Row>
       ) : (
         grouped.map(([heading, group]) => (
           <section key={heading || 'all'} className="mb-4">
