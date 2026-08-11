@@ -5,9 +5,13 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
+import ToggleButton from 'react-bootstrap/ToggleButton'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import CollectionGroup from '../components/CollectionGroup.jsx'
 import StoryCard from '../components/StoryCard.jsx'
 import { STANDALONE, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
+import { usePersistentState } from '../usePersistentState.js'
 
 const SORTS = {
   'year-asc': { label: 'Publication date (oldest first)', compare: (a, b) => (a.year ?? 0) - (b.year ?? 0) },
@@ -23,9 +27,33 @@ const GROUP_BY = {
   decade: 'Decade',
 }
 
+/**
+ * How short stories are presented.
+ *
+ *   flat     -- every short story is its own entry, as before.
+ *   grouped  -- short stories are nested under the collections that include
+ *               them. Novels and plays are unaffected either way.
+ */
+const SHORT_STORY_MODES = {
+  flat: 'Individually',
+  grouped: 'Grouped by collection',
+}
+
+const MODE_STORAGE_KEY = 'christie-tracker:short-story-mode:v1'
+
+const SHORT_STORY = 'Short Story'
+const COLLECTION = 'Collection'
+
 function Checklist() {
-  const { get } = useProgress()
-  const { stories, types, characters } = useStories()
+  const { get, collectionStatus } = useProgress()
+  const {
+    stories,
+    types,
+    characters,
+    membersOfCollection,
+    collectionsContaining,
+    uncollectedStories,
+  } = useStories()
 
   const [search, setSearch] = useState('')
   // Selected filter values. Named distinctly from the `types`/`characters`
@@ -35,6 +63,13 @@ function Checklist() {
   const [statuses, setStatuses] = useState([]) // empty == all
   const [sort, setSort] = useState('year-asc')
   const [groupBy, setGroupBy] = useState('none')
+  // Remembered across visits -- this is a way of reading the catalog, not a
+  // transient filter, so re-picking it every time would be tedious.
+  const [shortStoryMode, setShortStoryMode] = usePersistentState(
+    MODE_STORAGE_KEY,
+    'flat',
+    (v) => v in SHORT_STORY_MODES,
+  )
 
   function toggleIn(list, setList, value) {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value])
@@ -53,7 +88,16 @@ function Checklist() {
         if (!selectedCharacters.includes(key)) return false
       }
 
-      if (statuses.length && !statuses.includes(get(story.slug).status)) return false
+      if (statuses.length) {
+        // A collection stores no status of its own -- it is derived from its
+        // members, so filtering on the stored value would never match one.
+        const memberSlugs = membersOfCollection(story.slug).map((m) => m.slug)
+        const status = memberSlugs.length
+          ? collectionStatus(memberSlugs)
+          : get(story.slug).status
+
+        if (!statuses.includes(status)) return false
+      }
 
       return true
     })
@@ -61,7 +105,71 @@ function Checklist() {
     return [...filtered].sort(SORTS[sort].compare)
     // `stories` arrives asynchronously, so it must be a dependency -- otherwise
     // the list stays empty after the fetch resolves.
-  }, [stories, search, selectedTypes, selectedCharacters, statuses, sort, get])
+  }, [
+    stories,
+    search,
+    selectedTypes,
+    selectedCharacters,
+    statuses,
+    sort,
+    get,
+    membersOfCollection,
+    collectionStatus,
+  ])
+
+  /**
+   * Grouped mode: collections carry their member stories, and short stories
+   * are removed from the top-level list so they are not shown twice.
+   *
+   * A story in several collections appears under each of them. That is
+   * deliberate -- it reflects how the books are actually published, and since
+   * progress is keyed by slug, ticking it in one place updates every other.
+   *
+   * A collection is shown when it OR any of its members matches the filters.
+   *
+   * Testing the collection's own values alone would be wrong on both axes. The
+   * anthologies are mixed, so Midsummer Mysteries is tagged Hercule Poirot but
+   * holds Marple, Quin, Parker Pyne and Tommy & Tuppence stories -- filtering
+   * on the tag would silently hide every one of them. Likewise a filter on
+   * "Read" surfaces a part-finished collection, because the stories in it that
+   * you have read do match; the header count and roll-up bar show it is
+   * partial.
+   */
+  const collectionView = useMemo(() => {
+    if (shortStoryMode !== 'grouped') return null
+
+    const visibleSlugs = new Set(visible.map((s) => s.slug))
+    const passes = (story) => visibleSlugs.has(story.slug)
+
+    // Every collection in the catalog, not just those in `visible` -- one whose
+    // own tag failed the filter still belongs here if its contents matched.
+    const collections = stories
+      .filter((story) => story.type === COLLECTION)
+      .map((collection) => {
+        const all = membersOfCollection(collection.slug)
+        return {
+          collection,
+          members: all.filter(passes),
+          memberTotal: all.length,
+          // Roll-up covers the whole book, so the bar means "how far through
+          // this collection am I" rather than shifting with every filter.
+          allMemberSlugs: all.map((m) => m.slug),
+        }
+      })
+      .filter((entry) => passes(entry.collection) || entry.members.length > 0)
+      .sort((a, b) => SORTS[sort].compare(a.collection, b.collection))
+
+    // Everything shown as a standalone card: novels, plays, and the short
+    // stories that belong to no collection. The uncollected shorts keep their
+    // Short Story label -- they are listed independently, not relabelled.
+    const uncollected = new Set(uncollectedStories().map((s) => s.slug))
+    const others = visible
+      .filter((story) => story.type !== COLLECTION)
+      .filter((story) => story.type !== SHORT_STORY || uncollected.has(story.slug))
+      .sort(SORTS[sort].compare)
+
+    return { collections, others }
+  }, [shortStoryMode, visible, stories, membersOfCollection, uncollectedStories, sort])
 
   const grouped = useMemo(() => {
     if (groupBy === 'none') return [['', visible]]
@@ -98,12 +206,50 @@ function Checklist() {
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
         <h1 className="mb-0">Checklist</h1>
         <span className="text-muted">
-          Showing <strong>{visible.length}</strong> of {stories.length}
+          {collectionView ? (
+            <>
+              <strong>{collectionView.collections.length}</strong> collections,{' '}
+              <strong>{collectionView.others.length}</strong> other works
+            </>
+          ) : (
+            <>
+              Showing <strong>{visible.length}</strong> of {stories.length}
+            </>
+          )}
         </span>
       </div>
 
       <Card className="mb-4">
         <Card.Body>
+          <div className="mb-3">
+            <Form.Label as="div" className="mb-1">
+              Short stories
+            </Form.Label>
+            <ToggleButtonGroup
+              type="radio"
+              name="short-story-mode"
+              value={shortStoryMode}
+              onChange={setShortStoryMode}
+              size="sm"
+            >
+              {Object.entries(SHORT_STORY_MODES).map(([key, label]) => (
+                <ToggleButton
+                  key={key}
+                  id={`short-story-mode-${key}`}
+                  value={key}
+                  variant="outline-primary"
+                >
+                  {label}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+            <Form.Text muted className="d-block">
+              {shortStoryMode === 'grouped'
+                ? 'Short stories are nested under the collections that include them. Novels and plays are unaffected.'
+                : 'Every short story is listed on its own.'}
+            </Form.Text>
+          </div>
+
           <Row className="g-3">
             <Col md={6} lg={4}>
               <Form.Label htmlFor="story-search">Search by title</Form.Label>
@@ -129,13 +275,23 @@ function Checklist() {
 
             <Col md={6} lg={4}>
               <Form.Label htmlFor="story-group">Group by</Form.Label>
-              <Form.Select id="story-group" value={groupBy} onChange={(e) => setGroupBy(e.target.value)}>
+              <Form.Select
+                id="story-group"
+                value={groupBy}
+                onChange={(e) => setGroupBy(e.target.value)}
+                // Collection grouping already supplies the headings; a second
+                // grouping on top of it would have nowhere to go.
+                disabled={shortStoryMode === 'grouped'}
+              >
                 {Object.entries(GROUP_BY).map(([key, label]) => (
                   <option key={key} value={key}>
                     {label}
                   </option>
                 ))}
               </Form.Select>
+              {shortStoryMode === 'grouped' && (
+                <Form.Text muted>Grouping is by collection in this mode.</Form.Text>
+              )}
             </Col>
           </Row>
 
@@ -212,6 +368,36 @@ function Checklist() {
         <Card body className="text-center text-muted">
           No stories match these filters.
         </Card>
+      ) : collectionView ? (
+        <>
+          {collectionView.collections.map((entry) => (
+            <CollectionGroup
+              key={entry.collection.slug}
+              collection={entry.collection}
+              members={entry.members}
+              memberTotal={entry.memberTotal}
+              allMemberSlugs={entry.allMemberSlugs}
+            />
+          ))}
+
+          {/* Novels, plays, and any short story with no collection -- all as
+              standalone cards, so switching modes never hides a story. */}
+          {collectionView.others.length > 0 && (
+            <section className="mb-4">
+              <h2 className="h5 border-bottom pb-2 mb-3">
+                Other works{' '}
+                <span className="text-muted fw-normal">({collectionView.others.length})</span>
+              </h2>
+              <Row xs={1} md={2} xl={3} className="g-3">
+                {collectionView.others.map((story) => (
+                  <Col key={story.slug}>
+                    <StoryCard story={story} />
+                  </Col>
+                ))}
+              </Row>
+            </section>
+          )}
+        </>
       ) : (
         grouped.map(([heading, group]) => (
           <section key={heading || 'all'} className="mb-4">

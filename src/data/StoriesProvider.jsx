@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { supabase } from '../supabaseClient.js'
+import { buildMembership } from './collectionMembership.js'
 
 /**
  * Loads the Christie catalog from Supabase once, at app start, and shares it.
@@ -155,11 +156,52 @@ export function StoriesProvider({ children }) {
   const value = useMemo(() => {
     const bySlug = new Map(stories.map((s) => [s.slug, s]))
 
+    // Derived from `related` on Collection rows -- see collectionMembership.js
+    // for why that field means membership there and recommendations elsewhere.
+    const { membersOf, collectionsOf, uncollected } = buildMembership(stories)
+
+    const lookup = (slug) => bySlug.get(slug) ?? null
+    const resolve = (slugs) => (slugs ?? []).map(lookup).filter(Boolean)
+
     return {
       stories,
       loading,
       error,
       stale,
+
+      /** Member stories of a collection, in published order. */
+      membersOfCollection: (slug) => resolve(membersOf.get(slug)),
+
+      /**
+       * Collections containing a story. 64 shorts are in more than one, which
+       * is why this returns an array rather than a single parent.
+       */
+      collectionsContaining: (slug) => resolve(collectionsOf.get(slug)),
+
+      /** Short stories belonging to no collection. */
+      uncollectedStories: () => resolve(uncollected),
+
+      /**
+       * The catalog counted as distinct works: novels, plays and short stories,
+       * with collections left out.
+       *
+       * A collection is a container, not a separate work -- counting both it
+       * and its contents would tally the same reading twice. Reading all 20
+       * collections covers 164 of the 302 rows, so a naive total reports 7%
+       * complete for what is more than half the catalog.
+       */
+      distinctWorks: stories.filter((s) => s.type !== 'Collection'),
+
+      /** Just the collections, for reporting on them separately. */
+      collections: stories.filter((s) => s.type === 'Collection'),
+
+      /**
+       * Slugs of every distinct work, for progress summaries.
+       *
+       * Pass to summarise() to get catalog-wide progress. Home and Statistics
+       * both do exactly that, so the headline numbers cannot drift apart.
+       */
+      distinctWorkSlugs: stories.filter((s) => s.type !== 'Collection').map((s) => s.slug),
 
       getStory(slug) {
         // One slug contains a non-ASCII character, so route params arrive

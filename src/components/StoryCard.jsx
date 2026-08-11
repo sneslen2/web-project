@@ -2,17 +2,33 @@ import { Link } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
-import { coverAt, encodeSlug } from '../data/StoriesProvider.jsx'
+import { coverAt, encodeSlug, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 /**
  * One story in the checklist: cover, metadata, a read checkbox, and a link
  * through to the full page.
+ *
+ * A collection has no status of its own -- it is derived from its member
+ * stories -- so its card reports progress and links through rather than
+ * offering a checkbox. Marking a collection read or unread happens on its own
+ * page, where the consequences can be spelled out.
  */
 function StoryCard({ story }) {
-  const { get, toggleRead } = useProgress()
+  const { get, toggleRead, collectionStatus } = useProgress()
+  const { membersOfCollection } = useStories()
+
+  const memberSlugs = membersOfCollection(story.slug).map((m) => m.slug)
+  const isCollection = memberSlugs.length > 0
+
   const record = get(story.slug)
-  const isRead = record.status === STATUS.READ
+  const isRead = isCollection
+    ? collectionStatus(memberSlugs) === STATUS.READ
+    : record.status === STATUS.READ
+
+  const readCount = isCollection
+    ? memberSlugs.filter((slug) => get(slug).status === STATUS.READ).length
+    : 0
 
   return (
     <Card className={`h-100 ${isRead ? 'border-success' : ''}`}>
@@ -55,13 +71,19 @@ function StoryCard({ story }) {
             )}
           </div>
 
-          <Form.Check
-            type="checkbox"
-            id={`read-${story.slug}`}
-            label={isRead ? 'Read' : 'Mark as read'}
-            checked={isRead}
-            onChange={() => toggleRead(story.slug)}
-          />
+          {isCollection ? (
+            <div className="small text-muted">
+              {readCount} of {memberSlugs.length} stories read
+            </div>
+          ) : (
+            <Form.Check
+              type="checkbox"
+              id={`read-${story.slug}`}
+              label={isRead ? 'Read' : 'Mark as read'}
+              checked={isRead}
+              onChange={() => toggleRead(story.slug)}
+            />
+          )}
         </div>
       </div>
     </Card>

@@ -66,6 +66,25 @@ export function ProgressProvider({ children }) {
     }))
   }, [])
 
+  /**
+   * Apply the same change to many stories in one state update.
+   *
+   * Used when a collection's status is set: the collection has no stored status
+   * of its own, so the write goes to its members. Doing it as a single update
+   * avoids the render-per-story a loop of update() calls would cause.
+   */
+  const updateMany = useCallback((slugs, changes) => {
+    if (slugs.length === 0) return
+
+    setRecords((current) => {
+      const next = { ...current }
+      for (const slug of slugs) {
+        next[slug] = { ...emptyRecord, ...current[slug], ...changes }
+      }
+      return next
+    })
+  }, [])
+
   const value = useMemo(() => {
     const get = (slug) => records[slug] ?? emptyRecord
 
@@ -89,10 +108,100 @@ export function ProgressProvider({ children }) {
       setRating: (slug, rating) => update(slug, { rating }),
       setNotes: (slug, notes) => update(slug, { notes }),
 
+      /**
+       * A collection's status, derived from its members.
+       *
+       * Collections store no status of their own -- it is always computed, so
+       * the collection and its contents can never disagree. Unticking one
+       * member drops the collection out of Read immediately.
+       *
+       * An empty collection reports Unread: there is nothing to have read.
+       */
+      collectionStatus(memberSlugs) {
+        if (memberSlugs.length === 0) return STATUS.UNREAD
+
+        const statuses = memberSlugs.map((slug) => get(slug).status)
+        if (statuses.every((s) => s === STATUS.READ)) return STATUS.READ
+        if (statuses.some((s) => s !== STATUS.UNREAD)) return STATUS.READING
+        return STATUS.UNREAD
+      },
+
+      /**
+       * What marking a collection unread would destroy.
+       *
+       * Clearing a collection is the one lossy direction: finish dates cannot
+       * be recovered, and a shared story may have been finished via a different
+       * collection entirely. Callers use this to confirm before writing.
+       */
+      previewCollectionClear(memberSlugs) {
+        const affected = memberSlugs.filter((slug) => get(slug).status !== STATUS.UNREAD)
+        return {
+          affected: affected.length,
+          datedCount: affected.filter((slug) => get(slug).finishedOn).length,
+          ratedCount: affected.filter((slug) => get(slug).rating != null).length,
+        }
+      },
+
+      /**
+       * Set a collection's status by writing through to every member.
+       *
+       * Read stamps today's finish date on members that were not already read,
+       * preserving the original date on ones that were. Unread clears status
+       * and finish date -- call previewCollectionClear first and confirm, since
+       * that direction discards data. Ratings and notes are never touched by
+       * either direction; they are judgements about the story, not progress.
+       *
+       * Reading is deliberately not written through -- "part-way through a
+       * collection" is what the members already express, and forcing them all
+       * to Reading would destroy per-story progress.
+       *
+       * A story in several collections is one record, so this correctly credits
+       * it everywhere it appears.
+       */
+      setCollectionStatus(memberSlugs, status) {
+        if (status === STATUS.READ) {
+          const today = new Date().toISOString().slice(0, 10)
+          // Only stamp stories that were not already read, so an existing
+          // finish date survives.
+          const unfinished = memberSlugs.filter((slug) => get(slug).status !== STATUS.READ)
+          updateMany(unfinished, { status: STATUS.READ, finishedOn: today })
+          return
+        }
+
+        if (status === STATUS.UNREAD) {
+          updateMany(memberSlugs, { status: STATUS.UNREAD, finishedOn: null })
+        }
+      },
+
+      /**
+       * Reading progress across a set of stories, for collection roll-ups.
+       *
+       * Purely derived -- it never writes. Because records are keyed by slug, a
+       * story in several collections contributes the same progress to each.
+       */
+      summarise(slugs) {
+        const total = slugs.length
+        const read = slugs.filter((s) => get(s).status === STATUS.READ).length
+        const reading = slugs.filter((s) => get(s).status === STATUS.READING).length
+        const rated = slugs.map((s) => get(s).rating).filter((r) => r != null)
+
+        return {
+          total,
+          read,
+          reading,
+          unread: total - read - reading,
+          percentRead: total ? Math.round((read / total) * 100) : 0,
+          // Only over the stories actually rated; null when none are.
+          averageRating: rated.length
+            ? Math.round((rated.reduce((sum, r) => sum + r, 0) / rated.length) * 10) / 10
+            : null,
+        }
+      },
+
       /** Wipe everything. Used by the statistics page. */
       reset: () => setRecords({}),
     }
-  }, [records, update])
+  }, [records, update, updateMany])
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>
 }

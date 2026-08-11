@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Alert from 'react-bootstrap/Alert'
 import Badge from 'react-bootstrap/Badge'
@@ -10,6 +11,8 @@ import Form from 'react-bootstrap/Form'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 import ToggleButton from 'react-bootstrap/ToggleButton'
+import CollectionProgress from '../components/CollectionProgress.jsx'
+import ConfirmClearCollection from '../components/ConfirmClearCollection.jsx'
 import { coverAt, encodeSlug, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, STATUS_LABELS, useProgress } from '../progress/ProgressProvider.jsx'
 
@@ -40,9 +43,19 @@ function RatingPicker({ value, onChange }) {
 
 function Story() {
   const { slug } = useParams()
-  const { getStory } = useStories()
+  const { getStory, membersOfCollection, collectionsContaining } = useStories()
   const story = getStory(slug)
-  const { get, setStatus, setRating, setNotes } = useProgress()
+  const {
+    get,
+    setStatus,
+    setRating,
+    setNotes,
+    summarise,
+    collectionStatus,
+    setCollectionStatus,
+    previewCollectionClear,
+  } = useProgress()
+  const [clearing, setClearing] = useState(false)
 
   if (!story) {
     return (
@@ -56,6 +69,33 @@ function Story() {
   }
 
   const record = get(story.slug)
+
+  // Collections list their contents; stories link back to the collections that
+  // include them. Both are empty for novels and plays, so both sections vanish.
+  const members = membersOfCollection(story.slug)
+  const parentCollections = collectionsContaining(story.slug)
+  const memberSlugs = members.map((m) => m.slug)
+  const memberSummary = summarise(memberSlugs)
+
+  // A collection has no stored status of its own -- it is derived from its
+  // members, and setting it writes through to them.
+  const isCollection = members.length > 0
+  const displayStatus = isCollection ? collectionStatus(memberSlugs) : record.status
+
+  function handleStatusChange(status) {
+    if (!isCollection) {
+      setStatus(story.slug, status)
+      return
+    }
+
+    // Clearing a collection discards finish dates, so confirm first. Marking
+    // one read only adds, and needs no interruption.
+    if (status === STATUS.UNREAD) {
+      setClearing(true)
+      return
+    }
+    setCollectionStatus(memberSlugs, status)
+  }
 
   return (
     <>
@@ -158,14 +198,24 @@ function Story() {
                         variant="outline-primary"
                         name="status"
                         value={status}
-                        checked={record.status === status}
-                        onChange={() => setStatus(story.slug, status)}
+                        checked={displayStatus === status}
+                        // Reading is not settable on a collection: it is what
+                        // the members already say, and writing it through would
+                        // overwrite their individual progress.
+                        disabled={isCollection && status === STATUS.READING}
+                        onChange={() => handleStatusChange(status)}
                       >
                         {STATUS_LABELS[status]}
                       </ToggleButton>
                     ))}
                   </ButtonGroup>
                 </div>
+                {isCollection && (
+                  <Form.Text muted>
+                    Follows the {members.length} stories in this collection. Marking it read or
+                    unread updates all of them.
+                  </Form.Text>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-3">
@@ -176,7 +226,7 @@ function Story() {
                 />
               </Form.Group>
 
-              {record.finishedOn && (
+              {!isCollection && record.finishedOn && (
                 <p className="text-muted small">
                   Finished on {new Date(record.finishedOn).toLocaleDateString()}
                 </p>
@@ -195,6 +245,87 @@ function Story() {
               </Form.Group>
             </Card.Body>
           </Card>
+
+          {/* A collection's contents, with the reading progress rolled up from
+              its member stories. Replaces the old "Other stories you might
+              enjoy" heading, which was mislabelling a table of contents. */}
+          {members.length > 0 && (
+            <Card className="mb-4">
+              <Card.Header className="d-flex justify-content-between align-items-center">
+                <span>Stories in this collection</span>
+                <Badge bg="secondary">{members.length}</Badge>
+              </Card.Header>
+              <Card.Body className="pb-2">
+                <CollectionProgress summary={memberSummary} className="mb-2" />
+              </Card.Body>
+              <ListGroup variant="flush">
+                {members.map((member) => {
+                  const memberRecord = get(member.slug)
+                  const isRead = memberRecord.status === STATUS.READ
+
+                  return (
+                    <ListGroup.Item
+                      key={member.slug}
+                      className="d-flex justify-content-between align-items-center gap-2"
+                    >
+                      <span className="d-flex align-items-center gap-2">
+                        {/* Marks progress at a glance without making the row a
+                            control -- status is edited on the story's own page. */}
+                        <span
+                          className={isRead ? 'text-success' : 'text-secondary opacity-25'}
+                          aria-hidden="true"
+                        >
+                          {isRead ? '✓' : '○'}
+                        </span>
+                        <Link to={`/story/${encodeSlug(member.slug)}`}>{member.title}</Link>
+                      </span>
+
+                      <span className="d-flex align-items-center gap-2 flex-shrink-0">
+                        {memberRecord.rating != null && (
+                          <span className="small text-warning">
+                            {'★'.repeat(memberRecord.rating)}
+                          </span>
+                        )}
+                        {memberRecord.status !== STATUS.UNREAD && (
+                          <Badge bg={isRead ? 'success' : 'warning'} text={isRead ? undefined : 'dark'}>
+                            {STATUS_LABELS[memberRecord.status]}
+                          </Badge>
+                        )}
+                      </span>
+                    </ListGroup.Item>
+                  )
+                })}
+              </ListGroup>
+            </Card>
+          )}
+
+          {/* The reverse link. A story can appear in several collections -- 64
+              of them do -- and its progress is shared across all of them. */}
+          {parentCollections.length > 0 && (
+            <section className="mb-4">
+              <h2 className="h5">
+                {parentCollections.length === 1
+                  ? 'Appears in this collection'
+                  : 'Appears in these collections'}
+              </h2>
+              <ListGroup>
+                {parentCollections.map((collection) => (
+                  <ListGroup.Item key={collection.slug}>
+                    <Link to={`/story/${encodeSlug(collection.slug)}`}>{collection.title}</Link>
+                    {collection.year && (
+                      <span className="text-muted small"> &middot; {collection.year}</span>
+                    )}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+              {parentCollections.length > 1 && (
+                <p className="text-muted small mt-2 mb-0">
+                  Your status, rating, and notes for this story are shared across every collection
+                  it appears in.
+                </p>
+              )}
+            </section>
+          )}
 
           {story.moreAbout && (
             <section className="mb-4">
@@ -216,7 +347,9 @@ function Story() {
             </Card>
           )}
 
-          {story.related?.length > 0 && (
+          {/* Recommendations. Skipped for collections, whose `related` field is
+              really a table of contents and is rendered above instead. */}
+          {members.length === 0 && story.related?.length > 0 && (
             <section className="mb-4">
               <h2 className="h5">Other stories you might enjoy</h2>
               <ListGroup>
@@ -252,6 +385,24 @@ function Story() {
           )}
         </Col>
       </Row>
+
+      {isCollection && (
+        <ConfirmClearCollection
+          show={clearing}
+          onHide={() => setClearing(false)}
+          onConfirm={() => {
+            setCollectionStatus(memberSlugs, STATUS.UNREAD)
+            setClearing(false)
+          }}
+          collectionTitle={story.title}
+          preview={previewCollectionClear(memberSlugs)}
+          // Members that also belong to another collection -- clearing here
+          // clears them there too, which is worth saying out loud.
+          sharedCount={
+            members.filter((m) => collectionsContaining(m.slug).length > 1).length
+          }
+        />
+      )}
     </>
   )
 }

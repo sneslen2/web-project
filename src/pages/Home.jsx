@@ -8,17 +8,17 @@ import { useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 function Home() {
-  const { get } = useProgress()
-  const { stories } = useStories()
+  const { get, summarise } = useProgress()
+  const { stories, distinctWorks, distinctWorkSlugs } = useStories()
 
-  const readCount = stories.filter((s) => get(s.slug).status === STATUS.READ).length
-  const readingCount = stories.filter((s) => get(s.slug).status === STATUS.READING).length
-  // Guard the divisor: CatalogGate normally prevents an empty catalog reaching
-  // here, but NaN in a progress bar is a bad failure mode to leave possible.
-  const pct = stories.length ? Math.round((readCount / stories.length) * 100) : 0
+  // The same catalog-wide summary the statistics page shows, from the same
+  // helper, so the two can never disagree. Collections are excluded from the
+  // denominator -- they are containers for short stories counted individually,
+  // and including both would tally the same reading twice.
+  const progress = summarise(distinctWorkSlugs)
 
   // Next unread in publication order -- the obvious "what now?" answer.
-  const nextUp = stories
+  const nextUp = distinctWorks
     .filter((s) => get(s.slug).status === STATUS.UNREAD)
     .sort((a, b) => (a.year ?? 0) - (b.year ?? 0))[0]
 
@@ -44,11 +44,15 @@ function Home() {
               Your progress
             </Card.Title>
             <span className="text-muted">
-              {readCount} of {stories.length} read
-              {readingCount > 0 && `, ${readingCount} in progress`}
+              {progress.read} of {progress.total} read
+              {progress.reading > 0 && `, ${progress.reading} in progress`}
             </span>
           </div>
-          <ProgressBar now={pct} label={pct >= 8 ? `${pct}%` : ''} style={{ height: '1.5rem' }} />
+          <ProgressBar
+            now={progress.percentRead}
+            label={progress.percentRead >= 8 ? `${progress.percentRead}%` : ''}
+            style={{ height: '1.5rem' }}
+          />
 
           {nextUp && (
             <p className="mt-3 mb-0">

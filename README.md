@@ -9,14 +9,15 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 
 - Backup in case the Supabase project is paused or down
 - Send recurring ping to keep the project active
+- Restructure Collections as not separate works, just groupings of short stories
+- Email confirmation link doesn't work, get rid of
 
 
 ## Todo
 
-- Mystery solver activity!
 - Get info for the About page
 - Clean up design and formatting
-- Restructure Collections as not separate works, just groupings of short stories
+  - Don't like the cards and tags on the checklist
 - Enable marking in progress from the checklist
 - Collapse the filters
 - Quick button filters
@@ -27,7 +28,6 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Easier check-off
 - Add count to filters
 - Username instead of email for registration
-- Email confirmation link doesn't work, get rid of
 - Sign in directs to obsolete Notes page
 - Author field for inspired by
 - Short stories link to a description of the collection(s)
@@ -37,12 +37,18 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Recently finished only pulls the first few
 - Title of the tab is "React + Bootstrap SPA"
 - Clear progress when logged out
+- Favourite should be favorite
+- Filters should be saved when user navigates back to checklist
+- Recently finished seems broken
+- Add total progress to checklist
 
 **Tentative**
-- Separate inspired by and/or Mary Westmacott
+- Mystery solver activity!
+- Separate tab/checklist for plays, inspired by, and/or Mary Westmacott
 - Add biography works
 - Remove Ariadne Oliver and/or Harley Quin
 - Scrape additional data from Goodreads (cover photos for short stories?)
+- Get additional short story collection data
 - Add star rating filter
 - Some kind of scroll or quick jump function on the checklist
   (timeline, alphabet, groupings, etc dynamic sidebar)
