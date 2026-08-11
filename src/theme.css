@@ -89,13 +89,14 @@ h1, h2, h3, h4, h5, .ch-display {
   color: var(--ch-text) !important;
 }
 .ch-brand em { color: var(--ch-brass); font-style: normal; }
-/* Keyhole mark beside the wordmark. Optical nudge down so the glyph sits on
-   the serif baseline rather than the line box. */
+/* Keyhole mark beside the wordmark. Slightly under cap height so the solid
+   plate reads as a companion to the title rather than competing with it;
+   optical nudge down to sit on the serif baseline, not the line box. */
 .ch-brand-mark {
-  height: 1.5rem;
+  height: 1.4rem;
   width: auto;
-  margin-right: 0.5rem;
-  vertical-align: -0.18em;
+  margin-right: 0.55rem;
+  vertical-align: -0.16em;
 }
 
 .ch-nav-link {
