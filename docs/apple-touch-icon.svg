@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <!-- Home-screen icon. Square with no corner radius: iOS applies its own
+       squircle mask, and a pre-rounded icon gets clipped twice. Must stay
+       fully opaque -- iOS renders transparency as black. -->
+  <rect width="180" height="180" fill="#5c1a24"/>
+  <path d="M90 43a31 31 0 0 0-17 56.8L59 144h62l-14-44.2A31 31 0 0 0 90 43z" fill="#c9a227"/>
+</svg>
