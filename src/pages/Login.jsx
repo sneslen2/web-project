@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form'
 import Nav from 'react-bootstrap/Nav'
 import Spinner from 'react-bootstrap/Spinner'
 import { useAuth } from '../auth/AuthProvider.jsx'
+import { validateUsername } from '../auth/username.js'
 
 /**
  * Combined sign in / create account page. One form, one toggle -- less
@@ -14,7 +15,7 @@ import { useAuth } from '../auth/AuthProvider.jsx'
  */
 function Login() {
   const [mode, setMode] = useState('signin') // 'signin' | 'signup'
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const [notice, setNotice] = useState(null)
@@ -33,37 +34,59 @@ function Login() {
     event.preventDefault()
     setError(null)
     setNotice(null)
+
+    // Validated up front: an invalid username would otherwise come back from
+    // the API as a confusing complaint about the email address it was turned
+    // into, which the user never typed.
+    const usernameProblem = validateUsername(username)
+    if (usernameProblem) {
+      setError(usernameProblem)
+      return
+    }
+
     setBusy(true)
 
     if (mode === 'signin') {
-      const { error: signInError } = await signIn(email, password)
+      const { error: signInError } = await signIn(username, password)
       setBusy(false)
       if (signInError) {
-        setError(signInError.message)
+        // Supabase phrases this as "Invalid login credentials" for a wrong
+        // password AND for an account that does not exist. Restate it in terms
+        // of what was actually typed.
+        setError(
+          signInError.message === 'Invalid login credentials'
+            ? 'That username and password do not match an account.'
+            : signInError.message,
+        )
         return
       }
       navigate(destination, { replace: true })
     } else {
       const { error: signUpError, needsEmailConfirmation } = await signUp(
-        email,
+        username,
         password,
       )
       setBusy(false)
       if (signUpError) {
-        setError(signUpError.message)
+        setError(
+          signUpError.message === 'User already registered'
+            ? 'That username is already taken.'
+            : signUpError.message,
+        )
         return
       }
       if (needsEmailConfirmation) {
-        // Account created but not yet usable -- say so rather than pretending
-        // they're logged in.
-        setNotice(
-          `Account created. Check ${email} for a confirmation link, then sign in.`,
+        // Usernames map to addresses at a domain that cannot receive mail, so
+        // a confirmation link can never arrive. This is a misconfiguration,
+        // not something the user can resolve -- say so plainly.
+        setError(
+          'The account was created but cannot be used until email confirmation ' +
+            'is turned off for this project in the Supabase dashboard ' +
+            '(Authentication → Providers → Email).',
         )
-        setMode('signin')
-        setPassword('')
         return
       }
-      // Email confirmation is off, so signUp already returned a session.
+      // Confirmation is off, so signUp already returned a session.
       navigate(destination, { replace: true })
     }
   }
@@ -96,15 +119,24 @@ function Login() {
         {notice && <Alert variant="success">{notice}</Alert>}
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="login-email">
-            <Form.Label>Email</Form.Label>
+          <Form.Group className="mb-3" controlId="login-username">
+            <Form.Label>Username</Form.Label>
             <Form.Control
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              autoComplete="email"
+              autoComplete="username"
+              // Phones default to capitalising the first letter, which would
+              // silently change the username the user thinks they typed.
+              autoCapitalize="none"
+              spellCheck="false"
             />
+            {mode === 'signup' && (
+              <Form.Text muted>
+                3&ndash;30 characters: letters, numbers, dots, underscores, hyphens.
+              </Form.Text>
+            )}
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="login-password">

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { supabase } from '../supabaseClient.js'
+import { emailToUsername, usernameToEmail } from './username.js'
 
 const AuthContext = createContext(null)
 
@@ -48,20 +49,33 @@ export function AuthProvider({ children }) {
       user: session?.user ?? null,
       loading,
 
-      /** Create an account. Returns { error } -- null on success. */
-      async signUp(email, password) {
-        const { data, error } = await supabase.auth.signUp({ email, password })
-        // When email confirmation is ON, Supabase returns a user but no
-        // session: the account exists but can't act until the link is clicked.
-        // Report that back so the UI can say so instead of silently "working".
+      /** The signed-in user's username, or null. */
+      username: session?.user?.email ? emailToUsername(session.user.email) : null,
+
+      /**
+       * Create an account from a username + password.
+       *
+       * Supabase authenticates on an email, so the username is converted to a
+       * synthetic address here -- see username.js. Callers deal only in
+       * usernames.
+       */
+      async signUp(username, password) {
+        const { data, error } = await supabase.auth.signUp({
+          email: usernameToEmail(username),
+          password,
+        })
+        // With email confirmation ON, Supabase returns a user but no session.
+        // These addresses are not deliverable, so that setting makes every
+        // account permanently unusable -- surface it as a clear error rather
+        // than a "check your email" the user can never act on.
         const needsEmailConfirmation = !error && !data.session
         return { error, needsEmailConfirmation }
       },
 
-      /** Sign in with email + password. Returns { error } -- null on success. */
-      async signIn(email, password) {
+      /** Sign in with username + password. Returns { error } -- null on success. */
+      async signIn(username, password) {
         const { error } = await supabase.auth.signInWithPassword({
-          email,
+          email: usernameToEmail(username),
           password,
         })
         return { error }

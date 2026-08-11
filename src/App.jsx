@@ -15,7 +15,7 @@ import CatalogGate from './components/CatalogGate.jsx'
 import { useAuth } from './auth/AuthProvider.jsx'
 
 function App() {
-  const { session, signOut } = useAuth()
+  const { session, username, signOut } = useAuth()
   const navigate = useNavigate()
 
   async function handleSignOut() {
@@ -52,7 +52,7 @@ function App() {
               {session ? (
                 <div className="d-flex align-items-center gap-2">
                   <Navbar.Text className="text-truncate" style={{ maxWidth: '14rem' }}>
-                    {session.user.email}
+                    {username}
                   </Navbar.Text>
                   <Button variant="outline-light" size="sm" onClick={handleSignOut}>
                     Sign out
