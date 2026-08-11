@@ -25,3 +25,4 @@ dist-ssr
 
 # Scraper dependencies (local only)
 scripts/node_modules
+web-project.code-workspace

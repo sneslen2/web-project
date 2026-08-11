@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "snapshot": "node scripts/build-catalog-snapshot.mjs",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview"

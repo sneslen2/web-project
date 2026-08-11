@@ -5,6 +5,12 @@ works of Agatha Christie — 302 novels, collections, plays, and short stories.
 
 Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 
+## Part 2 Log
+
+- Backup in case the Supabase project is paused or down
+- Send recurring ping to keep the project active
+
+
 ## Todo
 
 - Mystery solver activity!
@@ -30,6 +36,7 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Easy back button from story
 - Recently finished only pulls the first few
 - Title of the tab is "React + Bootstrap SPA"
+- Clear progress when logged out
 
 **Tentative**
 - Separate inspired by and/or Mary Westmacott

@@ -1,0 +1,59 @@
+# Keeps the Supabase project from auto-pausing.
+#
+# Free-tier projects pause after about a week with no activity, which makes the
+# deployed site fall back to its cached catalog and breaks sign-in entirely.
+# A single cheap read every few hours counts as activity.
+#
+# The key used here is the publishable (anon) key -- the same one already
+# shipped in the client bundle, restricted by RLS to the select-only policy on
+# `stories`. It is stored as a repository secret anyway so that rotating it is
+# a one-place change, and so this file does not need editing if the project
+# URL changes.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   SUPABASE_URL              e.g. https://<ref>.supabase.co
+#   SUPABASE_PUBLISHABLE_KEY  the sb_publishable_... / anon key
+#
+# NOTE: GitHub disables scheduled workflows on public repos after 60 days with
+# no commits. If this repo goes quiet for that long, re-enable the workflow
+# from the Actions tab.
+name: Keep Supabase warm
+
+on:
+  schedule:
+    # Every 6 hours. Well inside the ~1 week pause window even if a run or two
+    # is dropped -- GitHub does not guarantee exact cron delivery.
+    - cron: '0 */6 * * *'
+  # Allows a manual run from the Actions tab, handy for verifying setup.
+  workflow_dispatch:
+
+# No repository contents are read or written; this only makes an outbound call.
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Read one row from the stories table
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_PUBLISHABLE_KEY" ]; then
+            echo "::error::SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY repository secrets must be set."
+            exit 1
+          fi
+
+          # --fail turns an HTTP error into a non-zero exit so a broken key or a
+          # project that failed to resume shows up as a failed run, not a green one.
+          # Retries absorb brief cold-start latency on a project that is waking.
+          status=$(curl --silent --show-error --fail \
+            --retry 3 --retry-delay 10 --retry-all-errors \
+            --max-time 30 \
+            --output /dev/null --write-out '%{http_code}' \
+            "$SUPABASE_URL/rest/v1/stories?select=slug&limit=1" \
+            -H "apikey: $SUPABASE_PUBLISHABLE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_PUBLISHABLE_KEY")
+
+          echo "Supabase responded with HTTP $status"

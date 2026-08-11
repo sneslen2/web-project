@@ -7,6 +7,13 @@ import { supabase } from '../supabaseClient.js'
  * The catalog is public reference data (see the select-only RLS policy on
  * `stories`), so this works signed out. It's fetched rather than bundled so the
  * database is the single source of truth and the ~640 KB stays out of the build.
+ *
+ * If that fetch fails, we fall back to public/catalog.json -- a snapshot built
+ * by scripts/build-catalog-snapshot.mjs. The common cause is a free-tier
+ * Supabase project auto-pausing after a week of inactivity, which would
+ * otherwise leave every page showing an error for a catalog that has not
+ * actually changed. The fallback is lazily fetched, so a healthy load never
+ * pays for it.
  */
 
 const StoriesContext = createContext(null)
@@ -14,54 +21,129 @@ const StoriesContext = createContext(null)
 /** Sentinel for "no recurring detective" in filter state -- null can't be a checkbox value. */
 export const STANDALONE = '__standalone__'
 
+/** Columns to read. Kept in sync with scripts/build-catalog-snapshot.mjs. */
+const COLUMNS =
+  'slug, title, type, detective, year, story_count, attribution, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related'
+
+/**
+ * Map a DB row to the shape the components use. `detective` is named that way
+ * in Postgres because "character" is a built-in type name there.
+ */
+function toStory(row) {
+  return {
+    slug: row.slug,
+    title: row.title,
+    type: row.type,
+    character: row.detective,
+    year: row.year,
+    storyCount: row.story_count,
+    attribution: row.attribution,
+    url: row.url,
+    cover: row.cover,
+    synopsis: row.synopsis,
+    moreAbout: row.more_about,
+    trivia: row.trivia ?? [],
+    quote: row.quote,
+    extractPdf: row.extract_pdf,
+    related: row.related ?? [],
+  }
+}
+
+/**
+ * Turn a supabase-js error into something a reader can act on.
+ *
+ * A paused project and a dropped wifi connection both surface as the same
+ * opaque "Failed to fetch" from the underlying fetch call, so we can't tell
+ * them apart from the client -- but naming both candidates is far more useful
+ * than showing the raw TypeError.
+ */
+function describeError(queryError) {
+  const raw = queryError?.message ?? 'Unknown error'
+
+  // supabase-js reports network-level failures with no HTTP status.
+  const isNetworkFailure =
+    queryError?.status === undefined || raw.toLowerCase().includes('failed to fetch')
+
+  if (isNetworkFailure) {
+    return {
+      message: 'Could not reach the Supabase project.',
+      // The overwhelmingly likely cause for this app, and the one with a fix
+      // the reader can actually carry out.
+      hint:
+        'Free-tier Supabase projects pause automatically after about a week of ' +
+        'inactivity. Check the Supabase dashboard and resume the project if it is ' +
+        'paused. A lost network connection would look the same from here.',
+      raw,
+    }
+  }
+
+  return { message: raw, hint: null, raw }
+}
+
 export function StoriesProvider({ children }) {
   const [stories, setStories] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  // True when the rows on screen came from the snapshot rather than the DB.
+  const [stale, setStale] = useState(false)
 
   useEffect(() => {
     let active = true
+
+    /**
+     * Read the snapshot shipped alongside the app. Relative to import.meta.env
+     * .BASE_URL so it resolves under the GitHub Pages repo subpath.
+     */
+    async function loadSnapshot() {
+      const response = await fetch(`${import.meta.env.BASE_URL}catalog.json`)
+      if (!response.ok) {
+        throw new Error(`snapshot request returned ${response.status}`)
+      }
+      const rows = await response.json()
+      if (!Array.isArray(rows) || rows.length === 0) {
+        throw new Error('snapshot was empty')
+      }
+      return rows
+    }
 
     async function load() {
       // Default order is publication date -- the catalog's most natural sort and
       // what the checklist opens with.
       const { data, error: queryError } = await supabase
         .from('stories')
-        .select(
-          'slug, title, type, detective, year, story_count, attribution, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related',
-        )
+        .select(COLUMNS)
         .order('year', { ascending: true })
 
       if (!active) return
 
-      if (queryError) {
-        setError(queryError.message)
+      if (!queryError) {
+        setStories(data.map(toStory))
         setLoading(false)
         return
       }
 
-      // Map DB columns to the shape the components use. `detective` is named
-      // that way in Postgres because "character" is a built-in type name there.
-      setStories(
-        data.map((row) => ({
-          slug: row.slug,
-          title: row.title,
-          type: row.type,
-          character: row.detective,
-          year: row.year,
-          storyCount: row.story_count,
-          attribution: row.attribution,
-          url: row.url,
-          cover: row.cover,
-          synopsis: row.synopsis,
-          moreAbout: row.more_about,
-          trivia: row.trivia ?? [],
-          quote: row.quote,
-          extractPdf: row.extract_pdf,
-          related: row.related ?? [],
-        })),
-      )
-      setLoading(false)
+      // Live read failed. Serve the snapshot if we can -- a slightly stale
+      // catalog beats an error page for data that changes approximately never.
+      const described = describeError(queryError)
+
+      try {
+        const rows = await loadSnapshot()
+        if (!active) return
+
+        setStories(rows.map(toStory))
+        setStale(true)
+        setLoading(false)
+        console.warn(
+          `Supabase read failed (${described.raw}); serving the cached catalog from catalog.json.`,
+        )
+      } catch (snapshotError) {
+        if (!active) return
+
+        // Both sources are gone; now an error is the honest answer.
+        console.error('Cached catalog also unavailable:', snapshotError)
+        setError(described)
+        setLoading(false)
+      }
     }
 
     load()
@@ -77,6 +159,7 @@ export function StoriesProvider({ children }) {
       stories,
       loading,
       error,
+      stale,
 
       getStory(slug) {
         // One slug contains a non-ASCII character, so route params arrive
@@ -100,7 +183,7 @@ export function StoriesProvider({ children }) {
         { min: Infinity, max: -Infinity },
       ),
     }
-  }, [stories, loading, error])
+  }, [stories, loading, error, stale])
 
   return <StoriesContext.Provider value={value}>{children}</StoriesContext.Provider>
 }
