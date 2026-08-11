@@ -89,6 +89,14 @@ h1, h2, h3, h4, h5, .ch-display {
   color: var(--ch-text) !important;
 }
 .ch-brand em { color: var(--ch-brass); font-style: normal; }
+/* Keyhole mark beside the wordmark. Optical nudge down so the glyph sits on
+   the serif baseline rather than the line box. */
+.ch-brand-mark {
+  height: 1.5rem;
+  width: auto;
+  margin-right: 0.5rem;
+  vertical-align: -0.18em;
+}
 
 .ch-nav-link {
   color: var(--ch-muted) !important;

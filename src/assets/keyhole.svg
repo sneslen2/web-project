@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- The Christie Project: brass keyhole on a wine plate -->
-  <rect width="64" height="64" rx="12" fill="#5c1a24"/>
+  <!-- Nav wordmark glyph: keyhole only, no plate, so it reads as a mark
+       beside the serif title rather than a heavy block. -->
   <path d="M32 13a11 11 0 0 0-6 20.2L21 51h22l-5-17.8A11 11 0 0 0 32 13z" fill="#c9a227"/>
 </svg>

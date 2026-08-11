@@ -13,6 +13,7 @@ import Login from './pages/Login.jsx'
 import NotFound from './pages/NotFound.jsx'
 import CatalogGate from './components/CatalogGate.jsx'
 import { useAuth } from './auth/AuthProvider.jsx'
+import brandMark from './assets/keyhole.svg'
 
 function App() {
   const { session, username, signOut } = useAuth()
@@ -28,6 +29,8 @@ function App() {
       <Navbar variant="dark" expand="md" sticky="top" className="ch-navbar">
         <Container>
           <Navbar.Brand as={Link} to="/" className="ch-brand">
+            {/* Decorative: the adjacent wordmark already names the site. */}
+            <img src={brandMark} alt="" className="ch-brand-mark" />
             The Christie <em>Project</em>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="main-nav" />
