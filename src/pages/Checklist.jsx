@@ -78,7 +78,15 @@ function Checklist() {
 
     const filtered = stories.filter((story) => {
       if (needle && !story.title.toLowerCase().includes(needle)) return false
-      if (selectedTypes.length && !selectedTypes.includes(story.type)) return false
+
+      if (selectedTypes.length) {
+        // Collection is not offered as a format. A collection holds short
+        // stories and stands in for them in grouped mode, so it matches the
+        // Short Story filter -- otherwise picking Short Story there would
+        // empty the list.
+        const type = story.type === COLLECTION ? SHORT_STORY : story.type
+        if (!selectedTypes.includes(type)) return false
+      }
 
       if (selectedCharacters.length) {
         // STANDALONE is a sentinel: the data uses null for "no detective".

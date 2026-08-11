@@ -52,11 +52,10 @@ function Statistics() {
     const works = distinctWorks
     const overall = summarise(distinctWorkSlugs)
 
+    // `works` excludes collections and `types` no longer offers Collection as a
+    // format, so nothing here needs to special-case them.
     const countBy = (keyFor, keys) =>
       keys
-        // "Collection" is not a format a work can have here; its stories are
-        // already counted under Short Story.
-        .filter((key) => key !== 'Collection')
         .map((key) => {
           const inGroup = works.filter((s) => keyFor(s) === key)
           return {

@@ -217,7 +217,16 @@ export function StoriesProvider({ children }) {
 
       // Facets derived from the data, so a re-import that adds a new detective
       // or format shows up in the filters with no code change.
-      types: [...new Set(stories.map((s) => s.type).filter(Boolean))].sort(),
+      // Formats a work can be filtered or counted by. Collection is excluded:
+      // it is a container rather than a format. In the checklist's flat mode
+      // collections are not shown at all, and in grouped mode they stand in for
+      // the short stories inside them, so filtering to Short Story already
+      // reaches them.
+      types: [
+        ...new Set(stories.map((s) => s.type).filter(Boolean)),
+      ]
+        .filter((type) => type !== 'Collection')
+        .sort(),
       characters: [...new Set(stories.map((s) => s.character).filter(Boolean))].sort(),
       yearRange: stories.reduce(
         (range, s) =>
