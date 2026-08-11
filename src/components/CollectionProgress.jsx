@@ -29,7 +29,7 @@ function CollectionProgress({ summary, className = '' }) {
       </div>
 
       <ProgressBar
-        // Labelled on the wrapper: the bar is decorative once the counts above
+        // Labeled on the wrapper: the bar is decorative once the counts above
         // say the same thing in text.
         aria-hidden="true"
         style={{ height: '0.5rem' }}

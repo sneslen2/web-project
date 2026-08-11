@@ -14,7 +14,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import CollectionProgress from '../components/CollectionProgress.jsx'
 import ConfirmClearCollection from '../components/ConfirmClearCollection.jsx'
 import { coverAt, encodeSlug, useStories } from '../data/StoriesProvider.jsx'
-import { STATUS, STATUS_LABELS, useProgress } from '../progress/ProgressProvider.jsx'
+import { STATUS, STATUS_LABELS, todayLocal, useProgress } from '../progress/ProgressProvider.jsx'
 
 /** 1-5 stars. Rendered as buttons so it works by keyboard. */
 function RatingPicker({ value, onChange }) {
@@ -50,7 +50,8 @@ function Story() {
     setStatus,
     setRating,
     setNotes,
-    summarise,
+    setFinishedOn,
+    summarize,
     collectionStatus,
     setCollectionStatus,
     previewCollectionClear,
@@ -70,12 +71,15 @@ function Story() {
 
   const record = get(story.slug)
 
+  // Caps the date picker: a finish date in the future is a typo, not a plan.
+  const today = todayLocal()
+
   // Collections list their contents; stories link back to the collections that
   // include them. Both are empty for novels and plays, so both sections vanish.
   const members = membersOfCollection(story.slug)
   const parentCollections = collectionsContaining(story.slug)
   const memberSlugs = members.map((m) => m.slug)
-  const memberSummary = summarise(memberSlugs)
+  const memberSummary = summarize(memberSlugs)
 
   // A collection has no stored status of its own -- it is derived from its
   // members, and setting it writes through to them.
@@ -166,14 +170,6 @@ function Story() {
             </div>
           )}
 
-          {story.extractPdf && (
-            <p>
-              <a href={story.extractPdf} target="_blank" rel="noreferrer" className="btn btn-outline-primary btn-sm">
-                Read an extract (PDF)
-              </a>
-            </p>
-          )}
-
           {story.quote?.text && (
             <figure className="border-start border-4 ps-3 my-4">
               <blockquote className="mb-1 fst-italic">{story.quote.text}</blockquote>
@@ -226,10 +222,24 @@ function Story() {
                 />
               </Form.Group>
 
-              {!isCollection && record.finishedOn && (
-                <p className="text-muted small">
-                  Finished on {new Date(record.finishedOn).toLocaleDateString()}
-                </p>
+              {/* Collections have no record of their own -- their members each
+                  carry their own finish date. */}
+              {!isCollection && (
+                <Form.Group className="mb-3" controlId="story-finished-on">
+                  <Form.Label>Date finished</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={record.finishedOn ?? ''}
+                    // A finish date in the future is a typo, not a plan.
+                    max={today}
+                    onChange={(e) => setFinishedOn(story.slug, e.target.value)}
+                  />
+                  <Form.Text muted>
+                    {record.status === STATUS.READ
+                      ? 'Clear this if you would rather not record when you finished.'
+                      : 'Setting a date marks this as read.'}
+                  </Form.Text>
+                </Form.Group>
               )}
 
               <Form.Group controlId="story-notes">
@@ -237,7 +247,7 @@ function Story() {
                 <Form.Control
                   as="textarea"
                   rows={4}
-                  placeholder="Suspicions, favourite clues, who you thought did it…"
+                  placeholder="Suspicions, favorite clues, who you thought did it…"
                   value={record.notes}
                   onChange={(e) => setNotes(story.slug, e.target.value)}
                 />
@@ -248,7 +258,7 @@ function Story() {
 
           {/* A collection's contents, with the reading progress rolled up from
               its member stories. Replaces the old "Other stories you might
-              enjoy" heading, which was mislabelling a table of contents. */}
+              enjoy" heading, which was mislabeling a table of contents. */}
           {members.length > 0 && (
             <Card className="mb-4">
               <Card.Header className="d-flex justify-content-between align-items-center">

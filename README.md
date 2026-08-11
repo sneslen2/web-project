@@ -12,6 +12,15 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Restructure Collections as not separate works, just groupings of short stories
 - Email confirmation link doesn't work, get rid of
 - Collection should not show as a format option, collection should be integrated
+- Fixed title of the tab
+- Change accounts to use username instead of email
+- Short stories link to a description of the collection(s)
+- Sign in directs to Home or previous page
+- Scrapped Read an extract (PDF)
+- Added count to filters
+- Made finished date editable
+- UK spelling changed to US spelling
+- Show total and relative progress on the checklist
 
 
 ## Todo
@@ -27,23 +36,17 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
   - Links to the activities, meh
   - Add recently read
 - Easier check-off
-- Add count to filters
-- Username instead of email for registration
-- Sign in directs to obsolete Notes page
 - Author field for inspired by
-- Short stories link to a description of the collection(s)
-- Scrap Read an extract (PDF)
-- Make finished date editable
 - Easy back button from story
 - Recently finished only pulls the first few
-- Title of the tab is "React + Bootstrap SPA"
 - Clear progress when logged out
-- Favourite should be favorite
 - Filters should be saved when user navigates back to checklist
 - Recently finished seems broken
-- Add total progress to checklist
+
+
 
 **Tentative**
+
 - Mystery solver activity!
 - Separate tab/checklist for plays, inspired by, and/or Mary Westmacott
 - Add biography works

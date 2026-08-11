@@ -63,7 +63,7 @@ function toRow(story) {
     cover: story.cover ?? null,
     synopsis: story.synopsis ?? null,
     more_about: story.moreAbout ?? null,
-    // Non-null defaults in the schema, so normalise here rather than sending null.
+    // Non-null defaults in the schema, so normalize here rather than sending null.
     trivia: story.trivia ?? [],
     quote: story.quote ?? null,
     extract_pdf: story.extractPdf ?? null,

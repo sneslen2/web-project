@@ -12,7 +12,7 @@ import Table from 'react-bootstrap/Table'
 import { encodeSlug, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
-/** A labelled completion bar, reused for each breakdown row. */
+/** A labeled completion bar, reused for each breakdown row. */
 function CompletionRow({ label, read, total }) {
   const pct = total ? Math.round((read / total) * 100) : 0
   return (
@@ -29,7 +29,7 @@ function CompletionRow({ label, read, total }) {
 }
 
 function Statistics() {
-  const { records, get, reset, collectionStatus, summarise } = useProgress()
+  const { records, get, reset, collectionStatus, summarize } = useProgress()
   const {
     stories,
     distinctWorks,
@@ -47,10 +47,10 @@ function Statistics() {
     // reading all 20 collections covers 164 of the 302 rows, a naive total
     // reported 7% complete for more than half the catalog.
     //
-    // The headline figures come from the same summarise() call the home page
+    // The headline figures come from the same summarize() call the home page
     // uses, so the two pages cannot report different completion.
     const works = distinctWorks
-    const overall = summarise(distinctWorkSlugs)
+    const overall = summarize(distinctWorkSlugs)
 
     // `works` excludes collections and `types` no longer offers Collection as a
     // format, so nothing here needs to special-case them.
@@ -133,7 +133,7 @@ function Statistics() {
     collections,
     membersOfCollection,
     collectionStatus,
-    summarise,
+    summarize,
     types,
     characters,
     records,

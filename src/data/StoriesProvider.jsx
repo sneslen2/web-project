@@ -198,7 +198,7 @@ export function StoriesProvider({ children }) {
       /**
        * Slugs of every distinct work, for progress summaries.
        *
-       * Pass to summarise() to get catalog-wide progress. Home and Statistics
+       * Pass to summarize() to get catalog-wide progress. Home and Statistics
        * both do exactly that, so the headline numbers cannot drift apart.
        */
       distinctWorkSlugs: stories.filter((s) => s.type !== 'Collection').map((s) => s.slug),

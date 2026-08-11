@@ -127,7 +127,7 @@ function Login() {
               onChange={(e) => setUsername(e.target.value)}
               required
               autoComplete="username"
-              // Phones default to capitalising the first letter, which would
+              // Phones default to capitalizing the first letter, which would
               // silently change the username the user thinks they typed.
               autoCapitalize="none"
               spellCheck="false"

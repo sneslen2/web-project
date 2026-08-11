@@ -8,14 +8,14 @@ import { useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 function Home() {
-  const { get, summarise } = useProgress()
+  const { get, summarize } = useProgress()
   const { distinctWorks, distinctWorkSlugs } = useStories()
 
   // The same catalog-wide summary the statistics page shows, from the same
   // helper, so the two can never disagree. Collections are excluded from the
   // denominator -- they are containers for short stories counted individually,
   // and including both would tally the same reading twice.
-  const progress = summarise(distinctWorkSlugs)
+  const progress = summarize(distinctWorkSlugs)
 
   // Next unread in publication order -- the obvious "what now?" answer.
   const nextUp = distinctWorks

@@ -44,7 +44,7 @@ function About() {
               </p>
               <p>
                 Over the following five decades she wrote the novels, short stories, and plays
-                catalogued here, alongside romances published under the name Mary Westmacott. Her
+                cataloged here, alongside romances published under the name Mary Westmacott. Her
                 play <em>The Mousetrap</em> opened in London in 1952 and became the longest-running
                 stage production in history.
               </p>

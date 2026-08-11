@@ -34,7 +34,7 @@ const changes = []
 for (const story of stories) {
   const original = story.character
 
-  // Normalise every record so the field set is uniform, not just repaired rows.
+  // Normalize every record so the field set is uniform, not just repaired rows.
   if (story.storyCount === undefined) story.storyCount = null
   if (story.attribution === undefined) story.attribution = null
 

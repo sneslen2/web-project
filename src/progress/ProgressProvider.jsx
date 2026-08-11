@@ -24,6 +24,15 @@ export const STATUS_LABELS = {
   [STATUS.READ]: 'Read',
 }
 
+/**
+ * Today as YYYY-MM-DD in the reader's own timezone.
+ *
+ * Not toISOString().slice(0, 10) -- that converts to UTC first, so a reader in
+ * UTC+9 finishing a book on the morning of the 11th would have it stamped the
+ * 10th. 'en-CA' is the locale whose short date format is already ISO-shaped.
+ */
+export const todayLocal = () => new Date().toLocaleDateString('en-CA')
+
 /** The shape of a progress record. Absent from the map == untouched == unread. */
 const emptyRecord = {
   status: STATUS.UNREAD,
@@ -100,13 +109,28 @@ export function ProgressProvider({ children }) {
         update(slug, {
           status: nowRead ? STATUS.READ : STATUS.UNREAD,
           // Record when it was finished; clear it if un-marking.
-          finishedOn: nowRead ? new Date().toISOString().slice(0, 10) : null,
+          finishedOn: nowRead ? todayLocal() : null,
         })
       },
 
       setStatus: (slug, status) => update(slug, { status }),
       setRating: (slug, rating) => update(slug, { rating }),
       setNotes: (slug, notes) => update(slug, { notes }),
+
+      /**
+       * Set or clear the finish date. Pass '' or null to clear.
+       *
+       * Recording a finish date implies the story is read, so this promotes an
+       * unread story rather than leaving the contradictory pair "Unread, but
+       * finished on the 3rd". Clearing the date leaves the status alone --
+       * "read, but I don't recall when" is a perfectly ordinary state.
+       */
+      setFinishedOn(slug, finishedOn) {
+        const value = finishedOn || null
+        const shouldPromote = value !== null && get(slug).status !== STATUS.READ
+
+        update(slug, shouldPromote ? { finishedOn: value, status: STATUS.READ } : { finishedOn: value })
+      },
 
       /**
        * A collection's status, derived from its members.
@@ -149,7 +173,7 @@ export function ProgressProvider({ children }) {
        * preserving the original date on ones that were. Unread clears status
        * and finish date -- call previewCollectionClear first and confirm, since
        * that direction discards data. Ratings and notes are never touched by
-       * either direction; they are judgements about the story, not progress.
+       * either direction; they are judgments about the story, not progress.
        *
        * Reading is deliberately not written through -- "part-way through a
        * collection" is what the members already express, and forcing them all
@@ -160,7 +184,7 @@ export function ProgressProvider({ children }) {
        */
       setCollectionStatus(memberSlugs, status) {
         if (status === STATUS.READ) {
-          const today = new Date().toISOString().slice(0, 10)
+          const today = todayLocal()
           // Only stamp stories that were not already read, so an existing
           // finish date survives.
           const unfinished = memberSlugs.filter((slug) => get(slug).status !== STATUS.READ)
@@ -179,7 +203,7 @@ export function ProgressProvider({ children }) {
        * Purely derived -- it never writes. Because records are keyed by slug, a
        * story in several collections contributes the same progress to each.
        */
-      summarise(slugs) {
+      summarize(slugs) {
         const total = slugs.length
         const read = slugs.filter((s) => get(s).status === STATUS.READ).length
         const reading = slugs.filter((s) => get(s).status === STATUS.READING).length

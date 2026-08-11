@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import Row from 'react-bootstrap/Row'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
@@ -43,12 +44,50 @@ const MODE_STORAGE_KEY = 'christie-tracker:short-story-mode:v1'
 const SHORT_STORY = 'Short Story'
 const COLLECTION = 'Collection'
 
+/** A labeled completion bar with its count and percentage. */
+function ProgressRow({ label, read, total, percent, variant, className = '' }) {
+  return (
+    <div className={className}>
+      <div className="d-flex justify-content-between align-items-baseline small mb-1">
+        <span className="fw-semibold">{label}</span>
+        <span className="text-muted">
+          {read} of {total} read ({percent}%)
+        </span>
+      </div>
+      <ProgressBar
+        now={percent}
+        variant={variant}
+        style={{ height: '0.75rem' }}
+        // The count beside the label already says this in text.
+        aria-hidden="true"
+      />
+    </div>
+  )
+}
+
+/**
+ * A filter checkbox label with its match count.
+ *
+ * A zero count is dimmed rather than hidden: knowing a combination yields
+ * nothing is useful, and removing the option would make the list jump around
+ * as filters change.
+ */
+function FacetLabel({ name, count }) {
+  return (
+    <>
+      {name}{' '}
+      <span className={count === 0 ? 'text-muted opacity-50' : 'text-muted'}>({count})</span>
+    </>
+  )
+}
+
 function Checklist() {
-  const { get, collectionStatus } = useProgress()
+  const { get, collectionStatus, summarize } = useProgress()
   const {
     stories,
     types,
     characters,
+    distinctWorkSlugs,
     membersOfCollection,
     uncollectedStories,
   } = useStories()
@@ -73,55 +112,75 @@ function Checklist() {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value])
   }
 
-  const visible = useMemo(() => {
+  /**
+   * The facet value each story counts as, and the per-facet predicates.
+   *
+   * Defined once and shared by the visible list and the facet counts, so a
+   * count can never describe something different from what ticking the box
+   * actually does.
+   */
+  const facets = useMemo(() => {
+    const uncollectedSlugs = new Set(uncollectedStories().map((s) => s.slug))
     const needle = search.trim().toLowerCase()
 
-    const filtered = stories.filter((story) => {
-      if (needle && !story.title.toLowerCase().includes(needle)) return false
+    // Collection is not offered as a format. A collection holds short stories
+    // and stands in for them in grouped mode, so it counts as Short Story --
+    // otherwise picking Short Story there would empty the list.
+    const typeOf = (story) => (story.type === COLLECTION ? SHORT_STORY : story.type)
 
-      if (selectedTypes.length) {
-        // Collection is not offered as a format. A collection holds short
-        // stories and stands in for them in grouped mode, so it matches the
-        // Short Story filter -- otherwise picking Short Story there would
-        // empty the list.
-        const type = story.type === COLLECTION ? SHORT_STORY : story.type
-        if (!selectedTypes.includes(type)) return false
-      }
+    // STANDALONE is a sentinel: the data uses null for "no detective".
+    const characterOf = (story) => story.character ?? STANDALONE
 
-      if (selectedCharacters.length) {
-        // STANDALONE is a sentinel: the data uses null for "no detective".
-        const key = story.character ?? STANDALONE
-        if (!selectedCharacters.includes(key)) return false
-      }
+    // A collection stores no status of its own -- it is derived from its
+    // members, so reading the stored value would never match one.
+    const statusOf = (story) => {
+      const memberSlugs = membersOfCollection(story.slug).map((m) => m.slug)
+      return memberSlugs.length ? collectionStatus(memberSlugs) : get(story.slug).status
+    }
 
-      if (statuses.length) {
-        // A collection stores no status of its own -- it is derived from its
-        // members, so filtering on the stored value would never match one.
-        const memberSlugs = membersOfCollection(story.slug).map((m) => m.slug)
-        const status = memberSlugs.length
-          ? collectionStatus(memberSlugs)
-          : get(story.slug).status
+    /** Which entries this mode represents a short story with. See modeFiltered. */
+    const inMode = (story) => {
+      if (story.type === COLLECTION) return shortStoryMode === 'grouped'
+      if (story.type !== SHORT_STORY) return true
+      return shortStoryMode === 'flat' || uncollectedSlugs.has(story.slug)
+    }
 
-        if (!statuses.includes(status)) return false
-      }
-
-      return true
-    })
-
-    return [...filtered].sort(SORTS[sort].compare)
-    // `stories` arrives asynchronously, so it must be a dependency -- otherwise
-    // the list stays empty after the fetch resolves.
+    return {
+      typeOf,
+      characterOf,
+      statusOf,
+      inMode,
+      matchesSearch: (story) => !needle || story.title.toLowerCase().includes(needle),
+      matchesType: (story) => !selectedTypes.length || selectedTypes.includes(typeOf(story)),
+      matchesCharacter: (story) =>
+        !selectedCharacters.length || selectedCharacters.includes(characterOf(story)),
+      matchesStatus: (story) => !statuses.length || statuses.includes(statusOf(story)),
+    }
   }, [
-    stories,
     search,
     selectedTypes,
     selectedCharacters,
     statuses,
-    sort,
+    shortStoryMode,
     get,
     membersOfCollection,
     collectionStatus,
+    uncollectedStories,
   ])
+
+  const visible = useMemo(() => {
+    const filtered = stories.filter(
+      (story) =>
+        facets.matchesSearch(story) &&
+        facets.matchesType(story) &&
+        facets.matchesCharacter(story) &&
+        facets.matchesStatus(story),
+    )
+
+    return [...filtered].sort(SORTS[sort].compare)
+    // `stories` arrives asynchronously, so it must be a dependency -- otherwise
+    // the list stays empty after the fetch resolves.
+  }, [stories, facets, sort])
 
   /**
    * The mode decides which kind of entry represents a short story, and nothing
@@ -136,17 +195,84 @@ function Checklist() {
    * The two short stories in no collection are shown in both modes: no
    * collection would carry them, so hiding them would make them unreachable.
    */
-  const modeFiltered = useMemo(() => {
-    const uncollected = new Set(uncollectedStories().map((s) => s.slug))
+  const modeFiltered = useMemo(() => visible.filter(facets.inMode), [visible, facets])
 
-    return visible.filter((story) => {
-      if (story.type === COLLECTION) return shortStoryMode === 'grouped'
-      if (story.type !== SHORT_STORY) return true
-      // A short story shows individually in flat mode, or in either mode when
-      // no collection would otherwise carry it.
-      return shortStoryMode === 'flat' || uncollected.has(story.slug)
-    })
-  }, [visible, shortStoryMode, uncollectedStories])
+  /**
+   * How many entries each facet value would yield.
+   *
+   * Each count applies every *other* filter plus the value being counted, so a
+   * number says exactly what ticking that box would show -- including (0) for a
+   * combination with no results, which saves a click to find a dead end. Counts
+   * respect the short-story mode, so Short Story reads 166 individually and 22
+   * grouped by collection.
+   */
+  const facetCounts = useMemo(() => {
+    const tally = (matchesOwnFacet, keyOf) => {
+      const counts = new Map()
+
+      for (const story of stories) {
+        if (!facets.inMode(story)) continue
+        if (!facets.matchesSearch(story)) continue
+        if (!matchesOwnFacet(story)) continue
+
+        const key = keyOf(story)
+        counts.set(key, (counts.get(key) ?? 0) + 1)
+      }
+
+      return counts
+    }
+
+    return {
+      // Each facet's own selection is excluded from its own counts; the other
+      // two still apply.
+      types: tally(
+        (s) => facets.matchesCharacter(s) && facets.matchesStatus(s),
+        facets.typeOf,
+      ),
+      characters: tally(
+        (s) => facets.matchesType(s) && facets.matchesStatus(s),
+        facets.characterOf,
+      ),
+      statuses: tally(
+        (s) => facets.matchesType(s) && facets.matchesCharacter(s),
+        facets.statusOf,
+      ),
+    }
+  }, [stories, facets])
+
+  /**
+   * Progress over the whole catalog, and over the current filter when one is
+   * applied.
+   *
+   * Both count distinct works -- novels, plays and short stories -- so the
+   * number matches the home and statistics pages and does not lurch when the
+   * short-story mode is toggled. In grouped mode a collection card stands for
+   * its member stories, so it contributes those rather than itself; that is
+   * what keeps 47/282 reading the same in both modes.
+   */
+  const progress = useMemo(() => {
+    const overall = summarize(distinctWorkSlugs)
+
+    // Expand each visible card to the works it represents, de-duplicated: a
+    // story in two filtered-in collections must not be counted twice.
+    const filteredSlugs = new Set()
+    for (const story of modeFiltered) {
+      if (story.type === COLLECTION) {
+        for (const member of membersOfCollection(story.slug)) filteredSlugs.add(member.slug)
+      } else {
+        filteredSlugs.add(story.slug)
+      }
+    }
+
+    const filtered = summarize([...filteredSlugs])
+
+    return {
+      overall,
+      filtered,
+      // Only worth a second bar when it says something different.
+      showFiltered: filtered.total > 0 && filtered.total !== overall.total,
+    }
+  }, [summarize, distinctWorkSlugs, modeFiltered, membersOfCollection])
 
   const grouped = useMemo(() => {
     if (groupBy === 'none') return [['', modeFiltered]]
@@ -186,6 +312,30 @@ function Checklist() {
           Showing <strong>{modeFiltered.length}</strong> {modeFiltered.length === 1 ? 'entry' : 'entries'}
         </span>
       </div>
+
+      <Card className="mb-4">
+        <Card.Body className="py-3">
+          <ProgressRow
+            label="Whole catalog"
+            read={progress.overall.read}
+            total={progress.overall.total}
+            percent={progress.overall.percentRead}
+          />
+
+          {/* A second bar only when the filter narrows things -- otherwise it
+              would restate the line above. */}
+          {progress.showFiltered && (
+            <ProgressRow
+              label="These filters"
+              read={progress.filtered.read}
+              total={progress.filtered.total}
+              percent={progress.filtered.percentRead}
+              variant="info"
+              className="mt-3"
+            />
+          )}
+        </Card.Body>
+      </Card>
 
       <Card className="mb-4">
         <Card.Body>
@@ -268,7 +418,7 @@ function Checklist() {
                     key={type}
                     type="checkbox"
                     id={`type-${type}`}
-                    label={type}
+                    label={<FacetLabel name={type} count={facetCounts.types.get(type) ?? 0} />}
                     checked={selectedTypes.includes(type)}
                     onChange={() => toggleIn(selectedTypes, setSelectedTypes, type)}
                   />
@@ -284,7 +434,12 @@ function Checklist() {
                     key={character}
                     type="checkbox"
                     id={`char-${character}`}
-                    label={character}
+                    label={
+                      <FacetLabel
+                        name={character}
+                        count={facetCounts.characters.get(character) ?? 0}
+                      />
+                    }
                     checked={selectedCharacters.includes(character)}
                     onChange={() => toggleIn(selectedCharacters, setSelectedCharacters, character)}
                   />
@@ -292,7 +447,12 @@ function Checklist() {
                 <Form.Check
                   type="checkbox"
                   id="char-standalone"
-                  label="Standalone"
+                  label={
+                    <FacetLabel
+                      name="Standalone"
+                      count={facetCounts.characters.get(STANDALONE) ?? 0}
+                    />
+                  }
                   checked={selectedCharacters.includes(STANDALONE)}
                   onChange={() => toggleIn(selectedCharacters, setSelectedCharacters, STANDALONE)}
                 />
@@ -307,7 +467,12 @@ function Checklist() {
                     key={status}
                     type="checkbox"
                     id={`status-${status}`}
-                    label={status[0].toUpperCase() + status.slice(1)}
+                    label={
+                      <FacetLabel
+                        name={status[0].toUpperCase() + status.slice(1)}
+                        count={facetCounts.statuses.get(status) ?? 0}
+                      />
+                    }
                     checked={statuses.includes(status)}
                     onChange={() => toggleIn(statuses, setStatuses, status)}
                   />
