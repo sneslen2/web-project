@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import CollectionGroup from '../components/CollectionGroup.jsx'
 import StoryCard from '../components/StoryCard.jsx'
 import { STANDALONE, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
@@ -117,70 +116,35 @@ function Checklist() {
   ])
 
   /**
-   * Grouped mode: collections carry their member stories, and short stories
-   * are removed from the top-level list so they are not shown twice.
+   * The mode decides which kind of entry represents a short story, and nothing
+   * else. Novels and plays always show; every entry is the same kind of card.
    *
-   * A story in several collections appears under each of them. That is
-   * deliberate -- it reflects how the books are actually published, and since
-   * progress is keyed by slug, ticking it in one place updates every other.
+   *   flat     -- short stories individually; collections are hidden, since
+   *               showing a collection beside its own contents would list the
+   *               same reading twice.
+   *   grouped  -- collections instead, each with a progress indicator. The full
+   *               per-story checklist lives on the collection's page.
    *
-   * A collection is shown when it OR any of its members matches the filters.
-   *
-   * Testing the collection's own values alone would be wrong on both axes. The
-   * anthologies are mixed, so Midsummer Mysteries is tagged Hercule Poirot but
-   * holds Marple, Quin, Parker Pyne and Tommy & Tuppence stories -- filtering
-   * on the tag would silently hide every one of them. Likewise a filter on
-   * "Read" surfaces a part-finished collection, because the stories in it that
-   * you have read do match; the header count and roll-up bar show it is
-   * partial.
+   * The two short stories in no collection are shown in both modes: no
+   * collection would carry them, so hiding them would make them unreachable.
    */
-  const collectionView = useMemo(() => {
-    if (shortStoryMode !== 'grouped') return null
-
-    const visibleSlugs = new Set(visible.map((s) => s.slug))
-    const passes = (story) => visibleSlugs.has(story.slug)
-
-    // Every collection in the catalog, not just those in `visible` -- one whose
-    // own tag failed the filter still belongs here if its contents matched.
-    const collections = stories
-      .filter((story) => story.type === COLLECTION)
-      .map((collection) => {
-        const all = membersOfCollection(collection.slug)
-        return {
-          kind: 'collection',
-          collection,
-          members: all.filter(passes),
-          memberTotal: all.length,
-          // Roll-up covers the whole book, so the bar means "how far through
-          // this collection am I" rather than shifting with every filter.
-          allMemberSlugs: all.map((m) => m.slug),
-        }
-      })
-      .filter((entry) => passes(entry.collection) || entry.members.length > 0)
-
-    // Standalone cards: novels, plays, and the short stories that belong to no
-    // collection. The uncollected shorts keep their Short Story label -- they
-    // are listed independently, not relabelled.
+  const modeFiltered = useMemo(() => {
     const uncollected = new Set(uncollectedStories().map((s) => s.slug))
-    const others = visible
-      .filter((story) => story.type !== COLLECTION)
-      .filter((story) => story.type !== SHORT_STORY || uncollected.has(story.slug))
-      .map((story) => ({ kind: 'story', story }))
 
-    // One list so collections and other works interleave under the chosen sort
-    // rather than sitting in separate blocks.
-    const entries = [...collections, ...others].sort((a, b) =>
-      SORTS[sort].compare(a.collection ?? a.story, b.collection ?? b.story),
-    )
-
-    return { entries, collectionCount: collections.length, otherCount: others.length }
-  }, [shortStoryMode, visible, stories, membersOfCollection, uncollectedStories, sort])
+    return visible.filter((story) => {
+      if (story.type === COLLECTION) return shortStoryMode === 'grouped'
+      if (story.type !== SHORT_STORY) return true
+      // A short story shows individually in flat mode, or in either mode when
+      // no collection would otherwise carry it.
+      return shortStoryMode === 'flat' || uncollected.has(story.slug)
+    })
+  }, [visible, shortStoryMode, uncollectedStories])
 
   const grouped = useMemo(() => {
-    if (groupBy === 'none') return [['', visible]]
+    if (groupBy === 'none') return [['', modeFiltered]]
 
     const buckets = new Map()
-    for (const story of visible) {
+    for (const story of modeFiltered) {
       let key
       if (groupBy === 'type') key = story.type ?? 'Unknown'
       else if (groupBy === 'character') key = story.character ?? 'Standalone'
@@ -194,7 +158,7 @@ function Checklist() {
     return [...buckets.entries()].sort((a, b) =>
       groupBy === 'decade' ? parseInt(a[0], 10) - parseInt(b[0], 10) : a[0].localeCompare(b[0]),
     )
-  }, [visible, groupBy])
+  }, [modeFiltered, groupBy])
 
   const activeFilters =
     selectedTypes.length + selectedCharacters.length + statuses.length + (search ? 1 : 0)
@@ -211,16 +175,7 @@ function Checklist() {
       <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
         <h1 className="mb-0">Checklist</h1>
         <span className="text-muted">
-          {collectionView ? (
-            <>
-              <strong>{collectionView.collectionCount}</strong> collections,{' '}
-              <strong>{collectionView.otherCount}</strong> other works
-            </>
-          ) : (
-            <>
-              Showing <strong>{visible.length}</strong> of {stories.length}
-            </>
-          )}
+          Showing <strong>{modeFiltered.length}</strong> {modeFiltered.length === 1 ? 'entry' : 'entries'}
         </span>
       </div>
 
@@ -250,8 +205,8 @@ function Checklist() {
             </ToggleButtonGroup>
             <Form.Text muted className="d-block">
               {shortStoryMode === 'grouped'
-                ? 'Short stories are nested under the collections that include them. Novels and plays are unaffected.'
-                : 'Every short story is listed on its own.'}
+                ? 'Short stories are represented by the collections that include them; open a collection to check off its stories. Novels and plays are unaffected.'
+                : 'Every short story is listed on its own. Collections are hidden.'}
             </Form.Text>
           </div>
 
@@ -284,9 +239,6 @@ function Checklist() {
                 id="story-group"
                 value={groupBy}
                 onChange={(e) => setGroupBy(e.target.value)}
-                // Collection grouping already supplies the headings; a second
-                // grouping on top of it would have nowhere to go.
-                disabled={shortStoryMode === 'grouped'}
               >
                 {Object.entries(GROUP_BY).map(([key, label]) => (
                   <option key={key} value={key}>
@@ -294,9 +246,6 @@ function Checklist() {
                   </option>
                 ))}
               </Form.Select>
-              {shortStoryMode === 'grouped' && (
-                <Form.Text muted>Grouping is by collection in this mode.</Form.Text>
-              )}
             </Col>
           </Row>
 
@@ -369,32 +318,10 @@ function Checklist() {
         </Card.Body>
       </Card>
 
-      {visible.length === 0 ? (
+      {modeFiltered.length === 0 ? (
         <Card body className="text-center text-muted">
           No stories match these filters.
         </Card>
-      ) : collectionView ? (
-        // Collections sit in the same grid as the novels and plays, sorted
-        // together, so grouped mode reorganises the short stories without
-        // rearranging everything else.
-        <Row xs={1} md={2} xl={3} className="g-3">
-          {collectionView.entries.map((entry) =>
-            entry.kind === 'collection' ? (
-              <Col key={entry.collection.slug}>
-                <CollectionGroup
-                  collection={entry.collection}
-                  members={entry.members}
-                  memberTotal={entry.memberTotal}
-                  allMemberSlugs={entry.allMemberSlugs}
-                />
-              </Col>
-            ) : (
-              <Col key={entry.story.slug}>
-                <StoryCard story={entry.story} />
-              </Col>
-            ),
-          )}
-        </Row>
       ) : (
         grouped.map(([heading, group]) => (
           <section key={heading || 'all'} className="mb-4">

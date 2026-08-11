@@ -11,6 +11,7 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Send recurring ping to keep the project active
 - Restructure Collections as not separate works, just groupings of short stories
 - Email confirmation link doesn't work, get rid of
+- Collection should not show as a format option, collection should be integrated
 
 
 ## Todo

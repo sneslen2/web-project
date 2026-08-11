@@ -2,17 +2,20 @@ import { Link } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import { coverAt, encodeSlug, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
 /**
- * One story in the checklist: cover, metadata, a read checkbox, and a link
- * through to the full page.
+ * One entry in the checklist: cover, metadata, a read control, and a link
+ * through to the full page. Novels, plays, short stories and collections all
+ * use this same card so the grid stays uniform.
  *
  * A collection has no status of its own -- it is derived from its member
- * stories -- so its card reports progress and links through rather than
- * offering a checkbox. Marking a collection read or unread happens on its own
- * page, where the consequences can be spelled out.
+ * stories -- so instead of a checkbox it shows how far through the collection
+ * you are and links to its page, where the per-story checklist lives. Marking a
+ * collection read or unread also happens there, where the consequences can be
+ * spelled out.
  */
 function StoryCard({ story }) {
   const { get, toggleRead, collectionStatus } = useProgress()
@@ -29,6 +32,7 @@ function StoryCard({ story }) {
   const readCount = isCollection
     ? memberSlugs.filter((slug) => get(slug).status === STATUS.READ).length
     : 0
+  const percentRead = isCollection ? Math.round((readCount / memberSlugs.length) * 100) : 0
 
   return (
     <Card className={`h-100 ${isRead ? 'border-success' : ''}`}>
@@ -72,8 +76,17 @@ function StoryCard({ story }) {
           </div>
 
           {isCollection ? (
-            <div className="small text-muted">
-              {readCount} of {memberSlugs.length} stories read
+            <div>
+              <div className="small text-muted mb-1">
+                {readCount} of {memberSlugs.length} stories read
+              </div>
+              <ProgressBar
+                now={percentRead}
+                variant={isRead ? 'success' : 'primary'}
+                style={{ height: '0.4rem' }}
+                // The count above already states this in text.
+                aria-hidden="true"
+              />
             </div>
           ) : (
             <Form.Check
