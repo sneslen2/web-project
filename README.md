@@ -21,6 +21,8 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Made finished date editable
 - UK spelling changed to US spelling
 - Show total and relative progress on the checklist
+- Enable marking in progress from the checklist
+- Easier check-off
 
 
 ## Todo
@@ -28,20 +30,18 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Get info for the About page
 - Clean up design and formatting
   - Don't like the cards and tags on the checklist
-- Enable marking in progress from the checklist
 - Collapse the filters
 - Quick button filters
 - Rename the page
 - Not completely satisfied with the home page, keep tweaking
   - Links to the activities, meh
   - Add recently read
-- Easier check-off
 - Author field for inspired by
 - Easy back button from story
 - Recently finished only pulls the first few
 - Clear progress when logged out
 - Filters should be saved when user navigates back to checklist
-- Recently finished seems broken
+- Recently finished should link to the work
 
 
 
