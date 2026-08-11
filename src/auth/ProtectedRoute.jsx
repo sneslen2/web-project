@@ -5,7 +5,7 @@ import { useAuth } from './AuthProvider.jsx'
 /**
  * Gate for pages that require a signed-in user.
  *
- *   <Route element={<ProtectedRoute><Notes /></ProtectedRoute>} />
+ *   <Route element={<ProtectedRoute><Statistics /></ProtectedRoute>} />
  *
  * Note this is a convenience for the *UI* only -- it stops the page rendering,
  * not the data being fetched. The actual access control lives in the Row Level

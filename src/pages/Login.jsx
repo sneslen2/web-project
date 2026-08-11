@@ -25,8 +25,8 @@ function Login() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Where ProtectedRoute bounced them from, if applicable.
-  const destination = location.state?.from ?? '/notes'
+  // Where ProtectedRoute bounced them from, if applicable; otherwise home.
+  const destination = location.state?.from ?? '/'
 
   async function handleSubmit(event) {
     // The page is a static file with no server to POST to, so the default
