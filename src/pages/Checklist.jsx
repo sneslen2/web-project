@@ -51,7 +51,6 @@ function Checklist() {
     types,
     characters,
     membersOfCollection,
-    collectionsContaining,
     uncollectedStories,
   } = useStories()
 
