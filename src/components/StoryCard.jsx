@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
+import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import Form from 'react-bootstrap/Form'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import { coverAt, encodeSlug, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
@@ -18,7 +18,7 @@ import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
  * spelled out.
  */
 function StoryCard({ story }) {
-  const { get, toggleRead, collectionStatus } = useProgress()
+  const { get, toggleRead, setStatus, collectionStatus } = useProgress()
   const { membersOfCollection } = useStories()
 
   const memberSlugs = membersOfCollection(story.slug).map((m) => m.slug)
@@ -28,6 +28,7 @@ function StoryCard({ story }) {
   const isRead = isCollection
     ? collectionStatus(memberSlugs) === STATUS.READ
     : record.status === STATUS.READ
+  const isReading = !isCollection && record.status === STATUS.READING
 
   const readCount = isCollection
     ? memberSlugs.filter((slug) => get(slug).status === STATUS.READ).length
@@ -35,7 +36,11 @@ function StoryCard({ story }) {
   const percentRead = isCollection ? Math.round((readCount / memberSlugs.length) * 100) : 0
 
   return (
-    <Card className={`h-100 ${isRead ? 'border-success' : ''}`}>
+    <Card
+      className={`h-100 d-flex flex-column ${
+        isRead ? 'border-success' : isReading ? 'border-warning' : ''
+      }`}
+    >
       <div className="d-flex p-3 gap-3">
         {story.cover ? (
           <Card.Img
@@ -73,9 +78,19 @@ function StoryCard({ story }) {
                 {story.character}
               </Badge>
             )}
+            {/* Read state is carried by the footer button; in-progress needs
+                its own marker to be visible while scanning the grid. */}
+            {isReading && (
+              <Badge bg="warning" text="dark">
+                Reading
+              </Badge>
+            )}
           </div>
 
-          {isCollection ? (
+          {/* A collection has no status of its own -- it is derived from its
+              members -- so its card reports progress and links through to the
+              page where the per-story checklist lives. */}
+          {isCollection && (
             <div>
               <div className="small text-muted mb-1">
                 {readCount} of {memberSlugs.length} stories read
@@ -88,17 +103,46 @@ function StoryCard({ story }) {
                 aria-hidden="true"
               />
             </div>
-          ) : (
-            <Form.Check
-              type="checkbox"
-              id={`read-${story.slug}`}
-              label={isRead ? 'Read' : 'Mark as read'}
-              checked={isRead}
-              onChange={() => toggleRead(story.slug)}
-            />
           )}
         </div>
       </div>
+
+      {/* Marking progress is the point of the checklist, so the control gets
+          the full width of the card footer rather than a checkbox in a corner. */}
+      {!isCollection && (
+        <div className="px-3 pb-3 mt-auto">
+          <Button
+            variant={isRead ? 'success' : 'outline-success'}
+            className="w-100 fw-semibold"
+            onClick={() => toggleRead(story.slug)}
+            // Communicates the toggle to screen readers, which would otherwise
+            // hear only a label that changes unpredictably.
+            aria-pressed={isRead}
+          >
+            {isRead ? '✓ Read' : 'Mark as read'}
+          </Button>
+
+          {/* Secondary by design: finishing is the primary action. Hidden once
+              read, where "start reading" would be a step backwards. */}
+          {!isRead && (
+            <div className="text-center mt-2">
+              <Button
+                variant="link"
+                size="sm"
+                className="text-decoration-none p-0"
+                onClick={() =>
+                  setStatus(
+                    story.slug,
+                    isReading ? STATUS.UNREAD : STATUS.READING,
+                  )
+                }
+              >
+                {isReading ? 'Not reading anymore' : 'Start reading'}
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
     </Card>
   )
 }
