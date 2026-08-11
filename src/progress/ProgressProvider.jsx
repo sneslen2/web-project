@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { todayLocal } from '../today.js'
 
 /**
  * Per-story reading progress: status, rating, date finished, notes.
@@ -23,15 +24,6 @@ export const STATUS_LABELS = {
   [STATUS.READING]: 'Reading',
   [STATUS.READ]: 'Read',
 }
-
-/**
- * Today as YYYY-MM-DD in the reader's own timezone.
- *
- * Not toISOString().slice(0, 10) -- that converts to UTC first, so a reader in
- * UTC+9 finishing a book on the morning of the 11th would have it stamped the
- * 10th. 'en-CA' is the locale whose short date format is already ISO-shaped.
- */
-export const todayLocal = () => new Date().toLocaleDateString('en-CA')
 
 /** The shape of a progress record. Absent from the map == untouched == unread. */
 const emptyRecord = {

@@ -14,7 +14,8 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import CollectionProgress from '../components/CollectionProgress.jsx'
 import ConfirmClearCollection from '../components/ConfirmClearCollection.jsx'
 import { coverAt, encodeSlug, useStories } from '../data/StoriesProvider.jsx'
-import { STATUS, STATUS_LABELS, todayLocal, useProgress } from '../progress/ProgressProvider.jsx'
+import { STATUS, STATUS_LABELS, useProgress } from '../progress/ProgressProvider.jsx'
+import { todayLocal } from '../today.js'
 
 /** 1-5 stars. Rendered as buttons so it works by keyboard. */
 function RatingPicker({ value, onChange }) {
