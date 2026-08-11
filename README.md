@@ -29,6 +29,7 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Make finished date editable
 - Easy back button from story
 - Recently finished only pulls the first few
+- Title of the tab is "React + Bootstrap SPA"
 
 **Tentative**
 - Separate inspired by and/or Mary Westmacott
