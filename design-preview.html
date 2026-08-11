@@ -1,0 +1,587 @@
+<!doctype html>
+<!--
+  Design direction preview -- NOT part of the app.
+
+  Three candidate visual directions for The Christie Project, rendered with real
+  catalog data so they can be judged as the actual product rather than as
+  swatches. Open this file directly in a browser; it needs no build step.
+
+  Delete once a direction is chosen.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design directions — The Christie Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=Josefin+Sans:wght@400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      body { margin: 0; background: #14110f; color: #e8e3d9; font-family: Inter, system-ui, sans-serif; }
+
+      .page-head {
+        padding: 3rem 2rem 2rem;
+        max-width: 70rem;
+        margin: 0 auto;
+        border-bottom: 1px solid #2e2a25;
+      }
+      .page-head h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0 0 .5rem; }
+      .page-head p { color: #9a9187; max-width: 46rem; line-height: 1.6; margin: 0; }
+
+      .direction { padding: 3rem 2rem; max-width: 70rem; margin: 0 auto; }
+      .direction > header { margin-bottom: 1.5rem; }
+      .direction h2 {
+        font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0 0 .35rem;
+      }
+      .direction .tagline { color: #9a9187; font-size: .95rem; margin: 0 0 .75rem; }
+      .swatches { display: flex; gap: .4rem; margin-bottom: 1rem; flex-wrap: wrap; }
+      .swatch { width: 2.5rem; height: 2.5rem; border-radius: 3px; border: 1px solid rgba(255,255,255,.12); }
+      .meta { font-size: .8rem; color: #6f6862; }
+
+      /* The framed area each mockup renders inside. */
+      .frame { border-radius: 6px; overflow: hidden; border: 1px solid #2e2a25; }
+
+      /* ============================================================
+         DIRECTION A — The Study
+         Deep forest green, warm brass, serif headings. Library-first.
+         ============================================================ */
+      .a { --ink:#0f1f18; --ink-2:#163024; --paper:#f4f1e8; --brass:#c9a227; --rule:#2c4a3a; --text:#e6e6df; --muted:#9fb3a6; }
+      .a { background: var(--ink); color: var(--text); font-family: 'Work Sans', sans-serif; }
+      .a .nav {
+        display:flex; align-items:center; justify-content:space-between;
+        padding: 1rem 1.5rem; background: var(--ink-2);
+        border-bottom: 2px solid var(--brass);
+      }
+      .a .brand { font-family:'Playfair Display',serif; font-size:1.25rem; letter-spacing:.02em; }
+      .a .brand em { color: var(--brass); font-style: normal; }
+      .a .navlinks { display:flex; gap:1.5rem; font-size:.9rem; color:var(--muted); }
+      .a .navlinks span:first-child { color:var(--brass); border-bottom:1px solid var(--brass); padding-bottom:2px; }
+      .a .hero { padding: 2.5rem 1.5rem; border-bottom:1px solid var(--rule); }
+      .a .hero h3 { font-family:'Playfair Display',serif; font-weight:500; font-size:2rem; margin:0 0 .5rem; }
+      .a .hero p { color:var(--muted); margin:0 0 1.25rem; max-width:34rem; line-height:1.6; }
+      .a .bar { height:.5rem; background:#0a1610; border-radius:99px; overflow:hidden; max-width:26rem; }
+      .a .bar > i { display:block; height:100%; width:37%; background:var(--brass); }
+      .a .barlabel { font-size:.8rem; color:var(--muted); margin-top:.4rem; }
+      .a .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(15rem,1fr)); gap:1rem; padding:1.5rem; }
+      .a .card {
+        background: var(--ink-2); border:1px solid var(--rule); border-radius:4px;
+        display:flex; flex-direction:column; overflow:hidden;
+      }
+      .a .card .body { display:flex; gap:.85rem; padding:.85rem; }
+      .a .cover { width:60px; height:92px; object-fit:cover; border-radius:2px; flex-shrink:0; }
+      .a .title { font-family:'Playfair Display',serif; font-size:1rem; margin:0 0 .35rem; line-height:1.25; }
+      .a .tags { display:flex; gap:.3rem; flex-wrap:wrap; }
+      .a .tag { font-size:.65rem; text-transform:uppercase; letter-spacing:.06em; padding:.15rem .45rem;
+                border:1px solid var(--rule); border-radius:2px; color:var(--muted); }
+      .a .tag.gold { border-color:var(--brass); color:var(--brass); }
+      .a .action { padding:0 .85rem .85rem; margin-top:auto; }
+      .a .btn { display:block; width:100%; text-align:center; padding:.5rem; border-radius:3px;
+                border:1px solid var(--brass); color:var(--brass); background:transparent;
+                font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
+      .a .btn.done { background:var(--brass); color:#14210f; border-color:var(--brass); font-weight:600; }
+      .a .sub { display:block; text-align:center; font-size:.75rem; color:var(--muted); margin-top:.5rem; }
+
+      /* ============================================================
+         DIRECTION B — The Board
+         Clue-inspired. Graphic, saturated, geometric, mid-century.
+         ============================================================ */
+      .b { --bg:#1b1b1f; --panel:#232329; --oxblood:#7b2233; --mustard:#d8a13a; --teal:#1f6f6b;
+           --plum:#4a2a4d; --text:#f0ece4; --muted:#a09a92; }
+      .b { background:var(--bg); color:var(--text); font-family:'Josefin Sans',sans-serif; }
+      .b .nav { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem;
+                background:var(--oxblood); }
+      .b .brand { font-weight:600; letter-spacing:.18em; text-transform:uppercase; font-size:1rem; }
+      .b .navlinks { display:flex; gap:1.25rem; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; }
+      .b .hero { padding:2.5rem 1.5rem; background:
+          repeating-linear-gradient(45deg, #202026 0 12px, #1b1b1f 12px 24px); border-bottom:4px solid var(--mustard); }
+      .b .hero h3 { font-size:2.1rem; margin:0 0 .5rem; letter-spacing:.02em; font-weight:600; }
+      .b .hero p { color:var(--muted); margin:0 0 1.25rem; max-width:34rem; }
+      .b .chips { display:flex; gap:.5rem; flex-wrap:wrap; }
+      .b .chip { padding:.35rem .8rem; border-radius:99px; font-size:.75rem; letter-spacing:.08em;
+                 text-transform:uppercase; }
+      .b .chip.m { background:var(--mustard); color:#1b1b1f; }
+      .b .chip.t { background:var(--teal); }
+      .b .chip.p { background:var(--plum); }
+      .b .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(15rem,1fr)); gap:1rem; padding:1.5rem; }
+      .b .card { background:var(--panel); border-radius:2px; display:flex; flex-direction:column;
+                 border-left:5px solid var(--mustard); overflow:hidden; }
+      .b .card.read { border-left-color:var(--teal); }
+      .b .card .body { display:flex; gap:.85rem; padding:.85rem; }
+      .b .cover { width:60px; height:92px; object-fit:cover; flex-shrink:0; }
+      .b .title { font-size:1rem; margin:0 0 .4rem; font-weight:600; letter-spacing:.01em; }
+      .b .tags { display:flex; gap:.3rem; flex-wrap:wrap; }
+      .b .tag { font-size:.62rem; text-transform:uppercase; letter-spacing:.09em; padding:.18rem .5rem;
+                background:#2e2e35; color:var(--muted); }
+      .b .action { padding:0 .85rem .85rem; margin-top:auto; }
+      .b .btn { display:block; width:100%; padding:.55rem; border:none; background:var(--mustard);
+                color:#1b1b1f; font-family:inherit; font-weight:600; letter-spacing:.1em;
+                text-transform:uppercase; font-size:.75rem; cursor:pointer; }
+      .b .btn.done { background:var(--teal); color:#fff; }
+      .b .sub { display:block; text-align:center; font-size:.72rem; color:var(--muted);
+                margin-top:.5rem; letter-spacing:.06em; text-transform:uppercase; }
+
+      /* ============================================================
+         DIRECTION C — The Manor
+         Gothic, textured, near-black with oxblood. Most atmospheric.
+         ============================================================ */
+      .c { --bg:#100e0d; --panel:#1a1614; --wine:#5c1a24; --gold:#b08d4f; --text:#e4ded3; --muted:#8b8177; }
+      .c { background:var(--bg); color:var(--text); font-family:'Libre Baskerville',Georgia,serif; }
+      .c .nav { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.5rem;
+                border-bottom:1px solid #2a2320; background:
+                linear-gradient(180deg,#1c1715,#100e0d); }
+      .c .brand { font-family:'Cormorant Garamond',serif; font-size:1.5rem; letter-spacing:.04em; }
+      .c .brand::first-letter { color:var(--gold); font-size:1.3em; }
+      .c .navlinks { display:flex; gap:1.4rem; font-size:.78rem; color:var(--muted);
+                     font-family:'Work Sans',sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+      .c .hero { padding:3rem 1.5rem; text-align:center; border-bottom:1px solid #2a2320;
+                 background:radial-gradient(ellipse at 50% 0%, #241c19 0%, #100e0d 70%); }
+      .c .hero h3 { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.6rem;
+                    margin:0 0 .4rem; letter-spacing:.01em; }
+      .c .rule { width:5rem; height:1px; background:var(--gold); margin:1rem auto; position:relative; }
+      .c .rule::after { content:'❧'; position:absolute; top:-.75rem; left:50%; transform:translateX(-50%);
+                        background:#161211; color:var(--gold); padding:0 .5rem; font-size:.9rem; }
+      .c .hero p { color:var(--muted); margin:0 auto; max-width:32rem; font-size:.9rem; line-height:1.8;
+                   font-style:italic; }
+      .c .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(15rem,1fr)); gap:1.1rem; padding:1.5rem; }
+      .c .card { background:var(--panel); border:1px solid #2a2320; display:flex; flex-direction:column;
+                 position:relative; }
+      .c .card::before { content:''; position:absolute; inset:4px; border:1px solid rgba(176,141,79,.18);
+                         pointer-events:none; }
+      .c .card .body { display:flex; gap:.85rem; padding:1rem; }
+      .c .cover { width:58px; height:90px; object-fit:cover; flex-shrink:0;
+                  box-shadow:0 2px 8px rgba(0,0,0,.6); }
+      .c .title { font-family:'Cormorant Garamond',serif; font-size:1.15rem; margin:0 0 .3rem;
+                  line-height:1.2; font-weight:600; }
+      .c .tags { display:flex; gap:.4rem; flex-wrap:wrap; font-family:'Work Sans',sans-serif; }
+      .c .tag { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }
+      .c .tag::after { content:'·'; margin-left:.4rem; color:#3a322d; }
+      .c .tag:last-child::after { content:''; }
+      .c .action { padding:0 1rem 1rem; margin-top:auto; }
+      .c .btn { display:block; width:100%; padding:.55rem; background:transparent; color:var(--gold);
+                border:1px solid var(--gold); font-family:'Work Sans',sans-serif; font-size:.72rem;
+                letter-spacing:.14em; text-transform:uppercase; cursor:pointer; }
+      .c .btn.done { background:var(--wine); border-color:var(--wine); color:#f0e6d8; }
+      .c .sub { display:block; text-align:center; font-size:.7rem; color:var(--muted); margin-top:.55rem;
+                font-family:'Work Sans',sans-serif; letter-spacing:.08em; font-style:italic; }
+
+      /* ============================================================
+         DIRECTION D — The Green Study  (A's palette, blackened + C's type)
+         Near-black base, forest green as the mid-tone rather than the
+         background, brass/gold accent. Cormorant display, Work Sans UI.
+         ============================================================ */
+      .d {
+        --black:#0b0d0c;      /* page base -- true near-black */
+        --panel:#111614;      /* cards: black with a green cast */
+        --panel-2:#16201b;    /* raised surfaces, navbar */
+        --green:#1d3b2e;      /* forest green, now a mid-tone */
+        --green-lt:#2f5c47;   /* borders, hovers */
+        --brass:#c9a227;
+        --brass-dim:#8a7228;
+        /* Deep maroon. Used sparingly and only where something is genuinely
+           in-progress or being drawn attention to -- spread across the whole
+           surface it would fight the brass rather than punctuate it. */
+        --wine:#5c1a24;
+        --wine-lt:#8c2f3c;
+        --text:#e7e4da;
+        --muted:#93a397;      /* green-tinted grey, keeps the cast consistent */
+      }
+      .d { background:var(--black); color:var(--text); font-family:'Work Sans',sans-serif; }
+
+      .d .nav {
+        display:flex; align-items:center; justify-content:space-between;
+        padding:1.1rem 1.5rem;
+        /* Green reads as a band of light against the black rather than as the
+           whole surface -- that is what keeps it from feeling flat. */
+        background:linear-gradient(180deg,var(--panel-2) 0%, var(--black) 100%);
+        border-bottom:1px solid var(--green-lt);
+        box-shadow:0 1px 0 rgba(201,162,39,.25);
+      }
+      .d .brand { font-family:'Cormorant Garamond',serif; font-size:1.6rem; letter-spacing:.03em; font-weight:600; }
+      .d .brand em { color:var(--brass); font-style:normal; }
+      .d .navlinks { display:flex; gap:1.4rem; font-size:.75rem; color:var(--muted);
+                     letter-spacing:.14em; text-transform:uppercase; }
+      /* Active page: a maroon underscore rather than another brass element, so
+         "where am I" is distinct from "what have I finished". */
+      .d .navlinks span:first-child { color:var(--text); position:relative; }
+      .d .navlinks span:first-child::after {
+        content:''; position:absolute; left:0; right:0; bottom:-.45rem;
+        height:2px; background:var(--wine-lt);
+      }
+
+      .d .hero {
+        padding:3rem 1.5rem; text-align:center;
+        /* A pool of green light fading into black -- the lamp-lit study. */
+        background:radial-gradient(ellipse at 50% -10%, var(--green) 0%, #0e1512 45%, var(--black) 75%);
+        border-bottom:1px solid #1d2621;
+      }
+      .d .hero h3 { font-family:'Cormorant Garamond',serif; font-weight:600; font-size:2.7rem;
+                    margin:0 0 .3rem; letter-spacing:.01em; }
+      .d .rule { width:6rem; height:1px; background:var(--brass-dim); margin:1.1rem auto; position:relative; }
+      /* The one purely decorative flourish -- maroon suits it better than a
+         second brass element beside the progress bar. */
+      .d .rule::after { content:'❧'; position:absolute; top:-.8rem; left:50%; transform:translateX(-50%);
+                        background:#0f1613; color:var(--wine-lt); padding:0 .55rem; font-size:.95rem; }
+      .d .hero p { color:var(--muted); margin:0 auto 1.4rem; max-width:32rem; font-size:.92rem; line-height:1.75; }
+      .d .bar { height:.45rem; background:#0a0f0d; border:1px solid #1d2621; border-radius:99px;
+                overflow:hidden; max-width:26rem; margin:0 auto; }
+      .d .bar > i { display:block; height:100%; width:37%;
+                    background:linear-gradient(90deg,var(--green-lt),var(--brass)); }
+      .d .barlabel { font-size:.72rem; color:var(--muted); margin-top:.55rem;
+                     letter-spacing:.12em; text-transform:uppercase; }
+
+      .d .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(15rem,1fr)); gap:1rem; padding:1.5rem; }
+      .d .card {
+        background:var(--panel); border:1px solid #1e2823; border-radius:3px;
+        display:flex; flex-direction:column; overflow:hidden; position:relative;
+      }
+      /* A single hairline of green down the spine -- structure without the
+         busyness of C's full inset frame at scale. */
+      .d .card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+                         background:var(--green-lt); }
+      .d .card.read::before { background:var(--brass); }
+      .d .card.read { border-color:var(--brass-dim); }
+      /* In-progress gets the maroon spine: three states, three colours --
+         green (untouched), maroon (reading), brass (read). */
+      .d .card.reading::before { background:var(--wine-lt); }
+      .d .card.reading { border-color:var(--wine); }
+      .d .card .body { display:flex; gap:.85rem; padding:.9rem .9rem .9rem 1rem; }
+      .d .cover { width:60px; height:92px; object-fit:cover; border-radius:2px; flex-shrink:0;
+                  box-shadow:0 2px 10px rgba(0,0,0,.7); }
+      .d .title { font-family:'Cormorant Garamond',serif; font-size:1.2rem; margin:0 0 .35rem;
+                  line-height:1.2; font-weight:600; }
+      .d .tags { display:flex; gap:.4rem; flex-wrap:wrap; }
+      .d .tag { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }
+      .d .tag::after { content:'·'; margin-left:.4rem; color:#33413a; }
+      .d .tag:last-child::after { content:''; }
+      .d .tag.gold { color:var(--brass); }
+      /* Reading badge: filled, so it registers while scanning the grid. */
+      .d .tag.reading {
+        color:#e9c7cc; background:var(--wine); padding:.12rem .45rem; border-radius:2px;
+        letter-spacing:.09em;
+      }
+      .d .tag.reading::after { content:''; margin:0; }
+      .d .action { padding:0 .9rem .9rem 1rem; margin-top:auto; }
+      .d .btn { display:block; width:100%; padding:.55rem; background:transparent; color:var(--brass);
+                border:1px solid var(--brass-dim); border-radius:2px; font-family:'Work Sans',sans-serif;
+                font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; }
+      .d .btn.done { background:var(--green); border-color:var(--green-lt); color:var(--brass); font-weight:600; }
+      .d .sub { display:block; text-align:center; font-size:.7rem; color:var(--muted); margin-top:.55rem;
+                letter-spacing:.08em; }
+      /* The secondary action tints maroon, matching the state it produces. */
+      .d .sub.start { color:#b2707a; }
+      /* Reading: the primary button restates the state, in maroon. */
+      .d .btn.progress { background:var(--wine); border-color:var(--wine-lt); color:#f0dcdf; }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-head">
+      <h1>Design directions</h1>
+      <p>
+        Each block below is the same screen — navbar, hero with progress, and a row of checklist
+        cards — rendered with real catalog data. <strong>D is the current candidate:</strong> A's
+        green-and-brass palette blackened, with C's Cormorant type. A, B, and C follow for
+        comparison.
+      </p>
+    </div>
+
+    <!-- ============ D ============ -->
+    <section class="direction">
+      <header>
+        <h2>D — The Green Study <span style="color:#c9a227;font-size:.8rem;letter-spacing:.1em">← A + C</span></h2>
+        <p class="tagline">
+          A's forest-green-and-brass palette rebuilt on a near-black base, with C's Cormorant
+          Garamond display type. Green becomes the mid-tone — the pool of lamplight, the card
+          spines, the surfaces — rather than the whole background, which is what keeps it from
+          reading flat. C's ornamental double border is reduced to a single hairline spine so it
+          stays calm across 282 cards. Deep maroon enters as a third accent, reserved for the
+          in-progress state and the active nav item — so the three reading states each get their
+          own colour: green untouched, maroon reading, brass read.
+        </p>
+        <div class="swatches">
+          <div class="swatch" style="background:#0b0d0c"></div>
+          <div class="swatch" style="background:#111614"></div>
+          <div class="swatch" style="background:#1d3b2e"></div>
+          <div class="swatch" style="background:#2f5c47"></div>
+          <div class="swatch" style="background:#5c1a24"></div>
+          <div class="swatch" style="background:#8c2f3c"></div>
+          <div class="swatch" style="background:#c9a227"></div>
+        </div>
+        <p class="meta">Cormorant Garamond + Work Sans · near-black, forest green, deep maroon, aged brass</p>
+      </header>
+
+      <div class="frame d">
+        <div class="nav">
+          <div class="brand">The Christie <em>Project</em></div>
+          <div class="navlinks"><span>Checklist</span><span>Statistics</span><span>About</span></div>
+        </div>
+        <div class="hero">
+          <h3>Ninety-four Solved</h3>
+          <div class="rule"></div>
+          <p>A lifetime of murder, misdirection, and drawing-room revelation — tracked one volume at a time.</p>
+          <div class="bar"><i></i></div>
+          <div class="barlabel">37% of the catalog</div>
+        </div>
+        <div class="grid">
+          <div class="card read">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Mysterious Affair at Styles</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1920</span><span class="tag gold">Poirot</span></div>
+              </div>
+            </div>
+            <div class="action"><button class="btn done">✓ Read</button></div>
+          </div>
+          <div class="card reading">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/The-Secret-Adversary_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Secret Adversary</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1922</span><span class="tag reading">Reading</span></div>
+              </div>
+            </div>
+            <div class="action">
+              <button class="btn">Mark as read</button>
+              <span class="sub start">Not reading anymore</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/Poirot-Investigates_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">Poirot Investigates</h4>
+                <div class="tags"><span class="tag">Collection</span><span class="tag">1924</span></div>
+                <div style="margin-top:.55rem;font-size:.68rem;color:#93a397;letter-spacing:.1em;text-transform:uppercase">7 of 14 stories</div>
+                <div class="bar" style="margin-top:.35rem;height:.3rem;max-width:none"><i style="width:50%"></i></div>
+              </div>
+            </div>
+            <div class="action">
+              <button class="btn">Mark as read</button>
+              <span class="sub start">Start reading</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ A ============ -->
+    <section class="direction">
+      <header>
+        <h2>A — The Study</h2>
+        <p class="tagline">
+          Forest green and brass, serif headings over a clean sans body. Reads as a well-kept
+          private library: sophisticated and warm, but restrained enough to stay legible across 282
+          cards.
+        </p>
+        <div class="swatches">
+          <div class="swatch" style="background:#0f1f18"></div>
+          <div class="swatch" style="background:#163024"></div>
+          <div class="swatch" style="background:#2c4a3a"></div>
+          <div class="swatch" style="background:#c9a227"></div>
+          <div class="swatch" style="background:#f4f1e8"></div>
+        </div>
+        <p class="meta">Playfair Display + Work Sans · deep green, aged brass</p>
+      </header>
+
+      <div class="frame a">
+        <div class="nav">
+          <div class="brand">The Christie <em>Project</em></div>
+          <div class="navlinks"><span>Checklist</span><span>Statistics</span><span>About</span></div>
+        </div>
+        <div class="hero">
+          <h3>Ninety-four of two hundred eighty-two</h3>
+          <p>A lifetime of murder, misdirection, and drawing-room revelation — tracked one volume at a time.</p>
+          <div class="bar"><i></i></div>
+          <div class="barlabel">37% of the catalog read</div>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Mysterious Affair at Styles</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1920</span><span class="tag gold">Poirot</span></div>
+              </div>
+            </div>
+            <div class="action"><button class="btn done">✓ Read</button></div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/The-Secret-Adversary_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Secret Adversary</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1922</span><span class="tag gold">Tommy &amp; Tuppence</span></div>
+              </div>
+            </div>
+            <div class="action">
+              <button class="btn">Mark as read</button>
+              <span class="sub">Start reading</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/Poirot-Investigates_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">Poirot Investigates</h4>
+                <div class="tags"><span class="tag">Collection</span><span class="tag">1924</span></div>
+                <div style="margin-top:.5rem;font-size:.72rem;color:#9fb3a6">7 of 14 stories read</div>
+                <div class="bar" style="margin-top:.3rem;height:.3rem"><i style="width:50%"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ B ============ -->
+    <section class="direction">
+      <header>
+        <h2>B — The Board</h2>
+        <p class="tagline">
+          Clue by way of mid-century graphic design. Oxblood, mustard, and teal blocks; geometric
+          sans throughout; colour-coded card spines. The boldest and most playful of the three.
+        </p>
+        <div class="swatches">
+          <div class="swatch" style="background:#1b1b1f"></div>
+          <div class="swatch" style="background:#7b2233"></div>
+          <div class="swatch" style="background:#d8a13a"></div>
+          <div class="swatch" style="background:#1f6f6b"></div>
+          <div class="swatch" style="background:#4a2a4d"></div>
+        </div>
+        <p class="meta">Josefin Sans · oxblood, mustard, teal, plum</p>
+      </header>
+
+      <div class="frame b">
+        <div class="nav">
+          <div class="brand">The Christie Project</div>
+          <div class="navlinks"><span>Checklist</span><span>Statistics</span><span>About</span></div>
+        </div>
+        <div class="hero">
+          <h3>94 / 282 solved</h3>
+          <p>Every novel, play, and short story — filed, filtered, and crossed off.</p>
+          <div class="chips">
+            <span class="chip m">86 Novels</span>
+            <span class="chip t">166 Short Stories</span>
+            <span class="chip p">30 Plays</span>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="card read">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Mysterious Affair at Styles</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1920</span><span class="tag">Poirot</span></div>
+              </div>
+            </div>
+            <div class="action"><button class="btn done">✓ Read</button></div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/The-Secret-Adversary_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Secret Adversary</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1922</span><span class="tag">T&amp;T</span></div>
+              </div>
+            </div>
+            <div class="action">
+              <button class="btn">Mark as read</button>
+              <span class="sub">Start reading</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/Poirot-Investigates_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">Poirot Investigates</h4>
+                <div class="tags"><span class="tag">Collection</span><span class="tag">1924</span></div>
+                <div style="margin-top:.5rem;font-size:.72rem;color:#a09a92">7 OF 14 READ</div>
+                <div style="margin-top:.3rem;height:.3rem;background:#2e2e35"><i style="display:block;height:100%;width:50%;background:#d8a13a"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ C ============ -->
+    <section class="direction">
+      <header>
+        <h2>C — The Manor</h2>
+        <p class="tagline">
+          Near-black and oxblood, Cormorant Garamond display type, hairline gold rules and inset
+          card borders. The most atmospheric and gothic — closest to an old study at night.
+        </p>
+        <div class="swatches">
+          <div class="swatch" style="background:#100e0d"></div>
+          <div class="swatch" style="background:#1a1614"></div>
+          <div class="swatch" style="background:#5c1a24"></div>
+          <div class="swatch" style="background:#b08d4f"></div>
+          <div class="swatch" style="background:#e4ded3"></div>
+        </div>
+        <p class="meta">Cormorant Garamond + Libre Baskerville · ink black, wine, antique gold</p>
+      </header>
+
+      <div class="frame c">
+        <div class="nav">
+          <div class="brand">The Christie Project</div>
+          <div class="navlinks"><span>Checklist</span><span>Statistics</span><span>About</span></div>
+        </div>
+        <div class="hero">
+          <h3>Ninety-four Solved</h3>
+          <div class="rule"></div>
+          <p>“Very few of us are what we seem.” — one hundred and eighty-eight mysteries remain.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Mysterious Affair at Styles</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1920</span><span class="tag">Poirot</span></div>
+              </div>
+            </div>
+            <div class="action"><button class="btn done">✓ Read</button></div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/The-Secret-Adversary_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">The Secret Adversary</h4>
+                <div class="tags"><span class="tag">Novel</span><span class="tag">1922</span><span class="tag">Tommy &amp; Tuppence</span></div>
+              </div>
+            </div>
+            <div class="action">
+              <button class="btn">Mark as read</button>
+              <span class="sub">or start reading</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="body">
+              <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/Poirot-Investigates_PB.jpg?auto=compress,format&fit=clip&q=70&w=160" alt="" />
+              <div>
+                <h4 class="title">Poirot Investigates</h4>
+                <div class="tags"><span class="tag">Collection</span><span class="tag">1924</span></div>
+                <div style="margin-top:.5rem;font-size:.68rem;color:#8b8177;font-family:'Work Sans',sans-serif">SEVEN OF FOURTEEN</div>
+                <div style="margin-top:.35rem;height:1px;background:#2a2320"><i style="display:block;height:1px;width:50%;background:#b08d4f"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-head" style="border-bottom:none;border-top:1px solid #2e2a25">
+      <p>
+        These are directions, not finished screens — spacing, states, and the remaining pages would
+        be worked out once one is chosen. Mixing is expected: <em>A</em>'s palette with <em>C</em>'s
+        typography is a perfectly reasonable answer.
+      </p>
+    </div>
+  </body>
+</html>

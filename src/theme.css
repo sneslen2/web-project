@@ -1,0 +1,443 @@
+/*
+ * The Christie Project -- visual theme.
+ *
+ * A near-black study: forest green as the mid-tone, aged brass for completion,
+ * deep maroon for in-progress. Cormorant Garamond for display type, Work Sans
+ * for interface text.
+ *
+ * Loaded after Bootstrap so these override its defaults. Most of the work is
+ * done by reassigning Bootstrap's own CSS variables rather than fighting its
+ * selectors -- that way react-bootstrap components inherit the theme without
+ * every one needing a bespoke rule.
+ */
+
+:root {
+  /* Surfaces, darkest first. */
+  --ch-black: #0b0d0c;
+  --ch-panel: #111614;
+  --ch-panel-2: #16201b;
+  --ch-line: #1e2823;
+
+  /* Forest green: the mid-tone, not the background. */
+  --ch-green: #1d3b2e;
+  --ch-green-lt: #2f5c47;
+
+  /* Deep maroon: in-progress, active nav, the occasional flourish. */
+  --ch-wine: #5c1a24;
+  --ch-wine-lt: #8c2f3c;
+  --ch-wine-text: #d99aa4;
+
+  /* Aged brass: completion, primary accents. */
+  --ch-brass: #c9a227;
+  --ch-brass-dim: #8a7228;
+
+  --ch-text: #e7e4da;
+  --ch-muted: #93a397;
+
+  --ch-serif: 'Cormorant Garamond', Georgia, serif;
+  --ch-sans: 'Work Sans', system-ui, -apple-system, sans-serif;
+
+  /* --- Bootstrap overrides --- */
+  --bs-body-bg: var(--ch-black);
+  --bs-body-color: var(--ch-text);
+  --bs-body-font-family: var(--ch-sans);
+  --bs-emphasis-color: var(--ch-text);
+  --bs-secondary-color: var(--ch-muted);
+  --bs-border-color: var(--ch-line);
+  --bs-link-color: var(--ch-brass);
+  --bs-link-hover-color: #e0bb45;
+  --bs-primary: var(--ch-green-lt);
+  --bs-success: var(--ch-brass);
+  --bs-warning: var(--ch-wine-lt);
+}
+
+body {
+  margin: 0;
+  background-color: var(--ch-black);
+  color: var(--ch-text);
+  font-family: var(--ch-sans);
+  /* A faint pool of green at the top of the page -- the lamp in the study.
+     Fixed so it stays put while the list scrolls under it. */
+  background-image: radial-gradient(
+    ellipse 80rem 40rem at 50% -12rem,
+    rgba(29, 59, 46, 0.55) 0%,
+    rgba(11, 13, 12, 0) 70%
+  );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+h1, h2, h3, h4, h5, .ch-display {
+  font-family: var(--ch-serif);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.ch-navbar {
+  background: linear-gradient(180deg, var(--ch-panel-2) 0%, var(--ch-black) 100%) !important;
+  border-bottom: 1px solid var(--ch-green-lt);
+  box-shadow: 0 1px 0 rgba(201, 162, 39, 0.25);
+}
+
+.ch-brand {
+  font-family: var(--ch-serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--ch-text) !important;
+}
+.ch-brand em { color: var(--ch-brass); font-style: normal; }
+
+.ch-nav-link {
+  color: var(--ch-muted) !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  position: relative;
+}
+.ch-nav-link:hover { color: var(--ch-text) !important; }
+/* Active page gets maroon, so "where am I" reads differently from "finished". */
+.ch-nav-link.active { color: var(--ch-text) !important; }
+.ch-nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.1rem;
+  height: 2px;
+  background: var(--ch-wine-lt);
+}
+
+/* A hairline rule with a centred fleuron. Used under page headings. */
+.ch-rule {
+  width: 6rem;
+  height: 1px;
+  background: var(--ch-brass-dim);
+  margin: 1.1rem auto;
+  position: relative;
+  border: 0;
+}
+.ch-rule::after {
+  content: '❧';
+  position: absolute;
+  top: -0.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ch-black);
+  color: var(--ch-wine-lt);
+  padding: 0 0.55rem;
+  font-size: 0.95rem;
+}
+
+/* ----------------------------------------------------------- components */
+
+.card {
+  --bs-card-bg: var(--ch-panel);
+  --bs-card-border-color: var(--ch-line);
+  --bs-card-cap-bg: var(--ch-panel-2);
+  border-radius: 3px;
+}
+
+.form-control, .form-select {
+  background-color: var(--ch-black);
+  border-color: var(--ch-line);
+  color: var(--ch-text);
+}
+.form-control:focus, .form-select:focus {
+  background-color: var(--ch-black);
+  border-color: var(--ch-green-lt);
+  color: var(--ch-text);
+  box-shadow: 0 0 0 0.2rem rgba(47, 92, 71, 0.35);
+}
+.form-control::placeholder { color: #5c6a62; }
+.form-check-input { background-color: var(--ch-black); border-color: var(--ch-green-lt); }
+.form-check-input:checked { background-color: var(--ch-green-lt); border-color: var(--ch-brass); }
+
+legend, .form-label { color: var(--ch-text); }
+.form-text { color: var(--ch-muted) !important; }
+
+.badge { font-weight: 500; letter-spacing: 0.06em; }
+
+/* Section headings above each group in the checklist. */
+.ch-section-heading {
+  font-family: var(--ch-serif);
+  font-size: 1.5rem;
+  color: var(--ch-brass);
+  border-bottom: 1px solid var(--ch-line);
+  padding-bottom: 0.35rem;
+  /* Clears the sticky navbar when jumped to. */
+  scroll-margin-top: 5rem;
+}
+
+/* Buttons: brass outline by default, filled green once done. */
+.ch-btn {
+  display: block;
+  width: 100%;
+  padding: 0.55rem;
+  background: transparent;
+  color: var(--ch-brass);
+  border: 1px solid var(--ch-brass-dim);
+  border-radius: 2px;
+  font-family: var(--ch-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.ch-btn:hover { background: rgba(201, 162, 39, 0.1); border-color: var(--ch-brass); }
+.ch-btn.done {
+  background: var(--ch-green);
+  border-color: var(--ch-green-lt);
+  color: var(--ch-brass);
+  font-weight: 600;
+}
+.ch-btn.done:hover { background: var(--ch-green-lt); }
+
+.ch-btn-sub {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+  color: var(--ch-wine-text);
+  background: none;
+  border: 0;
+  padding: 0.15rem;
+  cursor: pointer;
+}
+.ch-btn-sub:hover { color: #eab8c0; text-decoration: underline; }
+
+/* -------------------------------------------------------------- the hero */
+
+.ch-hero {
+  padding: 3.5rem 1.5rem 3rem;
+  /* A pool of lamplight against the black. */
+  background: radial-gradient(ellipse at 50% -10%, var(--ch-green) 0%, #0e1512 45%, transparent 78%);
+  border-bottom: 1px solid var(--ch-line);
+}
+.ch-hero-title {
+  font-family: var(--ch-serif);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+.ch-hero-lead {
+  color: var(--ch-muted);
+  max-width: 34rem;
+  margin: 0 auto 1.6rem;
+  line-height: 1.75;
+}
+.ch-btn-hero {
+  background: transparent;
+  border: 1px solid var(--ch-brass);
+  color: var(--ch-brass);
+  border-radius: 2px;
+  padding: 0.6rem 1.8rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.ch-btn-hero:hover {
+  background: var(--ch-brass);
+  border-color: var(--ch-brass);
+  color: #14210f;
+}
+
+/* ------------------------------------------------------- the book plate */
+
+.ch-plate {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--ch-line);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.ch-plate:hover { border-color: var(--ch-green-lt); transform: translateY(-2px); }
+.ch-plate.read { border-color: var(--ch-brass-dim); }
+.ch-plate.reading { border-color: var(--ch-wine); }
+
+.ch-plate-art {
+  position: relative;
+  height: 9.5rem;
+  overflow: hidden;
+  background: #0a0f0d;
+  flex-shrink: 0;
+}
+.ch-plate-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Biased upward: cover art puts the title near the top, and this is a
+     backdrop rather than the artwork in its own right. */
+  object-position: center 22%;
+  opacity: 0.55;
+  filter: saturate(0.7);
+}
+/* Fades the art into the panel so the plated title stays readable over any
+   cover, however light. */
+.ch-plate-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 13, 12, 0.15) 0%, var(--ch-panel) 96%);
+}
+
+.ch-plate-nocover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ch-green-lt);
+  font-size: 2rem;
+}
+
+.ch-ribbon {
+  position: absolute;
+  top: 0;
+  right: 0.9rem;
+  z-index: 3;
+  width: 1.6rem;
+  height: 2.4rem;
+  background: var(--ch-wine);
+  color: #f0dcdf;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0.25rem;
+  font-size: 0.7rem;
+}
+.ch-plate.read .ch-ribbon { background: var(--ch-brass); color: #14210f; }
+
+.ch-plate-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.7rem;
+  padding: 0 0.9rem;
+  z-index: 2;
+}
+.ch-plate-heading {
+  font-family: var(--ch-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+.ch-plate-heading a { color: var(--ch-text); text-decoration: none; }
+.ch-plate-heading a:hover { color: var(--ch-brass); }
+
+.ch-plate-meta {
+  padding: 0.7rem 0.9rem 0.5rem;
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ch-tag {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ch-muted);
+}
+.ch-tag.gold { color: var(--ch-brass); }
+.ch-tag.reading {
+  color: #e9c7cc;
+  background: var(--ch-wine);
+  padding: 0.12rem 0.45rem;
+  border-radius: 2px;
+}
+
+.ch-plate-action { padding: 0 0.9rem 0.9rem; margin-top: auto; }
+
+.ch-collection-count {
+  font-size: 0.68rem;
+  color: var(--ch-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+.ch-minibar {
+  height: 0.3rem;
+  background: #0a0f0d;
+  border: 1px solid var(--ch-line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.ch-minibar > i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--ch-green-lt), var(--ch-brass));
+}
+
+/* ------------------------------------------------------------- the rail */
+
+/* Cards take the remaining width; the rail is a fixed narrow column. Grid
+   rather than flex so the sticky rail resolves its height against the row. */
+.ch-list-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .ch-list-layout { grid-template-columns: minmax(0, 1fr) 5rem; }
+}
+.ch-list-main { min-width: 0; }
+
+.ch-rail {
+  position: sticky;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.4rem;
+  background: var(--ch-panel);
+  border: 1px solid var(--ch-line);
+  border-radius: 3px;
+  /* Long lists of sections should scroll inside the rail, not push it past
+     the viewport. */
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+}
+
+.ch-rail-tick {
+  font-family: var(--ch-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--ch-muted);
+  text-align: center;
+  padding: 0.3rem 0.2rem;
+  border-radius: 2px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+}
+.ch-rail-tick:hover { background: var(--ch-green); color: var(--ch-text); }
+.ch-rail-tick.on { color: var(--ch-brass); background: #0e1613; }
+.ch-rail-tick.on::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 2px;
+  background: var(--ch-brass);
+}
+.ch-rail-tick small {
+  display: block;
+  font-size: 0.55rem;
+  color: #4d5b53;
+  letter-spacing: 0;
+}
+.ch-rail-tick.on small { color: var(--ch-brass-dim); }

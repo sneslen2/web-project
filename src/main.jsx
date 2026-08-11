@@ -4,6 +4,8 @@ import { createRoot } from 'react-dom/client'
 // components are styled everywhere.
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { HashRouter } from 'react-router-dom'
+// After Bootstrap so the theme's variable overrides win.
+import './theme.css'
 import './index.css'
 import App from './App.jsx'
 import { AuthProvider } from './auth/AuthProvider.jsx'

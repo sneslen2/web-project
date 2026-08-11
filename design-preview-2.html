@@ -1,0 +1,343 @@
+<!doctype html>
+<!--
+  Card redesign + jump bar preview -- NOT part of the app.
+
+  Direction D's palette applied to three candidate card layouts, plus two
+  candidate quick-jump bars, using real catalog data. Open directly; no build.
+  Delete once a direction is chosen.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cards &amp; jump bar — The Christie Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --black:#0b0d0c; --panel:#111614; --panel-2:#16201b;
+        --green:#1d3b2e; --green-lt:#2f5c47;
+        --wine:#5c1a24; --wine-lt:#8c2f3c;
+        --brass:#c9a227; --brass-dim:#8a7228;
+        --text:#e7e4da; --muted:#93a397;
+      }
+      *,*::before,*::after { box-sizing:border-box; }
+      body { margin:0; background:var(--black); color:var(--text); font-family:'Work Sans',sans-serif; }
+
+      .head { max-width:74rem; margin:0 auto; padding:2.5rem 2rem 1.5rem; border-bottom:1px solid #1e2823; }
+      .head h1 { font-family:'Cormorant Garamond',serif; font-size:2.2rem; margin:0 0 .5rem; font-weight:600; }
+      .head p { color:var(--muted); max-width:46rem; line-height:1.7; margin:0; }
+      section { max-width:74rem; margin:0 auto; padding:2.5rem 2rem; }
+      h2 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; margin:0 0 .3rem; font-weight:600; }
+      h2 .pick { color:var(--brass); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+                 font-family:'Work Sans',sans-serif; vertical-align:middle; margin-left:.5rem; }
+      .tagline { color:var(--muted); margin:0 0 1.5rem; max-width:48rem; line-height:1.65; font-size:.95rem; }
+      .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(16rem,1fr)); gap:1rem; }
+
+      /* ---------- shared card bits ---------- */
+      .tag { font-size:.6rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }
+      .tag.gold { color:var(--brass); }
+      .tag.reading { color:#e9c7cc; background:var(--wine); padding:.12rem .45rem; border-radius:2px; }
+      .btn { display:block; width:100%; padding:.55rem; background:transparent; color:var(--brass);
+             border:1px solid var(--brass-dim); border-radius:2px; font-family:'Work Sans',sans-serif;
+             font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; }
+      .btn.done { background:var(--green); border-color:var(--green-lt); color:var(--brass); font-weight:600; }
+      .sub { display:block; text-align:center; font-size:.68rem; margin-top:.5rem; color:#b2707a;
+             letter-spacing:.06em; cursor:pointer; }
+
+      /* ============ CARD 1: Spine (current, refined) ============ */
+      .c1 .card { background:var(--panel); border:1px solid #1e2823; border-radius:3px;
+                  display:flex; flex-direction:column; position:relative; overflow:hidden; }
+      .c1 .card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--green-lt); }
+      .c1 .card.read::before { background:var(--brass); }
+      .c1 .card.reading::before { background:var(--wine-lt); }
+      .c1 .body { display:flex; gap:.9rem; padding:.9rem .9rem .9rem 1.1rem; }
+      .c1 .cover { width:62px; height:95px; object-fit:cover; flex-shrink:0; border-radius:2px;
+                   box-shadow:0 2px 10px rgba(0,0,0,.7); }
+      .c1 .title { font-family:'Cormorant Garamond',serif; font-size:1.2rem; margin:0 0 .35rem;
+                   line-height:1.2; font-weight:600; }
+      .c1 .tags { display:flex; gap:.45rem; flex-wrap:wrap; }
+      .c1 .action { padding:0 .9rem .9rem 1.1rem; margin-top:auto; }
+
+      /* ============ CARD 2: Book Plate ============
+         Cover as a full-bleed banner with the title plated over it. More
+         visual, more like a shelf. */
+      .c2 .card { background:var(--panel); border:1px solid #1e2823; border-radius:3px;
+                  display:flex; flex-direction:column; overflow:hidden; }
+      .c2 .art { position:relative; height:9rem; overflow:hidden; background:#0a0f0d; }
+      .c2 .art img { width:100%; height:100%; object-fit:cover; object-position:center 22%;
+                     opacity:.55; filter:saturate(.7); }
+      .c2 .art::after { content:''; position:absolute; inset:0;
+                        background:linear-gradient(180deg,rgba(11,13,12,.15) 0%,var(--panel) 96%); }
+      .c2 .plate { position:absolute; left:0; right:0; bottom:.7rem; padding:0 .9rem; z-index:2; }
+      .c2 .title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; margin:0; line-height:1.15;
+                   font-weight:700; text-shadow:0 2px 12px rgba(0,0,0,.9); }
+      .c2 .ribbon { position:absolute; top:0; right:.9rem; width:1.6rem; height:2.4rem; z-index:3;
+                    background:var(--wine); clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%);
+                    display:flex; align-items:flex-start; justify-content:center; padding-top:.25rem;
+                    font-size:.7rem; color:#f0dcdf; }
+      .c2 .ribbon.read { background:var(--brass); color:#14210f; }
+      .c2 .meta { padding:.7rem .9rem; display:flex; gap:.45rem; flex-wrap:wrap; }
+      .c2 .action { padding:0 .9rem .9rem; margin-top:auto; }
+
+      /* ============ CARD 3: Index Card ============
+         No cover. Typographic, dense, library-catalogue feel. Fits far more
+         per screen -- best for a 282-item checklist. */
+      .c3 .grid { grid-template-columns:repeat(auto-fill,minmax(19rem,1fr)); }
+      .c3 .card { background:var(--panel); border:1px solid #1e2823; border-left:3px solid var(--green-lt);
+                  display:flex; align-items:center; gap:1rem; padding:.85rem 1rem; }
+      .c3 .card.read { border-left-color:var(--brass); }
+      .c3 .card.reading { border-left-color:var(--wine-lt); }
+      .c3 .num { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:#2b3831;
+                 line-height:1; width:2.2rem; flex-shrink:0; text-align:right; }
+      .c3 .card.read .num { color:var(--brass-dim); }
+      .c3 .main { flex-grow:1; min-width:0; }
+      .c3 .title { font-family:'Cormorant Garamond',serif; font-size:1.15rem; margin:0 0 .2rem;
+                   line-height:1.2; font-weight:600; }
+      .c3 .tags { display:flex; gap:.45rem; flex-wrap:wrap; }
+      .c3 .check { flex-shrink:0; width:2.2rem; height:2.2rem; border-radius:50%; cursor:pointer;
+                   border:1px solid var(--brass-dim); background:transparent; color:var(--brass);
+                   font-size:1rem; display:flex; align-items:center; justify-content:center; }
+      .c3 .check.done { background:var(--green); border-color:var(--green-lt); }
+      .c3 .check.prog { border-color:var(--wine-lt); color:#d99aa4; }
+
+      /* ============ JUMP BARS ============ */
+      .demo { display:flex; gap:1.25rem; align-items:flex-start; }
+      .demo .fill { flex-grow:1; }
+      .stack { display:flex; flex-direction:column; gap:.6rem; }
+      .fakerow { height:3.4rem; background:var(--panel); border:1px solid #1e2823;
+                 border-left:3px solid var(--green-lt); border-radius:2px; }
+      .fakehead { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--brass);
+                  border-bottom:1px solid #1e2823; padding-bottom:.3rem; margin:.6rem 0 .2rem; }
+
+      /* J1: rail of decade/letter ticks */
+      .j1 { position:sticky; top:1rem; width:4.5rem; flex-shrink:0; display:flex; flex-direction:column;
+            gap:.15rem; padding:.6rem .4rem; background:var(--panel); border:1px solid #1e2823;
+            border-radius:3px; }
+      .j1 .jt { font-size:.72rem; letter-spacing:.08em; color:var(--muted); text-align:center;
+                padding:.3rem .2rem; border-radius:2px; cursor:pointer; position:relative; }
+      .j1 .jt:hover { background:var(--green); color:var(--text); }
+      .j1 .jt.on { color:var(--brass); background:#0e1613; }
+      .j1 .jt.on::before { content:''; position:absolute; left:0; top:20%; bottom:20%; width:2px; background:var(--brass); }
+      .j1 .jt small { display:block; font-size:.55rem; color:#4d5b53; letter-spacing:0; }
+
+      /* J2: slim alphabet/decade strip, letters only */
+      .j2 { position:sticky; top:1rem; width:1.9rem; flex-shrink:0; display:flex; flex-direction:column;
+            align-items:center; gap:.05rem; padding:.5rem 0; background:var(--panel);
+            border:1px solid #1e2823; border-radius:99px; }
+      .j2 .jt { font-size:.62rem; color:var(--muted); cursor:pointer; width:1.4rem; height:1.15rem;
+                display:flex; align-items:center; justify-content:center; border-radius:50%;
+                letter-spacing:.02em; }
+      .j2 .jt:hover { background:var(--green); color:var(--text); }
+      .j2 .jt.on { background:var(--brass); color:#14210f; font-weight:600; }
+      .j2 .jt.off { color:#2b3831; cursor:default; }
+      .note { font-size:.8rem; color:var(--muted); margin-top:1rem; line-height:1.6; }
+    </style>
+  </head>
+
+  <body>
+    <div class="head">
+      <h1>Card layouts &amp; the jump bar</h1>
+      <p>
+        Three card treatments in direction D's palette, then two quick-jump bars. All with real
+        catalog data. The jump bar adapts to the active sort — decades when sorted by year, letters
+        when sorted by title.
+      </p>
+    </div>
+
+    <!-- ---------- CARDS ---------- -->
+    <section class="c1">
+      <h2>Card 1 — The Spine <span class="pick">refined current</span></h2>
+      <p class="tagline">
+        Today's layout, tightened: thicker state spine, larger Cormorant title, cover with a drop
+        shadow so it sits on the panel rather than in it. Familiar and information-dense.
+      </p>
+      <div class="grid">
+        <div class="card read">
+          <div class="body">
+            <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg?auto=compress,format&fit=clip&q=70&w=180" alt="" />
+            <div>
+              <h4 class="title">The Mysterious Affair at Styles</h4>
+              <div class="tags"><span class="tag">Novel</span><span class="tag">1920</span><span class="tag gold">Poirot</span></div>
+            </div>
+          </div>
+          <div class="action"><button class="btn done">✓ Read</button></div>
+        </div>
+        <div class="card reading">
+          <div class="body">
+            <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/The-Secret-Adversary_PB.jpg?auto=compress,format&fit=clip&q=70&w=180" alt="" />
+            <div>
+              <h4 class="title">The Secret Adversary</h4>
+              <div class="tags"><span class="tag">Novel</span><span class="tag">1922</span><span class="tag reading">Reading</span></div>
+            </div>
+          </div>
+          <div class="action"><button class="btn">Mark as read</button><span class="sub">Not reading anymore</span></div>
+        </div>
+        <div class="card">
+          <div class="body">
+            <img class="cover" src="https://agathachristie.imgix.net/hcus-paperback/The-Murder-Of-Roger-Ackroyd_PB.jpg?auto=compress,format&fit=clip&q=70&w=180" alt="" />
+            <div>
+              <h4 class="title">The Murder of Roger Ackroyd</h4>
+              <div class="tags"><span class="tag">Novel</span><span class="tag">1926</span><span class="tag gold">Poirot</span></div>
+            </div>
+          </div>
+          <div class="action"><button class="btn">Mark as read</button><span class="sub">Start reading</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c2">
+      <h2>Card 2 — The Book Plate</h2>
+      <p class="tagline">
+        Cover art as a full-bleed banner, faded into the panel with the title plated over it. A
+        corner ribbon carries the state. Handsome and shelf-like, but taller — fewer per screen, and
+        it leans on cover quality (short stories often reuse a collection's cover).
+      </p>
+      <div class="grid">
+        <div class="card">
+          <div class="art">
+            <span class="ribbon read">✓</span>
+            <img src="https://agathachristie.imgix.net/hcus-paperback/MysteriousAffairAtStyles_PB.jpg?auto=compress,format&fit=clip&q=70&w=400" alt="" />
+            <div class="plate"><h4 class="title">The Mysterious Affair at Styles</h4></div>
+          </div>
+          <div class="meta"><span class="tag">Novel</span><span class="tag">1920</span><span class="tag gold">Poirot</span></div>
+          <div class="action"><button class="btn done">✓ Read</button></div>
+        </div>
+        <div class="card">
+          <div class="art">
+            <span class="ribbon">▸</span>
+            <img src="https://agathachristie.imgix.net/hcus-paperback/The-Secret-Adversary_PB.jpg?auto=compress,format&fit=clip&q=70&w=400" alt="" />
+            <div class="plate"><h4 class="title">The Secret Adversary</h4></div>
+          </div>
+          <div class="meta"><span class="tag">Novel</span><span class="tag">1922</span><span class="tag reading">Reading</span></div>
+          <div class="action"><button class="btn">Mark as read</button></div>
+        </div>
+        <div class="card">
+          <div class="art">
+            <img src="https://agathachristie.imgix.net/hcus-paperback/The-Murder-Of-Roger-Ackroyd_PB.jpg?auto=compress,format&fit=clip&q=70&w=400" alt="" />
+            <div class="plate"><h4 class="title">The Murder of Roger Ackroyd</h4></div>
+          </div>
+          <div class="meta"><span class="tag">Novel</span><span class="tag">1926</span><span class="tag gold">Poirot</span></div>
+          <div class="action"><button class="btn">Mark as read</button><span class="sub">Start reading</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="c3">
+      <h2>Card 3 — The Index Card <span class="pick">densest</span></h2>
+      <p class="tagline">
+        No cover art. A library index card: publication year set as a display numeral, title, tags,
+        and a single round check on the right. Roughly twice as many fit per screen, which matters
+        across 282 entries — and it sidesteps the missing-cover problem entirely.
+      </p>
+      <div class="grid">
+        <div class="card read">
+          <div class="num">1920</div>
+          <div class="main">
+            <h4 class="title">The Mysterious Affair at Styles</h4>
+            <div class="tags"><span class="tag">Novel</span><span class="tag gold">Poirot</span></div>
+          </div>
+          <button class="check done">✓</button>
+        </div>
+        <div class="card reading">
+          <div class="num">1922</div>
+          <div class="main">
+            <h4 class="title">The Secret Adversary</h4>
+            <div class="tags"><span class="tag">Novel</span><span class="tag reading">Reading</span></div>
+          </div>
+          <button class="check prog">▸</button>
+        </div>
+        <div class="card">
+          <div class="num">1926</div>
+          <div class="main">
+            <h4 class="title">The Murder of Roger Ackroyd</h4>
+            <div class="tags"><span class="tag">Novel</span><span class="tag gold">Poirot</span></div>
+          </div>
+          <button class="check">○</button>
+        </div>
+        <div class="card">
+          <div class="num">1934</div>
+          <div class="main">
+            <h4 class="title">Murder on the Orient Express</h4>
+            <div class="tags"><span class="tag">Novel</span><span class="tag gold">Poirot</span></div>
+          </div>
+          <button class="check">○</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- JUMP BARS ---------- -->
+    <section>
+      <h2>Jump bar 1 — The Rail <span class="pick">recommended</span></h2>
+      <p class="tagline">
+        A sticky rail of labelled ticks with counts, following the active sort. Wide enough to read
+        at a glance and to show how much sits under each heading; the current section highlights as
+        you scroll.
+      </p>
+      <div class="demo">
+        <div class="j1">
+          <div class="jt on">1920s<small>99</small></div>
+          <div class="jt">1930s<small>69</small></div>
+          <div class="jt">1940s<small>31</small></div>
+          <div class="jt">1950s<small>25</small></div>
+          <div class="jt">1960s<small>16</small></div>
+          <div class="jt">1970s<small>8</small></div>
+          <div class="jt">1990s<small>2</small></div>
+          <div class="jt">2000s<small>1</small></div>
+          <div class="jt">2010s<small>15</small></div>
+          <div class="jt">2020s<small>16</small></div>
+        </div>
+        <div class="fill">
+          <div class="fakehead">1920s</div>
+          <div class="stack">
+            <div class="fakerow"></div><div class="fakerow"></div><div class="fakerow"></div>
+          </div>
+          <div class="fakehead">1930s</div>
+          <div class="stack">
+            <div class="fakerow"></div><div class="fakerow"></div>
+          </div>
+        </div>
+      </div>
+      <p class="note">
+        Sorted by title instead, the same rail shows A – Z with counts. Sorted by detective, it
+        shows Poirot, Marple, and the rest.
+      </p>
+    </section>
+
+    <section>
+      <h2>Jump bar 2 — The Alphabet Strip</h2>
+      <p class="tagline">
+        A slim pill of single characters, like a phone contact list. Takes almost no width and feels
+        quick, but shows no counts, and unused letters (Q, X, Z here) have to be dimmed out.
+      </p>
+      <div class="demo">
+        <div class="j2">
+          <div class="jt on">A</div><div class="jt">B</div><div class="jt">C</div><div class="jt">D</div>
+          <div class="jt">E</div><div class="jt">F</div><div class="jt">G</div><div class="jt">H</div>
+          <div class="jt">I</div><div class="jt">J</div><div class="jt">K</div><div class="jt">L</div>
+          <div class="jt">M</div><div class="jt">N</div><div class="jt">O</div><div class="jt">P</div>
+          <div class="jt off">Q</div><div class="jt">R</div><div class="jt">S</div><div class="jt">T</div>
+          <div class="jt">U</div><div class="jt">V</div><div class="jt">W</div><div class="jt off">X</div>
+          <div class="jt">Y</div><div class="jt off">Z</div>
+        </div>
+        <div class="fill">
+          <div class="fakehead">A</div>
+          <div class="stack"><div class="fakerow"></div><div class="fakerow"></div></div>
+          <div class="fakehead">B</div>
+          <div class="stack"><div class="fakerow"></div><div class="fakerow"></div><div class="fakerow"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="head" style="border-bottom:none;border-top:1px solid #1e2823">
+      <p>
+        Cards and jump bar are independent choices — any card works with either bar. Tell me which
+        of each, or what to change.
+      </p>
+    </div>
+  </body>
+</html>

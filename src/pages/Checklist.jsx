@@ -8,16 +8,31 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import Row from 'react-bootstrap/Row'
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import JumpRail from '../components/JumpRail.jsx'
 import StoryCard from '../components/StoryCard.jsx'
 import { STANDALONE, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 import { usePersistentState } from '../usePersistentState.js'
 
+/**
+ * Title with any leading article removed, for sorting and for the A-Z rail.
+ *
+ * "The Big Four" files under B, as it would on a shelf. Sorting and sectioning
+ * must use the same key or the letter headings come out scrambled.
+ */
+export const sortableTitle = (story) => story.title.replace(/^(The|A|An)\s+/i, '').trim()
+
 const SORTS = {
   'year-asc': { label: 'Publication date (oldest first)', compare: (a, b) => (a.year ?? 0) - (b.year ?? 0) },
   'year-desc': { label: 'Publication date (newest first)', compare: (a, b) => (b.year ?? 0) - (a.year ?? 0) },
-  'title-asc': { label: 'Title (A–Z)', compare: (a, b) => a.title.localeCompare(b.title) },
-  'title-desc': { label: 'Title (Z–A)', compare: (a, b) => b.title.localeCompare(a.title) },
+  'title-asc': {
+    label: 'Title (A–Z)',
+    compare: (a, b) => sortableTitle(a).localeCompare(sortableTitle(b)),
+  },
+  'title-desc': {
+    label: 'Title (Z–A)',
+    compare: (a, b) => sortableTitle(b).localeCompare(sortableTitle(a)),
+  },
 }
 
 const GROUP_BY = {
@@ -274,25 +289,60 @@ function Checklist() {
     }
   }, [summarize, distinctWorkSlugs, modeFiltered, membersOfCollection])
 
+  /**
+   * The list broken into sections, as [label, stories] pairs.
+   *
+   * An explicit "Group by" wins. With no grouping, sections are derived from
+   * the active sort so the jump rail always has somewhere to go: decades when
+   * sorted by year, first letters when sorted by title. Those implicit
+   * sections follow the existing order rather than reordering anything, so the
+   * list looks the same as before -- just with headings in it.
+   */
   const grouped = useMemo(() => {
-    if (groupBy === 'none') return [['', modeFiltered]]
+    const keyOf = (story) => {
+      if (groupBy === 'type') return story.type ?? 'Unknown'
+      if (groupBy === 'character') return story.character ?? 'Standalone'
+      if (groupBy === 'decade') return story.year ? `${Math.floor(story.year / 10) * 10}s` : 'Unknown'
+
+      // groupBy === 'none': follow the sort.
+      if (sort.startsWith('year')) {
+        return story.year ? `${Math.floor(story.year / 10) * 10}s` : 'Unknown'
+      }
+      // Same key the title sort uses, so the letter headings run in order.
+      const letter = sortableTitle(story)[0]
+      return letter ? letter.toUpperCase() : '#'
+    }
 
     const buckets = new Map()
     for (const story of modeFiltered) {
-      let key
-      if (groupBy === 'type') key = story.type ?? 'Unknown'
-      else if (groupBy === 'character') key = story.character ?? 'Standalone'
-      else key = story.year ? `${Math.floor(story.year / 10) * 10}s` : 'Unknown'
-
+      const key = keyOf(story)
       if (!buckets.has(key)) buckets.set(key, [])
       buckets.get(key).push(story)
     }
 
-    // Sort group headings: decades chronologically, others alphabetically.
-    return [...buckets.entries()].sort((a, b) =>
+    const entries = [...buckets.entries()]
+
+    // Explicit grouping sorts its own headings; implicit sections are already
+    // in the right order because the list was sorted before bucketing.
+    if (groupBy === 'none') return entries
+
+    return entries.sort((a, b) =>
       groupBy === 'decade' ? parseInt(a[0], 10) - parseInt(b[0], 10) : a[0].localeCompare(b[0]),
     )
-  }, [modeFiltered, groupBy])
+  }, [modeFiltered, groupBy, sort])
+
+  /** Rail entries, derived from whatever sections the list ended up with. */
+  const sections = useMemo(
+    () =>
+      grouped
+        .filter(([label]) => label)
+        .map(([label, group]) => ({
+          id: `section-${label.replace(/\W+/g, '-').toLowerCase()}`,
+          label,
+          count: group.length,
+        })),
+    [grouped],
+  )
 
   const activeFilters =
     selectedTypes.length + selectedCharacters.length + statuses.length + (search ? 1 : 0)
@@ -496,22 +546,39 @@ function Checklist() {
           No stories match these filters.
         </Card>
       ) : (
-        grouped.map(([heading, group]) => (
-          <section key={heading || 'all'} className="mb-4">
-            {heading && (
-              <h2 className="h5 border-bottom pb-2 mb-3">
-                {heading} <span className="text-muted fw-normal">({group.length})</span>
-              </h2>
-            )}
-            <Row xs={1} md={2} xl={3} className="g-3">
-              {group.map((story) => (
-                <Col key={story.slug}>
-                  <StoryCard story={story} />
-                </Col>
-              ))}
-            </Row>
-          </section>
-        ))
+        <div className="ch-list-layout">
+          <div className="ch-list-main">
+            {grouped.map(([heading, group]) => {
+              const id = heading
+                ? `section-${heading.replace(/\W+/g, '-').toLowerCase()}`
+                : undefined
+
+              return (
+                <section key={heading || 'all'} className="mb-4">
+                  {heading && (
+                    <h2 id={id} className="ch-section-heading mb-3">
+                      {heading}{' '}
+                      <span className="text-muted fw-normal fs-6">({group.length})</span>
+                    </h2>
+                  )}
+                  <Row xs={1} md={2} xl={3} className="g-3">
+                    {group.map((story) => (
+                      <Col key={story.slug}>
+                        <StoryCard story={story} />
+                      </Col>
+                    ))}
+                  </Row>
+                </section>
+              )
+            })}
+          </div>
+
+          {/* Hidden on narrow screens, where a sticky side rail would eat the
+              width the cards need. */}
+          <aside className="ch-list-rail d-none d-lg-block">
+            <JumpRail sections={sections} />
+          </aside>
+        </div>
       )}
     </>
   )

@@ -25,25 +25,25 @@ function App() {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" expand="md" sticky="top">
+      <Navbar variant="dark" expand="md" sticky="top" className="ch-navbar">
         <Container>
-          <Navbar.Brand as={Link} to="/">
-            The Christie Project
+          <Navbar.Brand as={Link} to="/" className="ch-brand">
+            The Christie <em>Project</em>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="main-nav" />
           <Navbar.Collapse id="main-nav">
             <Nav className="ms-auto">
               {/* NavLink adds an "active" class on the matching route. */}
-              <Nav.Link as={NavLink} to="/" end>
+              <Nav.Link as={NavLink} to="/" end className="ch-nav-link">
                 Home
               </Nav.Link>
-              <Nav.Link as={NavLink} to="/checklist">
+              <Nav.Link as={NavLink} to="/checklist" className="ch-nav-link">
                 Checklist
               </Nav.Link>
-              <Nav.Link as={NavLink} to="/statistics">
+              <Nav.Link as={NavLink} to="/statistics" className="ch-nav-link">
                 Statistics
               </Nav.Link>
-              <Nav.Link as={NavLink} to="/about">
+              <Nav.Link as={NavLink} to="/about" className="ch-nav-link">
                 About Christie
               </Nav.Link>
             </Nav>
@@ -59,7 +59,7 @@ function App() {
                   </Button>
                 </div>
               ) : (
-                <Nav.Link as={NavLink} to="/login">
+                <Nav.Link as={NavLink} to="/login" className="ch-nav-link">
                   Sign in
                 </Nav.Link>
               )}

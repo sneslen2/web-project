@@ -24,18 +24,17 @@ function Home() {
 
   return (
     <>
-      <Card className="mb-4 bg-dark text-light border-0">
-        <Card.Body className="py-5 text-center">
-          <h1 className="display-5">The Christie Project</h1>
-          <p className="lead mb-4">
-            Track your way through Agatha Christie&rsquo;s complete works &mdash;{' '}
-            {distinctWorks.length} novels, plays, and short stories.
-          </p>
-          <Button as={Link} to="/checklist" variant="light" size="lg">
-            Open the checklist
-          </Button>
-        </Card.Body>
-      </Card>
+      <div className="ch-hero text-center mb-4">
+        <h1 className="ch-hero-title">The Christie Project</h1>
+        <hr className="ch-rule" />
+        <p className="ch-hero-lead">
+          Track your way through Agatha Christie&rsquo;s complete works &mdash;{' '}
+          {distinctWorks.length} novels, plays, and short stories.
+        </p>
+        <Button as={Link} to="/checklist" className="ch-btn-hero">
+          Open the checklist
+        </Button>
+      </div>
 
       <Card className="mb-4">
         <Card.Body>
