@@ -419,6 +419,9 @@ legend, .form-label { color: var(--ch-text); }
   color: var(--ch-muted);
 }
 .ch-tag.gold { color: var(--ch-brass); }
+/* Author credit on the extras cards. Wine text rather than the brass used for
+   detectives, so "who wrote it" never reads as "who solves it". */
+.ch-tag.wine { color: var(--ch-wine-text); }
 .ch-tag.reading {
   color: #e9c7cc;
   background: var(--ch-wine);

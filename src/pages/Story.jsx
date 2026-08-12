@@ -101,6 +101,11 @@ function Story() {
   const isCollection = members.length > 0
   const displayStatus = isCollection ? collectionStatus(memberSlugs) : record.status
 
+  // A collection of other-author stories has no single author of its own. 0 for
+  // Christie's own collections, whose members carry no author at all.
+  const assortedAuthors =
+    new Set(members.map((m) => m.otherAuthor).filter(Boolean)).size > 1
+
   function handleStatusChange(status) {
     if (!isCollection) {
       setStatus(story.slug, status)
@@ -169,6 +174,19 @@ function Story() {
             {story.attribution && (
               <Badge bg="warning" text="dark">
                 {story.attribution}
+              </Badge>
+            )}
+            {/* Extras only: who actually wrote it. Null for Christie's own
+                work, and for a collection whose stories have different
+                authors -- there the members carry their own credit. */}
+            {story.otherAuthor && (
+              <Badge bg="light" text="dark">
+                By {story.otherAuthor}
+              </Badge>
+            )}
+            {!story.otherAuthor && assortedAuthors && (
+              <Badge bg="light" text="dark">
+                By assorted authors
               </Badge>
             )}
           </div>

@@ -17,8 +17,14 @@ function StoryCard({ story }) {
   const { get, toggleRead, setStatus, collectionStatus } = useProgress()
   const { membersOfCollection } = useStories()
 
-  const memberSlugs = membersOfCollection(story.slug).map((m) => m.slug)
+  const members = membersOfCollection(story.slug)
+  const memberSlugs = members.map((m) => m.slug)
   const isCollection = memberSlugs.length > 0
+
+  // A collection of other-author stories has no single author of its own, so
+  // the card reports how many contributed instead. 0 for Christie's own
+  // collections, whose members carry no author.
+  const authorCount = new Set(members.map((m) => m.otherAuthor).filter(Boolean)).size
 
   const record = get(story.slug)
   const isRead = isCollection
@@ -63,6 +69,15 @@ function StoryCard({ story }) {
         <span className="ch-tag">{story.type}</span>
         {story.year && <span className="ch-tag">{story.year}</span>}
         {story.character && <span className="ch-tag gold">{story.character}</span>}
+        {/* Only the extras carry an author -- it is null for Christie's own
+            writing, so this tag appears on the Extras page and nowhere else.
+            A collection whose stories have different authors reads "Assorted",
+            since no one name is right for the card that stands in for them. */}
+        {story.otherAuthor ? (
+          <span className="ch-tag wine">{story.otherAuthor}</span>
+        ) : (
+          isCollection && authorCount > 1 && <span className="ch-tag wine">Assorted</span>
+        )}
         {isReading && <span className="ch-tag reading">Reading</span>}
       </div>
 
