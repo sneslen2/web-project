@@ -44,8 +44,15 @@
   --bs-emphasis-color: var(--ch-text);
   --bs-secondary-color: var(--ch-muted);
   --bs-border-color: var(--ch-line);
+  /* bg-body-secondary / bg-body-tertiary utility classes actually paint from
+     the *-rgb variables below (same !important-opacity pattern as the link
+     colors further down), not from these hex ones -- left unset, the utility
+     classes fell back to Bootstrap's light-mode pale gray, which is why the
+     About page's "Total" row showed light text on a near-white background. */
   --bs-secondary-bg: var(--ch-panel-2);
+  --bs-secondary-bg-rgb: 22, 32, 27; /* --ch-panel-2 */
   --bs-tertiary-bg: var(--ch-panel);
+  --bs-tertiary-bg-rgb: 17, 22, 20; /* --ch-panel */
   --bs-link-color: var(--ch-brass);
   --bs-link-hover-color: #e0bb45;
   --bs-link-color-rgb: 201, 162, 39;
