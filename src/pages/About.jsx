@@ -140,10 +140,6 @@ function About() {
             </Card.Body>
           </Card>
 
-          <Alert variant="dark" className="border small mb-0">
-            Biographical detail on this page is drawn from the Wikipedia article on Agatha Christie.
-            Catalog figures alongside it are computed from the scraped data, not typed in.
-          </Alert>
         </Col>
 
         <Col lg={4}>
