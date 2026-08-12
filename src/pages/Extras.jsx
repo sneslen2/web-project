@@ -13,6 +13,7 @@ import { STANDALONE, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 import { usePersistentState } from '../usePersistentState.js'
 import { useSearchParamList, useSearchParamString } from '../useSearchParamState.js'
+import Collapse from 'react-bootstrap/Collapse'
 
 /**
  * Extras -- works tracked alongside the main catalog but not part of it.
@@ -52,6 +53,7 @@ const SHORT_STORY_MODES = {
 }
 
 const MODE_STORAGE_KEY = 'christie-tracker:extras-short-story-mode:v1'
+const FILTERS_OPEN_STORAGE_KEY = 'christie-tracker:extras-filters-open:v1'
 
 const COLLECTION = 'Collection'
 const SHORT_STORY = 'Short Story'
@@ -97,6 +99,8 @@ function Extras() {
     'grouped',
     (v) => v in SHORT_STORY_MODES,
   )
+  // Remembered across visits, same as the short-story mode.
+  const [filtersOpen, setFiltersOpen] = usePersistentState(FILTERS_OPEN_STORAGE_KEY, true)
 
   function toggleIn(list, setList, value) {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value])
@@ -293,6 +297,19 @@ function Extras() {
       </Card>
 
       <Card className="mb-4">
+        <Card.Header
+          as="button"
+          type="button"
+          className="ch-filter-toggle"
+          onClick={() => setFiltersOpen((open) => !open)}
+          aria-expanded={filtersOpen}
+          aria-controls="extras-filters-body"
+        >
+          <span className="h6 mb-0">Filters</span>
+          <span className={`ch-nav-caret${filtersOpen ? ' open' : ''}`} aria-hidden="true" />
+        </Card.Header>
+        <Collapse in={filtersOpen}>
+          <div id="extras-filters-body">
         <Card.Body>
           <Row className="g-3">
             <Col md={6} lg={4}>
@@ -461,6 +478,8 @@ function Extras() {
             </div>
           )}
         </Card.Body>
+          </div>
+        </Collapse>
       </Card>
 
       {modeFiltered.length === 0 ? (

@@ -14,6 +14,7 @@ import { STANDALONE, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 import { usePersistentState } from '../usePersistentState.js'
 import { useSearchParamList, useSearchParamString } from '../useSearchParamState.js'
+import Collapse from 'react-bootstrap/Collapse'
 
 /**
  * Title with any leading article removed, for sorting and for the A-Z rail.
@@ -56,6 +57,7 @@ const SHORT_STORY_MODES = {
 }
 
 const MODE_STORAGE_KEY = 'christie-tracker:short-story-mode:v1'
+const FILTERS_OPEN_STORAGE_KEY = 'christie-tracker:checklist-filters-open:v1'
 
 const SHORT_STORY = 'Short Story'
 const COLLECTION = 'Collection'
@@ -129,6 +131,9 @@ function Checklist() {
     'flat',
     (v) => v in SHORT_STORY_MODES,
   )
+  // Remembered across visits, same as the short-story mode -- collapsing the
+  // filters is a workspace preference, not something to redo on every visit.
+  const [filtersOpen, setFiltersOpen] = usePersistentState(FILTERS_OPEN_STORAGE_KEY, true)
 
   function toggleIn(list, setList, value) {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value])
@@ -395,6 +400,19 @@ function Checklist() {
       </Card>
 
       <Card className="mb-4">
+        <Card.Header
+          as="button"
+          type="button"
+          className="ch-filter-toggle"
+          onClick={() => setFiltersOpen((open) => !open)}
+          aria-expanded={filtersOpen}
+          aria-controls="checklist-filters-body"
+        >
+          <span className="h6 mb-0">Filters</span>
+          <span className={`ch-nav-caret${filtersOpen ? ' open' : ''}`} aria-hidden="true" />
+        </Card.Header>
+        <Collapse in={filtersOpen}>
+          <div id="checklist-filters-body">
         <Card.Body>
           <Row className="g-3">
             <Col md={6} lg={3}>
@@ -544,6 +562,8 @@ function Checklist() {
             </div>
           )}
         </Card.Body>
+          </div>
+        </Collapse>
       </Card>
 
       {modeFiltered.length === 0 ? (

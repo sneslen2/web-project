@@ -147,8 +147,34 @@ h1, h2, h3, h4, h5, .ch-display {
   border-right: 0.28em solid transparent;
   border-left: 0.28em solid transparent;
   vertical-align: 0.15em;
+  transition: transform 0.15s ease;
+}
+.ch-nav-caret.open::after {
+  transform: rotate(180deg);
 }
 .ch-nav-caret:hover,
+.ch-nav-caret[aria-expanded='true'] {
+  color: var(--ch-brass);
+}
+
+/* Collapsible section header (Checklist/Extras filters). Reuses the caret
+   from the nav split above rather than inventing a second icon idiom. */
+.ch-filter-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 0;
+  appearance: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.ch-filter-toggle:hover .ch-nav-caret,
+.ch-filter-toggle[aria-expanded='true'] .ch-nav-caret {
+  color: var(--ch-brass);
+}
 .ch-nav-caret[aria-expanded='true'] {
   color: var(--ch-brass);
 }
