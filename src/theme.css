@@ -112,6 +112,44 @@ h1, h2, h3, h4, h5, .ch-display {
   color: var(--ch-brass) !important;
 }
 
+/* Checklist + Extras split control. The link keeps its own hit area so
+   Checklist is still one click; the caret opens the submenu. */
+.ch-nav-split {
+  display: flex;
+  align-items: center;
+}
+.ch-nav-caret {
+  border: 0;
+  background: none;
+  padding: 0.25rem 0.4rem;
+  color: var(--ch-muted);
+  line-height: 1;
+  cursor: pointer;
+}
+.ch-nav-caret::after {
+  content: '';
+  display: inline-block;
+  border-top: 0.3em solid currentColor;
+  border-right: 0.28em solid transparent;
+  border-left: 0.28em solid transparent;
+  vertical-align: 0.15em;
+}
+.ch-nav-caret:hover,
+.ch-nav-caret[aria-expanded='true'] {
+  color: var(--ch-brass);
+}
+.ch-nav-menu {
+  --bs-dropdown-bg: var(--ch-panel);
+  --bs-dropdown-border-color: var(--ch-line);
+  --bs-dropdown-link-color: var(--ch-text);
+  --bs-dropdown-link-hover-bg: var(--ch-green);
+  --bs-dropdown-link-active-bg: var(--ch-green-lt);
+  --bs-dropdown-font-size: 0.85rem;
+  border-radius: 3px;
+}
+/* NavLink marks the current route; brass matches the active nav underline. */
+.ch-nav-menu .active { color: var(--ch-brass) !important; }
+
 .ch-nav-link {
   color: var(--ch-muted) !important;
   font-size: 0.75rem;

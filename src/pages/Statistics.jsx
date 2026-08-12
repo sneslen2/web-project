@@ -44,8 +44,11 @@ function Statistics() {
   const stats = useMemo(() => {
     // Collections are containers, not works. Counting a collection alongside
     // the stories inside it would tally the same reading twice -- and since
-    // reading all 20 collections covers 164 of the 302 rows, a naive total
+    // reading all 19 collections covers 148 of the 263 main rows, a naive total
     // reported 7% complete for more than half the catalog.
+    //
+    // `distinctWorks` already excludes the Extras page's works and the
+    // suppressed duplicate plays, so nothing here has to filter them out.
     //
     // The headline figures come from the same summarize() call the home page
     // uses, so the two pages cannot report different completion.

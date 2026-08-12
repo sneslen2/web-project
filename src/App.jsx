@@ -1,12 +1,14 @@
 import { Routes, Route, Link, NavLink, useNavigate } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
+import Dropdown from 'react-bootstrap/Dropdown'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Checklist from './pages/Checklist.jsx'
+import Extras from './pages/Extras.jsx'
 import Statistics from './pages/Statistics.jsx'
 import Story from './pages/Story.jsx'
 import Login from './pages/Login.jsx'
@@ -41,9 +43,30 @@ function App() {
               <Nav.Link as={NavLink} to="/" end className="ch-nav-link">
                 Home
               </Nav.Link>
-              <Nav.Link as={NavLink} to="/checklist" className="ch-nav-link">
-                Checklist
-              </Nav.Link>
+              {/* Split rather than a plain Dropdown: Checklist stays a
+                  one-click destination, and the caret opens the Extras
+                  submenu beside it. */}
+              <div className="ch-nav-split">
+                <Nav.Link as={NavLink} to="/checklist" className="ch-nav-link">
+                  Checklist
+                </Nav.Link>
+                <Dropdown align="end">
+                  <Dropdown.Toggle
+                    as="button"
+                    type="button"
+                    className="ch-nav-caret"
+                    aria-label="More checklists"
+                  />
+                  <Dropdown.Menu variant="dark" className="ch-nav-menu">
+                    <Dropdown.Item as={NavLink} to="/checklist" end>
+                      Main catalog
+                    </Dropdown.Item>
+                    <Dropdown.Item as={NavLink} to="/extras">
+                      Extras
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
               <Nav.Link as={NavLink} to="/statistics" className="ch-nav-link">
                 Statistics
               </Nav.Link>
@@ -94,6 +117,16 @@ function App() {
             element={
               <CatalogGate>
                 <Checklist />
+              </CatalogGate>
+            }
+          />
+          {/* Westmacott, Detection Club, and other-author works. Tracked with
+              the same progress store, counted separately. */}
+          <Route
+            path="/extras"
+            element={
+              <CatalogGate>
+                <Extras />
               </CatalogGate>
             }
           />

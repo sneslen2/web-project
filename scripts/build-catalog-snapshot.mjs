@@ -26,7 +26,7 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_uHOWKmQ9xv8ToIM0aBpHyA_4_AnT_M9
 // Must stay in sync with the select in src/data/StoriesProvider.jsx, so the
 // cached rows and the live rows have identical shape.
 const COLUMNS =
-  'slug, title, type, detective, year, story_count, attribution, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related'
+  'slug, title, type, detective, year, story_count, attribution, extras_category, excluded, other_author, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related'
 
 const fromFile = process.argv.includes('--from-file')
 

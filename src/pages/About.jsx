@@ -203,12 +203,16 @@ function About() {
                 About this data
               </Card.Title>
               <Card.Text className="small text-muted">
-                Catalog information is drawn from agathachristie.com. Counts include some
-                adaptations and Mary Westmacott titles, so they run higher than the commonly cited
-                66 novels.
+                Catalog information is drawn from agathachristie.com. Counts cover Christie&rsquo;s
+                own writing, including posthumous collections, so they run higher than the commonly
+                cited 66 novels. The Mary Westmacott romances, the Detection Club collaborations,
+                and novels by other authors are tracked separately under Extras.
               </Card.Text>
-              <Link to="/checklist" className="small">
+              <Link to="/checklist" className="small d-block">
                 Browse the full checklist &rarr;
+              </Link>
+              <Link to="/extras" className="small">
+                Browse the extras &rarr;
               </Link>
             </Card.Body>
           </Card>

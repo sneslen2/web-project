@@ -24,7 +24,7 @@ export const STANDALONE = '__standalone__'
 
 /** Columns to read. Kept in sync with scripts/build-catalog-snapshot.mjs. */
 const COLUMNS =
-  'slug, title, type, detective, year, story_count, attribution, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related'
+  'slug, title, type, detective, year, story_count, attribution, extras_category, excluded, other_author, url, cover, synopsis, more_about, trivia, quote, extract_pdf, related'
 
 /**
  * Map a DB row to the shape the components use. `detective` is named that way
@@ -39,6 +39,12 @@ function toStory(row) {
     year: row.year,
     storyCount: row.story_count,
     attribution: row.attribution,
+    // Null for Christie's own writing; 'westmacott' | 'detection' | 'inspired'
+    // for the works on the Extras page. `?? null` rather than a bare read so a
+    // snapshot predating these columns behaves like a main work.
+    extrasCategory: row.extras_category ?? null,
+    excluded: row.excluded ?? false,
+    otherAuthor: row.other_author ?? null,
     url: row.url,
     cover: row.cover,
     synopsis: row.synopsis,
@@ -154,6 +160,9 @@ export function StoriesProvider({ children }) {
   }, [])
 
   const value = useMemo(() => {
+    // Lookups span every row, including extras: a story page has to resolve any
+    // slug, and collection membership has to nest the Marple stories under
+    // their collection the same way it does Christie's own.
     const bySlug = new Map(stories.map((s) => [s.slug, s]))
 
     // Derived from `related` on Collection rows -- see collectionMembership.js
@@ -163,8 +172,19 @@ export function StoriesProvider({ children }) {
     const lookup = (slug) => bySlug.get(slug) ?? null
     const resolve = (slugs) => (slugs ?? []).map(lookup).filter(Boolean)
 
+    // The catalog splits three ways. `excluded` rows (redundant 2017 radio-play
+    // republications) are dropped outright; `extrasCategory` rows are trackable
+    // but live on their own page; everything else is the main body of work that
+    // the checklist, Statistics and About all count.
+    const visible = stories.filter((s) => !s.excluded)
+    const mainWorks = visible.filter((s) => !s.extrasCategory)
+    const extras = visible.filter((s) => s.extrasCategory)
+
     return {
-      stories,
+      // `stories` is the main body of work, so every existing consumer counts
+      // and filters Christie's own writing without opting in.
+      stories: mainWorks,
+      extras,
       loading,
       error,
       stale,
@@ -186,14 +206,17 @@ export function StoriesProvider({ children }) {
        * with collections left out.
        *
        * A collection is a container, not a separate work -- counting both it
-       * and its contents would tally the same reading twice. Reading all 20
-       * collections covers 164 of the 302 rows, so a naive total reports 7%
-       * complete for what is more than half the catalog.
+       * and its contents would tally the same reading twice. Reading all 19
+       * collections covers 148 of the 263 main rows, so a naive total reports
+       * 7% complete for what is more than half the catalog.
+       *
+       * Extras and excluded rows are already gone by this point, so this is
+       * Christie's own body of work.
        */
-      distinctWorks: stories.filter((s) => s.type !== 'Collection'),
+      distinctWorks: mainWorks.filter((s) => s.type !== 'Collection'),
 
       /** Just the collections, for reporting on them separately. */
-      collections: stories.filter((s) => s.type === 'Collection'),
+      collections: mainWorks.filter((s) => s.type === 'Collection'),
 
       /**
        * Slugs of every distinct work, for progress summaries.
@@ -201,7 +224,7 @@ export function StoriesProvider({ children }) {
        * Pass to summarize() to get catalog-wide progress. Home and Statistics
        * both do exactly that, so the headline numbers cannot drift apart.
        */
-      distinctWorkSlugs: stories.filter((s) => s.type !== 'Collection').map((s) => s.slug),
+      distinctWorkSlugs: mainWorks.filter((s) => s.type !== 'Collection').map((s) => s.slug),
 
       getStory(slug) {
         // One slug contains a non-ASCII character, so route params arrive
@@ -223,16 +246,39 @@ export function StoriesProvider({ children }) {
       // the short stories inside them, so filtering to Short Story already
       // reaches them.
       types: [
-        ...new Set(stories.map((s) => s.type).filter(Boolean)),
+        ...new Set(mainWorks.map((s) => s.type).filter(Boolean)),
       ]
         .filter((type) => type !== 'Collection')
         .sort(),
-      characters: [...new Set(stories.map((s) => s.character).filter(Boolean))].sort(),
-      yearRange: stories.reduce(
+      characters: [...new Set(mainWorks.map((s) => s.character).filter(Boolean))].sort(),
+      yearRange: mainWorks.reduce(
         (range, s) =>
           s.year ? { min: Math.min(range.min, s.year), max: Math.max(range.max, s.year) } : range,
         { min: Infinity, max: -Infinity },
       ),
+
+      // Extras facets, kept separate so the two pages never offer each other's
+      // filter values. Derived the same way, so a re-import that adds an extra
+      // shows up with no code change.
+      extrasDistinctWorkSlugs: extras
+        .filter((s) => s.type !== 'Collection')
+        .map((s) => s.slug),
+      extrasCategories: [...new Set(extras.map((s) => s.extrasCategory).filter(Boolean))].sort(),
+      extrasCharacters: [...new Set(extras.map((s) => s.character).filter(Boolean))].sort(),
+      // Only authors credited on more than one work: a filter with one entry
+      // per value filters nothing useful. The twelve Marple contributors each
+      // wrote a single story, so they are deliberately absent.
+      extrasAuthors: (() => {
+        const counts = new Map()
+        for (const story of extras) {
+          if (!story.otherAuthor) continue
+          counts.set(story.otherAuthor, (counts.get(story.otherAuthor) ?? 0) + 1)
+        }
+        return [...counts.entries()]
+          .filter(([, count]) => count > 1)
+          .map(([author]) => author)
+          .sort()
+      })(),
     }
   }, [stories, loading, error, stale])
 

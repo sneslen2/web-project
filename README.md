@@ -35,16 +35,45 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 
 ## Todo
 
+Functional
+- Author field for inspired by
+- Recently finished only pulls the first few
+- Clear progress when logged out
+- Subtext on Home banner, liked the quote from one of the mockups
+- "Progress is currently saved in this browser only" message when I'm logged in
+- Inspired by prob should be distinct in the about page
+- Photo on about page
+- Remove Ariadne Oliver from The Pale Horse. She is a character, but she's not the detective
+
+
+
+Design/UI
+- Draft more color pallettes, I like the existing green/yellow/red, potentially add other colors
+- Integrate more white, too much black
+- More graphic decoration, art deco/mid-century modern patterns
+- Overhaul layout and design, draft potential ideas
+- Revamp stats page
+- Cards; tags, cover photo, details, status buttons, etc
+
+Bare bones
+- Landing page
+- Checklist page
+  - Facets, groupings, sort by, etc
+- About the author page
+- Stats page
+- Extras page
+- Detail pages
+
 - Collapse the filters
 - Quick button filters
 - Filters should be a sidebar
 - Not completely satisfied with the home page, keep tweaking
   - Links to the activities, meh
   - Add recently read
-- Author field for inspired by
-- Recently finished only pulls the first few
-- Clear progress when logged out
 - Add in progress color to progress bar
+- Add subtle animations
+
+
 - Formatting clean up
   - Fix username/sign in buttons in navigation bar
   - Progress bar coloring
@@ -58,14 +87,6 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
   - Fonts everywhere
   - Integrate blue (and maybe purple?) jewel tones
   - Catalog total on About page is white on white for some reason
-- Subtext on Home banner, liked the quote from one of the mockups
-- "Progress is currently saved in this browser only" message when I'm logged in
-- Inspired by prob should be distinct in the about page
-- Add subtle animations
-
-
-Design
-- Draft more color pallettes
 
 
 
@@ -84,6 +105,7 @@ Design
 - Customize what counts towards completion
 - Not sure about related stories, may scrap
 - Rename from "The Christie Project", idk it's kinda growing on me
+- Centralized character detail pages for recurring characters
 
 
 **Nice to have**
