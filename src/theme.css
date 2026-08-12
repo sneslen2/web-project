@@ -99,6 +99,19 @@ h1, h2, h3, h4, h5, .ch-display {
   vertical-align: -0.16em;
 }
 
+/* Back button on the story detail page. Uses the uppercase micro-label idiom
+   of the nav links so it reads as navigation, not a page action. */
+.ch-back {
+  color: var(--ch-muted) !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ch-back:hover,
+.ch-back:focus-visible {
+  color: var(--ch-brass) !important;
+}
+
 .ch-nav-link {
   color: var(--ch-muted) !important;
   font-size: 0.75rem;

@@ -286,7 +286,7 @@ function Statistics() {
                     key={item.slug}
                     className="d-flex justify-content-between align-items-center"
                   >
-                    <span>{item.title}</span>
+                    <Link to={`/story/${encodeSlug(item.slug)}`}>{item.title}</Link>
                     <small className="text-muted">
                       {new Date(item.finishedOn).toLocaleDateString()}
                     </small>

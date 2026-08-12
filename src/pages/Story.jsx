@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Alert from 'react-bootstrap/Alert'
 import Badge from 'react-bootstrap/Badge'
-import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Card from 'react-bootstrap/Card'
@@ -58,6 +57,21 @@ function Story() {
     previewCollectionClear,
   } = useProgress()
   const [clearing, setClearing] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  // Prefer real history so "back" returns to wherever the user actually came
+  // from -- the checklist, the stats page, or a collection -- with their scroll
+  // position intact. On a cold load (direct link, refresh, shared URL) there is
+  // no in-app history to pop, so fall back to the checklist.
+  const cameFromApp = location.key !== 'default'
+  function handleBack() {
+    if (cameFromApp) {
+      navigate(-1)
+    } else {
+      navigate('/checklist')
+    }
+  }
 
   if (!story) {
     return (
@@ -104,15 +118,14 @@ function Story() {
 
   return (
     <>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }}>
-          Home
-        </Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/checklist' }}>
-          Checklist
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>{story.title}</Breadcrumb.Item>
-      </Breadcrumb>
+      <Button
+        variant="link"
+        onClick={handleBack}
+        className="ch-back px-0 mb-3 text-decoration-none"
+      >
+        <span aria-hidden="true">&larr;</span>{' '}
+        {cameFromApp ? 'Back' : 'Back to the checklist'}
+      </Button>
 
       <Row className="g-4">
         <Col md={4} lg={3}>

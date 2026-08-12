@@ -24,23 +24,23 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Enable marking in progress from the checklist
 - Easier check-off
 - Design overhaul, defining universal theming
+- Custom tab label icon
+- Fleshed out About page
+- Easy back button from story
+- Filters should be saved when user navigates back to checklist
 
 
 ## Todo
 
-- Get info for the About page
 - Collapse the filters
 - Quick button filters
 - Not completely satisfied with the home page, keep tweaking
   - Links to the activities, meh
   - Add recently read
 - Author field for inspired by
-- Easy back button from story
 - Recently finished only pulls the first few
 - Clear progress when logged out
-- Filters should be saved when user navigates back to checklist
 - Recently finished should link to the work
-- Tab label icon
 - Add in progress color to progress bar
 - Formatting clean up
   - Fix username/sign in buttons in navigation bar
@@ -53,6 +53,7 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
   - Reading status switch button
   - Card tag coloring
   - Fonts everywhere
+  - Integrate blue (and maybe purple?) jewel tones
 - Rail/jump bar should stay visible when scrolling
 - Filters should be a sidebar
 - Subtext on Home banner, liked the quote from one of the mockups

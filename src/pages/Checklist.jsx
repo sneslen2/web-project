@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import Badge from 'react-bootstrap/Badge'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -13,6 +13,7 @@ import StoryCard from '../components/StoryCard.jsx'
 import { STANDALONE, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 import { usePersistentState } from '../usePersistentState.js'
+import { useSearchParamList, useSearchParamString } from '../useSearchParamState.js'
 
 /**
  * Title with any leading article removed, for sorting and for the A-Z rail.
@@ -107,14 +108,20 @@ function Checklist() {
     uncollectedStories,
   } = useStories()
 
-  const [search, setSearch] = useState('')
+  // Filters live in the URL, so navigating away and coming back -- with the
+  // browser Back button or the story page's back control -- restores the view
+  // the user had set up, and a filtered view can be linked or bookmarked.
+  const [search, setSearch] = useSearchParamString('q', '')
   // Selected filter values. Named distinctly from the `types`/`characters`
   // facet lists above, which are the full sets available.
-  const [selectedTypes, setSelectedTypes] = useState([]) // empty == all
-  const [selectedCharacters, setSelectedCharacters] = useState([]) // empty == all
-  const [statuses, setStatuses] = useState([]) // empty == all
-  const [sort, setSort] = useState('year-asc')
-  const [groupBy, setGroupBy] = useState('none')
+  const [selectedTypes, setSelectedTypes] = useSearchParamList('type') // empty == all
+  const [selectedCharacters, setSelectedCharacters] = useSearchParamList('detective') // empty == all
+  const [statuses, setStatuses] = useSearchParamList(
+    'status',
+    (v) => Object.values(STATUS).includes(v),
+  ) // empty == all
+  const [sort, setSort] = useSearchParamString('sort', 'year-asc', (v) => v in SORTS)
+  const [groupBy, setGroupBy] = useSearchParamString('group', 'none', (v) => v in GROUP_BY)
   // Remembered across visits -- this is a way of reading the catalog, not a
   // transient filter, so re-picking it every time would be tedious.
   const [shortStoryMode, setShortStoryMode] = usePersistentState(
