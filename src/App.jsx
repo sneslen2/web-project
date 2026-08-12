@@ -12,6 +12,7 @@ import Story from './pages/Story.jsx'
 import Login from './pages/Login.jsx'
 import NotFound from './pages/NotFound.jsx'
 import CatalogGate from './components/CatalogGate.jsx'
+import ScrollToTop from './ScrollToTop.jsx'
 import { useAuth } from './auth/AuthProvider.jsx'
 import brandMark from './assets/keyhole.svg'
 
@@ -70,6 +71,9 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
+      {/* Resets scroll on navigation, and restores it on Back. */}
+      <ScrollToTop />
 
       <Container className="py-4">
         {/* Declarative routing: each path renders one page component. */}

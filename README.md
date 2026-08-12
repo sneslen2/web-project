@@ -28,19 +28,22 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Fleshed out About page
 - Easy back button from story
 - Filters should be saved when user navigates back to checklist
+- Recently finished links to the detail page
+- Navigating to a new page should reset scroll progress to the top (except checklist page)
 
 
 ## Todo
 
 - Collapse the filters
 - Quick button filters
+- Rail/jump bar should stay visible when scrolling
+- Filters should be a sidebar
 - Not completely satisfied with the home page, keep tweaking
   - Links to the activities, meh
   - Add recently read
 - Author field for inspired by
 - Recently finished only pulls the first few
 - Clear progress when logged out
-- Recently finished should link to the work
 - Add in progress color to progress bar
 - Formatting clean up
   - Fix username/sign in buttons in navigation bar
@@ -54,12 +57,11 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
   - Card tag coloring
   - Fonts everywhere
   - Integrate blue (and maybe purple?) jewel tones
-- Rail/jump bar should stay visible when scrolling
-- Filters should be a sidebar
+  - Catalog total on About page is white on white for some reason
 - Subtext on Home banner, liked the quote from one of the mockups
 - "Progress is currently saved in this browser only" message when I'm logged in
-- Catalog total on About page is white on white for some reason
 - Inspired by prob should be distinct in the about page
+
 
 
 
