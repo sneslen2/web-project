@@ -396,37 +396,8 @@ function Checklist() {
 
       <Card className="mb-4">
         <Card.Body>
-          <div className="mb-3">
-            <Form.Label as="div" className="mb-1">
-              Short stories
-            </Form.Label>
-            <ToggleButtonGroup
-              type="radio"
-              name="short-story-mode"
-              value={shortStoryMode}
-              onChange={setShortStoryMode}
-              size="sm"
-            >
-              {Object.entries(SHORT_STORY_MODES).map(([key, label]) => (
-                <ToggleButton
-                  key={key}
-                  id={`short-story-mode-${key}`}
-                  value={key}
-                  variant="outline-primary"
-                >
-                  {label}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-            <Form.Text muted className="d-block">
-              {shortStoryMode === 'grouped'
-                ? 'Short stories are represented by the collections that include them; open a collection to check off its stories. Novels and plays are unaffected.'
-                : 'Every short story is listed on its own. Collections are hidden.'}
-            </Form.Text>
-          </div>
-
           <Row className="g-3">
-            <Col md={6} lg={4}>
+            <Col md={6} lg={3}>
               <Form.Label htmlFor="story-search">Search by title</Form.Label>
               <Form.Control
                 id="story-search"
@@ -437,7 +408,7 @@ function Checklist() {
               />
             </Col>
 
-            <Col md={6} lg={4}>
+            <Col md={6} lg={3}>
               <Form.Label htmlFor="story-sort">Sort by</Form.Label>
               <Form.Select id="story-sort" value={sort} onChange={(e) => setSort(e.target.value)}>
                 {Object.entries(SORTS).map(([key, { label }]) => (
@@ -448,7 +419,7 @@ function Checklist() {
               </Form.Select>
             </Col>
 
-            <Col md={6} lg={4}>
+            <Col md={6} lg={3}>
               <Form.Label htmlFor="story-group">Group by</Form.Label>
               <Form.Select
                 id="story-group"
@@ -461,6 +432,33 @@ function Checklist() {
                   </option>
                 ))}
               </Form.Select>
+            </Col>
+
+            <Col md={6} lg={3}>
+              <Form.Label as="div" className="mb-1">
+                Short stories
+              </Form.Label>
+              <ToggleButtonGroup
+                type="radio"
+                name="short-story-mode"
+                value={shortStoryMode}
+                onChange={setShortStoryMode}
+                size="sm"
+              >
+                {Object.entries(SHORT_STORY_MODES).map(([key, label]) => (
+                  <ToggleButton
+                    key={key}
+                    id={`short-story-mode-${key}`}
+                    value={key}
+                    variant="outline-primary"
+                  >
+                    {label}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+              <Form.Text muted className="d-block">
+                {shortStoryMode === 'grouped' ? 'Grouped by collection.' : 'Listed individually.'}
+              </Form.Text>
             </Col>
           </Row>
 

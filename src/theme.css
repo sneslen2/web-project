@@ -256,30 +256,30 @@ legend, .form-label { color: var(--ch-text); }
    hover/active/checked the same way .ch-btn fills on "done". */
 .btn-primary {
   --bs-btn-color: #f0dcdf;
-  --bs-btn-bg: var(--ch-wine);
-  --bs-btn-border-color: var(--ch-wine);
+  --bs-btn-bg: var(--ch-green);
+  --bs-btn-border-color: var(--ch-green);
   --bs-btn-hover-color: #f0dcdf;
-  --bs-btn-hover-bg: var(--ch-wine-lt);
-  --bs-btn-hover-border-color: var(--ch-wine-lt);
+  --bs-btn-hover-bg: var(--ch-green-lt);
+  --bs-btn-hover-border-color: var(--ch-green-lt);
   --bs-btn-active-color: #f0dcdf;
-  --bs-btn-active-bg: var(--ch-wine-lt);
-  --bs-btn-active-border-color: var(--ch-wine-lt);
+  --bs-btn-active-bg: var(--ch-green-lt);
+  --bs-btn-active-border-color: var(--ch-green-lt);
   --bs-btn-disabled-color: #f0dcdf;
-  --bs-btn-disabled-bg: var(--ch-wine);
-  --bs-btn-disabled-border-color: var(--ch-wine);
+  --bs-btn-disabled-bg: var(--ch-green);
+  --bs-btn-disabled-border-color: var(--ch-green);
   --bs-btn-focus-shadow-rgb: 140, 47, 60; /* --ch-wine-lt */
 }
 .btn-outline-primary {
-  --bs-btn-color: var(--ch-wine-lt);
-  --bs-btn-border-color: var(--ch-wine-lt);
+  --bs-btn-color: var(--ch-green-lt);
+  --bs-btn-border-color: var(--ch-green-lt);
   --bs-btn-hover-color: #f0dcdf;
-  --bs-btn-hover-bg: var(--ch-wine);
-  --bs-btn-hover-border-color: var(--ch-wine);
+  --bs-btn-hover-bg: var(--ch-green);
+  --bs-btn-hover-border-color: var(--ch-green);
   --bs-btn-active-color: #f0dcdf;
-  --bs-btn-active-bg: var(--ch-wine);
-  --bs-btn-active-border-color: var(--ch-wine);
-  --bs-btn-disabled-color: var(--ch-wine-lt);
-  --bs-btn-disabled-border-color: var(--ch-wine-lt);
+  --bs-btn-active-bg: var(--ch-green);
+  --bs-btn-active-border-color: var(--ch-green);
+  --bs-btn-disabled-color: var(--ch-green-lt);
+  --bs-btn-disabled-border-color: var(--ch-green-lt);
   --bs-btn-focus-shadow-rgb: 140, 47, 60; /* --ch-wine-lt */
 }
 

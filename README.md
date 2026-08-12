@@ -31,21 +31,21 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Recently finished links to the detail page
 - Navigating to a new page should reset scroll progress to the top (except checklist page)
 - Rail/jump bar should stay visible when scrolling
+- Mary Westmacott and Inspired by stories are relegated to a separate page
+- Display author on story cards for Inspired by
+- About page includes photo of Agatha Christie
+- Drop down menu appears on hover
+- Removed Ariadne Oliver from The Pale Horse. She is a character, but she's not the detective
 
 
 ## Todo
 
 Functional
-- Author field for inspired by
-- Recently finished only pulls the first few
 - Clear progress when logged out
 - Subtext on Home banner, liked the quote from one of the mockups
 - "Progress is currently saved in this browser only" message when I'm logged in
 - Inspired by prob should be distinct in the about page
-- Photo on about page
-- Remove Ariadne Oliver from The Pale Horse. She is a character, but she's not the detective
 - "No detective" should be "Standalone" on extras page (or maybe get rid of standalone all together?)
-- Checklist dropdown should appear on hover
 
 
 Design/UI
@@ -55,15 +55,6 @@ Design/UI
 - Overhaul layout and design, draft potential ideas
 - Revamp stats page
 - Cards; tags, cover photo, details, status buttons, etc
-
-Bare bones
-- Landing page
-- Checklist page
-  - Facets, groupings, sort by, etc
-- About the author page
-- Stats page
-- Extras page
-- Detail pages
 
 - Collapse the filters
 - Quick button filters
