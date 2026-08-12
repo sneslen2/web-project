@@ -47,6 +47,8 @@
   --bs-border-color: var(--ch-line);
   --bs-link-color: var(--ch-brass);
   --bs-link-hover-color: #e0bb45;
+  --bs-link-color-rgb: 201, 162, 39;
+  --bs-link-hover-color-rgb: 224, 187, 69;
   --bs-primary: var(--ch-green-lt);
   --bs-success: var(--ch-brass);
   --bs-warning: var(--ch-wine-lt);
