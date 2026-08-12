@@ -29,24 +29,41 @@ function About() {
           <Card className="mb-4">
             <Card.Body>
               <p className="lead">
-                Agatha Christie (1890&ndash;1976) is the best-selling novelist of all time, with
-                billions of copies sold worldwide and translations into more than a hundred
-                languages.
+                Dame Agatha Christie (1890&ndash;1976) is the best-selling fiction writer of all
+                time. As of 2020 her novels had sold more than two billion copies in 44 languages,
+                and she remains the most-translated individual author on record.
               </p>
               <p>
-                Born Agatha Mary Clarissa Miller in Torquay, Devon, she began writing detective
-                fiction after a dare from her sister Madge. Her first novel,{' '}
-                <em>The Mysterious Affair at Styles</em>, was written while she volunteered in a
-                hospital dispensary during the First World War &mdash; work that gave her the
-                knowledge of poisons recurring throughout her fiction. It was rejected by six
-                publishers before appearing in {yearRange.min}, introducing the Belgian detective
-                Hercule Poirot.
+                She was born Agatha Mary Clarissa Miller in Torquay, Devon, the youngest of three
+                children in a wealthy upper-middle-class family, and described her childhood as
+                &ldquo;very happy.&rdquo; Educated at home at her mother&rsquo;s insistence, she was
+                reading by the age of four and wrote her first poem at ten. Her father died when she
+                was eleven &mdash; a loss she later said marked the end of her childhood.
+              </p>
+              <p>
+                During the First World War she served with the Voluntary Aid Detachment of the
+                British Red Cross, working 3,400 hours at the Town Hall Red Cross Hospital in
+                Torquay, first as a nurse and then as a dispenser after qualifying as an
+                apothecary&rsquo;s assistant. That knowledge of poisons runs through the fiction:
+                arsenic, aconite, strychnine, digitalis, nicotine, and thallium all dispatch victims
+                across her career, and she had no need of the invented poisons forbidden by the
+                genre&rsquo;s conventions.
+              </p>
+              <p>
+                She wrote her first detective novel, <em>The Mysterious Affair at Styles</em>, in
+                1916. It introduced Hercule Poirot &mdash; a former Belgian police officer with
+                &ldquo;magnificent moustaches&rdquo; and a head &ldquo;exactly the shape of an
+                egg&rdquo; &mdash; a character drawn from the Belgian refugees she encountered in
+                Torquay. Rejected by several publishers, it finally appeared in {yearRange.min}.
               </p>
               <p>
                 Over the following five decades she wrote the novels, short stories, and plays
                 cataloged here, alongside romances published under the name Mary Westmacott. Her
                 play <em>The Mousetrap</em> opened in London in 1952 and became the longest-running
-                stage production in history.
+                stage production in history. She was appointed CBE in 1956 and promoted to Dame
+                Commander of the Order of the British Empire in 1971, and died at home in
+                Oxfordshire on 12 January 1976, aged 85. On her death, two West End theatres dimmed
+                their outside lights in her honour.
               </p>
             </Card.Body>
           </Card>
@@ -75,9 +92,56 @@ function About() {
             </ListGroup>
           </Card>
 
-          <Alert variant="light" className="border">
-            Fuller biographical detail, and per-detective introductions, can go here. Kept brief
-            for now rather than padded with unverified claims.
+          <Card className="mb-4">
+            <Card.Header>The eleven days</Card.Header>
+            <Card.Body>
+              <p>
+                In August 1926, months after her mother&rsquo;s death, Christie&rsquo;s husband
+                Archie asked for a divorce; he had fallen in love with Nancy Neele. On the evening of
+                3 December, after a quarrel, Christie disappeared from their home in Sunningdale. Her
+                car was found the next morning parked above a chalk quarry at Newlands Corner, an
+                expired driving licence and some clothes still inside.
+              </p>
+              <p>
+                The search became a national spectacle. More than 1,000 police officers, 15,000
+                volunteers, and several aeroplanes combed the countryside; a newspaper offered a
+                &pound;100 reward, and Sir Arthur Conan Doyle gave a spirit medium one of
+                Christie&rsquo;s gloves. The story reached the front page of{' '}
+                <em>The New York Times</em>.
+              </p>
+              <p className="mb-0">
+                She was found eleven days later at a hotel in Harrogate, 184 miles north, registered
+                under the surname of her husband&rsquo;s lover. Two doctors diagnosed genuine memory
+                loss; her biographers variously attribute it to a fugue state, a nervous breakdown,
+                or a deliberate act. Her autobiography never mentions it.
+              </p>
+            </Card.Body>
+          </Card>
+
+          <Card className="mb-4">
+            <Card.Header>Archaeology and the later years</Card.Header>
+            <Card.Body>
+              <p>
+                After her divorce she took the Orient Express to Istanbul and on to Baghdad. On a
+                return visit to a dig in Iraq in 1930 she met the archaeologist Max Mallowan,
+                thirteen years her junior; they married in Edinburgh that September and remained
+                together until her death. She joined his expeditions for decades, and the travel
+                furnished the settings for several novels &mdash; including{' '}
+                <em>Murder on the Orient Express</em>, drawn from her own experience of
+                international rail.
+              </p>
+              <p className="mb-0">
+                During the Second World War she worked in the pharmacy at University College
+                Hospital in London, updating her knowledge of poisons. It had a curious afterlife: in
+                1977, medical staff who had read <em>The Pale Horse</em> solved a thallium poisoning
+                case by recognising the symptoms she had described.
+              </p>
+            </Card.Body>
+          </Card>
+
+          <Alert variant="light" className="border small mb-0">
+            Biographical detail on this page is drawn from the Wikipedia article on Agatha Christie.
+            Catalog figures alongside it are computed from the scraped data, not typed in.
           </Alert>
         </Col>
 
@@ -106,6 +170,31 @@ function About() {
                 </strong>
               </ListGroup.Item>
             </ListGroup>
+          </Card>
+
+          <Card className="mb-4">
+            <Card.Header>Poirot and Marple</Card.Header>
+            <Card.Body className="small">
+              <p>
+                Poirot appeared in 33 novels and more than 50 short stories. Christie tired of him
+                &mdash; by the end of the 1930s she found him &ldquo;insufferable,&rdquo; and by the
+                1960s &ldquo;an egocentric creep&rdquo; &mdash; but unlike Conan Doyle she never
+                killed off her detective while he was still popular. In 1975 he became the first
+                fictional character to receive an obituary on the front page of{' '}
+                <em>The New York Times</em>.
+              </p>
+              <p>
+                Miss Marple debuted in short stories in 1927 and went on to appear in 12 novels and
+                20 stories. Christie modelled her partly on her step-grandmother, who
+                &ldquo;always expected the worst of everyone and everything, and&hellip; usually
+                proved right.&rdquo;
+              </p>
+              <p className="mb-0 text-muted">
+                The two never share a story. Christie explained that Poirot, &ldquo;a complete
+                egoist, would not like&hellip; having suggestions made to him by an elderly spinster
+                lady.&rdquo;
+              </p>
+            </Card.Body>
           </Card>
 
           <Card>
