@@ -418,7 +418,7 @@ function Extras() {
                     id="extras-detective-standalone"
                     label={
                       <FacetLabel
-                        name="No detective"
+                        name="Standalone"
                         count={facetCounts.characters.get(STANDALONE) ?? 0}
                       />
                     }
