@@ -246,7 +246,7 @@ legend, .form-label { color: var(--ch-text); }
 .badge { font-weight: 500; letter-spacing: 0.06em; }
 
 .progress {
-  --bs-progress-bar-bg: var(--ch-green-lt)
+  --bs-progress-bar-bg: var(--ch-wine-lt);
 }
 
 /* Section headings above each group in the checklist. */
