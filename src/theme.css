@@ -157,6 +157,17 @@ h1, h2, h3, h4, h5, .ch-display {
   --bs-dropdown-font-size: 0.85rem;
   border-radius: 3px;
 }
+/* Bridges the gap Bootstrap leaves between the caret and the menu. Without it
+   the pointer crosses dead space on the way down and hover is lost -- the close
+   delay covers that too, but this keeps the pointer inside the host entirely. */
+.ch-nav-menu.show::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(-1 * var(--bs-dropdown-spacer, 0.125rem) - 0.25rem);
+  height: calc(var(--bs-dropdown-spacer, 0.125rem) + 0.25rem);
+}
 /* NavLink marks the current route; brass matches the active nav underline. */
 .ch-nav-menu .active { color: var(--ch-brass) !important; }
 

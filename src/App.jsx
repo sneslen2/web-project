@@ -15,12 +15,14 @@ import Login from './pages/Login.jsx'
 import NotFound from './pages/NotFound.jsx'
 import CatalogGate from './components/CatalogGate.jsx'
 import ScrollToTop from './ScrollToTop.jsx'
+import { useHoverMenu } from './useHoverMenu.js'
 import { useAuth } from './auth/AuthProvider.jsx'
 import brandMark from './assets/keyhole.svg'
 
 function App() {
   const { session, username, signOut } = useAuth()
   const navigate = useNavigate()
+  const checklistMenu = useHoverMenu()
 
   async function handleSignOut() {
     await signOut()
@@ -45,12 +47,13 @@ function App() {
               </Nav.Link>
               {/* Split rather than a plain Dropdown: Checklist stays a
                   one-click destination, and the caret opens the Extras
-                  submenu beside it. */}
-              <div className="ch-nav-split">
+                  submenu beside it. Opens on hover; see useHoverMenu for why
+                  closing is delayed. */}
+              <div className="ch-nav-split" {...checklistMenu.hostProps}>
                 <Nav.Link as={NavLink} to="/checklist" className="ch-nav-link">
                   Checklist
                 </Nav.Link>
-                <Dropdown align="end">
+                <Dropdown align="end" show={checklistMenu.show} onToggle={checklistMenu.setShow}>
                   <Dropdown.Toggle
                     as="button"
                     type="button"
