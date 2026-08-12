@@ -30,13 +30,13 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Filters should be saved when user navigates back to checklist
 - Recently finished links to the detail page
 - Navigating to a new page should reset scroll progress to the top (except checklist page)
+- Rail/jump bar should stay visible when scrolling
 
 
 ## Todo
 
 - Collapse the filters
 - Quick button filters
-- Rail/jump bar should stay visible when scrolling
 - Filters should be a sidebar
 - Not completely satisfied with the home page, keep tweaking
   - Links to the activities, meh
@@ -61,7 +61,11 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Subtext on Home banner, liked the quote from one of the mockups
 - "Progress is currently saved in this browser only" message when I'm logged in
 - Inspired by prob should be distinct in the about page
+- Add subtle animations
 
+
+Design
+- Draft more color pallettes
 
 
 

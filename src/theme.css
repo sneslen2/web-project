@@ -415,9 +415,17 @@ legend, .form-label { color: var(--ch-text); }
 }
 .ch-list-main { min-width: 0; }
 
-.ch-rail {
+/* The rail sticks via its wrapper, not itself. The grid uses align-items:
+   start, so this aside is only as tall as the rail inside it -- a sticky
+   element there has no room to travel and scrolls away with the page. Making
+   the aside sticky instead pins it against the full height of the grid track. */
+.ch-list-rail {
   position: sticky;
   top: 5rem;
+  align-self: start;
+}
+
+.ch-rail {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
