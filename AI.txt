@@ -5,12 +5,10 @@ Sydney Neslen
 ================================================================================
 
 
-PERCENTAGE OF CODEBASE THAT IS AI-GENERATED: ~100%
+PERCENTAGE OF CODEBASE THAT IS AI-GENERATED: ~90%
 
-Every line of source code in this repository was written by an AI assistant
-(Claude Code, model Opus 5, run as a VS Code extension). I did not hand-write
-any application code, SQL, or tooling.
-
+The majority of source code in this repository was written by an AI assistant
+(Claude Code and Claude.ai). 
 
 
 ================================================================================
@@ -74,11 +72,69 @@ the work being done by the AI.
 
 
 ================================================================================
+ADDITIONAL WORK -- AUGUST 2026 SESSION
+================================================================================
+
+A second round of AI-assisted development, same process as above: the AI
+proposed and executed changes, I reviewed and directed each one.
+
+NAVIGATION AND UX FIXES.
+  * Story detail page: added a history-aware back button (navigate(-1) when
+    arriving from within the app, falling back to a link to the checklist on a
+    cold load/direct link/refresh) and removed the pre-existing breadcrumb at
+    my request once the button made it redundant.
+  * Checklist filter state moved from component state into URL search params,
+    so the back button (and browser Back) restores the exact search/sort/
+    filter selection you had, and a filtered view is now linkable/bookmarkable.
+  * Added scroll-to-top-on-navigation site-wide, distinguishing new
+    navigations (scroll to top) from Back/Forward (restore prior scroll
+    position) from in-place filter edits (leave scroll alone) -- necessary
+    because this app uses hash-based routing, which browsers don't scroll-
+    manage on their own.
+  * Fixed a CSS bug where the checklist's A-Z jump rail was written as
+    "sticky" but wasn't behaving that way -- the sticky rule was on the wrong
+    element in the layout, so it had no room to stick.
+  * Changed the Checklist nav dropdown (Checklist/Extras) to open on hover
+    instead of only on click, with fallback so keyboard and touch navigation
+    still work.
+
+EXTRAS SUBSYSTEM (major feature). At my direction, split the catalog into
+"main" works and "extras" -- titles not actually written solely by Agatha
+Christie -- and built a dedicated page for the latter:
+  * Identified, via AI-driven data auditing that I reviewed and corrected at
+    several points, which catalog entries belong in Extras: the six Mary
+    Westmacott romances, three Detection Club collaborative novels, and works
+    by other authors (Charles Osborne's play novelisations, Sophie Hannah's
+    Poirot continuation novels, a Lucy Foley novel, and the "Marple: Twelve
+    New Mysteries" collection along with its twelve individually-authored
+    short stories).
+  * Also identified and, at my direction, removed seven 1930s radio/stage
+    plays republished in 2017 that directly duplicate existing catalog
+    entries -- these are flagged rather than deleted from the data.
+  * Wrote a re-runnable SQL migration adding the columns needed to classify
+    and flag these rows, and updated the offline catalog snapshot script to
+    match.
+  * Rebuilt the app's data layer so every existing page (checklist, home,
+    statistics, about) automatically excludes Extras from its totals and
+    counts, without page-by-page changes.
+  * Built a new Extras page reusing the checklist's filter/progress/URL-state
+    patterns, with its own search, sort, status, category, author, and
+    detective filters, and a collection/individual-story display toggle.
+  * Added a split "Checklist / Extras" control to the nav bar.
+  * Added author attribution to story cards and the story detail page --
+    including an "Assorted" / "assorted authors" label on the Marple
+    collection, whose twelve stories each have a different author.
+
+OTHER CHANGES.
+  * Added Agatha Christie's author portrait to the About page.
+
+
+================================================================================
 TOOL
 ================================================================================
 
 Claude Code (Anthropic), model Opus 5, VS Code extension. Interactive use across
-multiple sessions in July 2026: the AI proposed changes and executed approved
-ones while I reviewed, redirected, and rejected as the work proceeded.
+multiple sessions in July and August 2026: the AI proposed changes and executed
+approved ones while I reviewed, redirected, and rejected as the work proceeded.
 
 ================================================================================
