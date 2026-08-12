@@ -92,16 +92,6 @@ function StoryCard({ story }) {
         </div>
       ) : (
         <div className="ch-plate-action">
-          <button
-            type="button"
-            className={`ch-btn ${isRead ? 'done' : ''}`}
-            onClick={() => toggleRead(story.slug)}
-            // Communicates the toggle to screen readers, which would otherwise
-            // hear only a label that changes unpredictably.
-            aria-pressed={isRead}
-          >
-            {isRead ? '✓ Read' : 'Mark as read'}
-          </button>
 
           {/* Secondary by design: finishing is the primary action. Hidden once
               read, where "start reading" would be a step backwards. */}
@@ -114,6 +104,19 @@ function StoryCard({ story }) {
               {isReading ? 'Not reading anymore' : 'Start reading'}
             </button>
           )}
+          
+          <button
+            type="button"
+            className={`ch-btn ${isRead ? 'done' : ''}`}
+            onClick={() => toggleRead(story.slug)}
+            // Communicates the toggle to screen readers, which would otherwise
+            // hear only a label that changes unpredictably.
+            aria-pressed={isRead}
+          >
+            {isRead ? '✓ Read' : 'Mark as read'}
+          </button>
+
+          
         </div>
       )}
     </Card>
