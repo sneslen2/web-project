@@ -140,7 +140,7 @@ function About() {
             </Card.Body>
           </Card>
 
-          <Alert variant="light" className="border small mb-0">
+          <Alert variant="dark" className="border small mb-0">
             Biographical detail on this page is drawn from the Wikipedia article on Agatha Christie.
             Catalog figures alongside it are computed from the scraped data, not typed in.
           </Alert>
@@ -208,25 +208,6 @@ function About() {
             </Card.Body>
           </Card>
 
-          <Card>
-            <Card.Body>
-              <Card.Title as="h2" className="h6">
-                About this data
-              </Card.Title>
-              <Card.Text className="small text-muted">
-                Catalog information is drawn from agathachristie.com. Counts cover Christie&rsquo;s
-                own writing, including posthumous collections, so they run higher than the commonly
-                cited 66 novels. The Mary Westmacott romances, the Detection Club collaborations,
-                and novels by other authors are tracked separately under Extras.
-              </Card.Text>
-              <Link to="/checklist" className="small d-block">
-                Browse the full checklist &rarr;
-              </Link>
-              <Link to="/extras" className="small">
-                Browse the extras &rarr;
-              </Link>
-            </Card.Body>
-          </Card>
         </Col>
       </Row>
     </>

@@ -39,6 +39,7 @@
 
   /* --- Bootstrap overrides --- */
   --bs-body-bg: var(--ch-black);
+  --bs-body-bg-secondary: var(--ch-black);
   --bs-body-color: var(--ch-text);
   --bs-body-font-family: var(--ch-sans);
   --bs-emphasis-color: var(--ch-text);
