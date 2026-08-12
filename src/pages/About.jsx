@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Row from 'react-bootstrap/Row'
 import { useStories } from '../data/StoriesProvider.jsx'
+import portrait from '../assets/agatha-christie.jpg'
 
 /**
  * About Agatha Christie.
@@ -146,6 +147,16 @@ function About() {
         </Col>
 
         <Col lg={4}>
+          {/* Intrinsic width/height are declared so the column does not reflow
+              when the image loads; theme.css scales it to fit. */}
+          <img
+            src={portrait}
+            alt="Portrait of Agatha Christie"
+            width={476}
+            height={714}
+            className="ch-portrait mb-4"
+          />
+
           <Card className="mb-4">
             <Card.Header>The catalog at a glance</Card.Header>
             <ListGroup variant="flush">

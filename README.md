@@ -44,7 +44,8 @@ Functional
 - Inspired by prob should be distinct in the about page
 - Photo on about page
 - Remove Ariadne Oliver from The Pale Horse. She is a character, but she's not the detective
-
+- "No detective" should be "Standalone" on extras page (or maybe get rid of standalone all together?)
+- Checklist dropdown should appear on hover
 
 
 Design/UI

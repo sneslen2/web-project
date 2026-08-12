@@ -99,6 +99,16 @@ h1, h2, h3, h4, h5, .ch-display {
   vertical-align: -0.16em;
 }
 
+/* Portrait on the About page. Scales to the sidebar column while keeping its
+   own aspect ratio, so the declared width/height still prevent a reflow. */
+.ch-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--ch-line);
+  border-radius: 3px;
+}
+
 /* Back button on the story detail page. Uses the uppercase micro-label idiom
    of the nav links so it reads as navigation, not a page action. */
 .ch-back {
