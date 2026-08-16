@@ -1,17 +1,32 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { supabase } from '../supabaseClient.js'
+import { useAuth } from '../auth/AuthProvider.jsx'
 import { todayLocal } from '../today.js'
 
 /**
  * Per-story reading progress: status, rating, date finished, notes.
  *
- * THIS IS THE SUPABASE SEAM. Everything is currently kept in localStorage so
- * the app is fully usable before the database is wired up. To move it to
- * Supabase, replace the load/persist internals below with queries against a
- * `reading_progress` table (user_id, story_slug, status, rating, finished_on,
- * notes) -- the hook's public shape stays identical, so no page needs editing.
+ * Two backing stores, chosen by sign-in state:
+ *
+ *   - Signed out: localStorage only ("guest mode"). Works exactly as before
+ *     this file was wired to Supabase.
+ *   - Signed in: the `reading_progress` table is the source of truth. Local
+ *     state is kept as a fast, offline-tolerant mirror -- reads and renders
+ *     never wait on the network, writes go out in the background.
+ *
+ * The first time a given browser signs in, any guest-mode progress already
+ * sitting in localStorage is uploaded for slugs that don't already have a
+ * server row (see the migration block in the sign-in effect below). A
+ * per-user localStorage flag makes this a one-time merge per browser, so a
+ * stale guest copy from months ago can't clobber newer progress made on
+ * another device on a later login.
+ *
+ * The hook's public shape is unchanged from the localStorage-only version, so
+ * no page needed editing to pick this up.
  */
 
 const STORAGE_KEY = 'christie-tracker:progress:v1'
+const MIGRATED_KEY_PREFIX = 'christie-tracker:progress:migrated:'
 
 export const STATUS = {
   UNREAD: 'unread',
@@ -47,11 +62,49 @@ function loadInitial() {
   }
 }
 
+/** DB row -> app record. */
+function fromDbRow(row) {
+  return {
+    status: row.status,
+    rating: row.rating,
+    finishedOn: row.finished_on,
+    notes: row.notes,
+  }
+}
+
+/** App record -> DB row. Always a full row: upsert replaces the whole record. */
+function toDbRow(slug, record, userId) {
+  return {
+    user_id: userId,
+    story_slug: slug,
+    status: record.status,
+    rating: record.rating,
+    finished_on: record.finishedOn,
+    notes: record.notes,
+  }
+}
+
 export function ProgressProvider({ children }) {
+  const { user, loading: authLoading } = useAuth()
+  const userId = user?.id ?? null
+
   // Keyed by story slug.
   const [records, setRecords] = useState(loadInitial)
+  // Surfaced for any future UI that wants to show a "couldn't sync" notice.
+  // Nothing currently reads this -- writes are optimistic and logged to the
+  // console on failure so a flaky connection can't block reading tracking.
+  const [syncError, setSyncError] = useState(null)
 
-  // Persist on every change. Cheap at this size (302 stories max).
+  // Lets the sign-in effect read "whatever is in state right now" without
+  // depending on `records` (which would re-run the effect on every write).
+  const recordsRef = useRef(records)
+  useEffect(() => {
+    recordsRef.current = records
+  }, [records])
+
+  // Persist locally on every change, signed in or not. For guests this *is*
+  // the store; for signed-in users it's an offline-tolerant mirror of
+  // whatever was last confirmed with the server.
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(records))
@@ -60,31 +113,128 @@ export function ProgressProvider({ children }) {
     }
   }, [records])
 
-  const update = useCallback((slug, changes) => {
-    setRecords((current) => ({
-      ...current,
-      [slug]: { ...emptyRecord, ...current[slug], ...changes },
-    }))
-  }, [])
+  // On sign-in, pull this user's progress down from Supabase and (once, per
+  // browser, per account) upload any guest-mode progress that isn't already
+  // represented on the server.
+  useEffect(() => {
+    // Auth hasn't resolved yet -- don't act on a session we don't know for
+    // sure is absent.
+    if (authLoading) return
+    // Signed out: nothing to sync. Whatever loadInitial() found stays as-is.
+    if (!userId) return
+
+    let active = true
+
+    ;(async () => {
+      try {
+        const { data, error } = await supabase
+          .from('reading_progress')
+          .select('story_slug, status, rating, finished_on, notes')
+          .eq('user_id', userId)
+        if (error) throw error
+        if (!active) return
+
+        const remote = {}
+        for (const row of data) remote[row.story_slug] = fromDbRow(row)
+
+        const migratedKey = MIGRATED_KEY_PREFIX + userId
+        const alreadyMigrated = localStorage.getItem(migratedKey) === '1'
+
+        if (!alreadyMigrated) {
+          // Merge, don't overwrite: only upload guest slugs with no server
+          // row yet. A guest copy that predates progress made on another
+          // device must never clobber it.
+          const guestOnly = Object.entries(recordsRef.current).filter(([slug]) => !(slug in remote))
+
+          if (guestOnly.length > 0) {
+            const rows = guestOnly.map(([slug, record]) => toDbRow(slug, record, userId))
+            const { error: uploadError } = await supabase.from('reading_progress').upsert(rows)
+            if (uploadError) throw uploadError
+            for (const [slug, record] of guestOnly) remote[slug] = record
+          }
+
+          localStorage.setItem(migratedKey, '1')
+        }
+
+        if (active) {
+          setRecords(remote)
+          setSyncError(null)
+        }
+      } catch (err) {
+        console.error('Could not sync progress with the server:', err)
+        // Leave whatever's already in state (guest-loaded or last-known-good)
+        // rather than blanking the page over a network hiccup.
+        if (active) setSyncError(err.message ?? String(err))
+      }
+    })()
+
+    return () => {
+      active = false
+    }
+  }, [userId, authLoading])
+
+  const update = useCallback(
+    (slug, changes) => {
+      setRecords((current) => {
+        const merged = { ...emptyRecord, ...current[slug], ...changes }
+
+        if (userId) {
+          supabase
+            .from('reading_progress')
+            .upsert(toDbRow(slug, merged, userId))
+            .then(({ error }) => {
+              if (error) {
+                console.error('Could not save progress to the server:', error.message)
+                setSyncError(error.message)
+              }
+            })
+        }
+
+        return { ...current, [slug]: merged }
+      })
+    },
+    [userId],
+  )
 
   /**
    * Apply the same change to many stories in one state update.
    *
    * Used when a collection's status is set: the collection has no stored status
    * of its own, so the write goes to its members. Doing it as a single update
-   * avoids the render-per-story a loop of update() calls would cause.
+   * avoids the render-per-story a loop of update() calls would cause -- and,
+   * signed in, sends one bulk upsert instead of one request per story.
    */
-  const updateMany = useCallback((slugs, changes) => {
-    if (slugs.length === 0) return
+  const updateMany = useCallback(
+    (slugs, changes) => {
+      if (slugs.length === 0) return
 
-    setRecords((current) => {
-      const next = { ...current }
-      for (const slug of slugs) {
-        next[slug] = { ...emptyRecord, ...current[slug], ...changes }
-      }
-      return next
-    })
-  }, [])
+      setRecords((current) => {
+        const next = { ...current }
+        const merged = []
+
+        for (const slug of slugs) {
+          const record = { ...emptyRecord, ...current[slug], ...changes }
+          next[slug] = record
+          merged.push([slug, record])
+        }
+
+        if (userId) {
+          supabase
+            .from('reading_progress')
+            .upsert(merged.map(([slug, record]) => toDbRow(slug, record, userId)))
+            .then(({ error }) => {
+              if (error) {
+                console.error('Could not save progress to the server:', error.message)
+                setSyncError(error.message)
+              }
+            })
+        }
+
+        return next
+      })
+    },
+    [userId],
+  )
 
   const value = useMemo(() => {
     const get = (slug) => records[slug] ?? emptyRecord
@@ -93,6 +243,7 @@ export function ProgressProvider({ children }) {
       records,
       get,
       update,
+      syncError,
 
       /** Cycle unread -> read -> unread, stamping the finish date. */
       toggleRead(slug) {
@@ -214,10 +365,40 @@ export function ProgressProvider({ children }) {
         }
       },
 
-      /** Wipe everything. Used by the statistics page. */
-      reset: () => setRecords({}),
+      /**
+       * Clear local state and storage only. Used on sign-out: does NOT touch
+       * the server, since the whole point is that the account's progress is
+       * still saved there for next time -- only this browser's in-memory/
+       * localStorage copy needs to stop showing it (so the next person to use
+       * this browser, or this account signed into a different one, doesn't
+       * inherit it).
+       */
+      clearLocal: () => setRecords({}),
+
+      /**
+       * Wipe everything, including the server. Used by the statistics page's
+       * "Reset all progress" -- signed in, this also deletes every row this
+       * user owns, since otherwise the next sign-in would just pull the
+       * "reset" progress back down from Supabase, undoing it. Do not call
+       * this on sign-out; see clearLocal.
+       */
+      reset: () => {
+        setRecords({})
+        if (userId) {
+          supabase
+            .from('reading_progress')
+            .delete()
+            .eq('user_id', userId)
+            .then(({ error }) => {
+              if (error) {
+                console.error('Could not clear progress on the server:', error.message)
+                setSyncError(error.message)
+              }
+            })
+        }
+      },
     }
-  }, [records, update, updateMany])
+  }, [records, update, updateMany, userId, syncError])
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>
 }

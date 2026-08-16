@@ -22,19 +22,18 @@ import brandMark from './assets/keyhole.svg'
 
 function App() {
   const { session, username, signOut } = useAuth()
-  const { reset: resetProgress } = useProgress()
+  const { clearLocal: clearLocalProgress } = useProgress()
   const navigate = useNavigate()
   const checklistMenu = useHoverMenu()
 
   async function handleSignOut() {
     const { error } = await signOut()
-    // Progress is still local-only (see ProgressProvider.jsx) rather than
-    // synced to the account, so it isn't tied to the session automatically.
-    // Wipe it explicitly on sign-out so the next person to use this browser
-    // -- or this same person signing into a different account -- doesn't
-    // inherit someone else's reading history. Skipped on a failed sign-out:
-    // if the session is still live, the data isn't stale yet.
-    if (!error) resetProgress()
+    // Progress now syncs to the account server-side, so signing out must only
+    // clear this browser's local copy -- NOT delete the account's saved
+    // progress (that's what reset() is for, on the Statistics page). Skipped
+    // on a failed sign-out: if the session is still live, the local copy
+    // isn't stale yet.
+    if (!error) clearLocalProgress()
     navigate('/', { replace: true })
   }
 
