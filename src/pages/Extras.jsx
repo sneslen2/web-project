@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -82,6 +83,7 @@ function Extras() {
 
   // Filters live in the URL, so returning here restores the view. Namespaced
   // separately from the checklist's params -- the two pages share no state.
+  const [, setSearchParams] = useSearchParams()
   const [search, setSearch] = useSearchParamString('q', '')
   const [categories, setCategories] = useSearchParamList(
     'category',
@@ -252,11 +254,22 @@ function Extras() {
     (search ? 1 : 0)
 
   function clearFilters() {
-    setSearch('')
-    setCategories([])
-    setSelectedCharacters([])
-    setAuthors([])
-    setStatuses([])
+    // One atomic setSearchParams() call, not five sequential ones -- see the
+    // matching comment in Checklist.jsx's clearFilters for why calling each
+    // field's own setter in sequence would silently leave four of the five
+    // filters still applied.
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev)
+        params.delete('q')
+        params.delete('category')
+        params.delete('detective')
+        params.delete('author')
+        params.delete('status')
+        return params
+      },
+      { replace: true },
+    )
   }
 
   return (

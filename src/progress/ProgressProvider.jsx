@@ -256,7 +256,18 @@ export function ProgressProvider({ children }) {
         })
       },
 
-      setStatus: (slug, status) => update(slug, { status }),
+      setStatus(slug, status) {
+        const current = get(slug)
+        const changes = { status }
+        // Marking something Read should populate a finish date the same way
+        // toggleRead does -- but only if it doesn't already have one. An
+        // existing date (set manually, or from an earlier Read/Unread cycle)
+        // is left alone rather than overwritten.
+        if (status === STATUS.READ && !current.finishedOn) {
+          changes.finishedOn = todayLocal()
+        }
+        update(slug, changes)
+      },
       setRating: (slug, rating) => update(slug, { rating }),
       setNotes: (slug, notes) => update(slug, { notes }),
 

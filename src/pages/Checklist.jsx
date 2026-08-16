@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
@@ -113,6 +114,7 @@ function Checklist() {
   // Filters live in the URL, so navigating away and coming back -- with the
   // browser Back button or the story page's back control -- restores the view
   // the user had set up, and a filtered view can be linked or bookmarked.
+  const [, setSearchParams] = useSearchParams()
   const [search, setSearch] = useSearchParamString('q', '')
   // Selected filter values. Named distinctly from the `types`/`characters`
   // facet lists above, which are the full sets available.
@@ -360,10 +362,24 @@ function Checklist() {
     selectedTypes.length + selectedCharacters.length + statuses.length + (search ? 1 : 0)
 
   function clearFilters() {
-    setSearch('')
-    setSelectedTypes([])
-    setSelectedCharacters([])
-    setStatuses([])
+    // NOT four sequential setSearch/setSelectedTypes/... calls: each of those
+    // setters is its own independent setSearchParams(), and react-router's
+    // functional-updater form reads the *same* pre-click URL for every one of
+    // them within this synchronous handler rather than composing -- so only
+    // the last call's change would actually survive, silently leaving the
+    // other three filters applied. One setSearchParams() call clearing every
+    // key at once is the only way this is atomic.
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev)
+        params.delete('q')
+        params.delete('type')
+        params.delete('detective')
+        params.delete('status')
+        return params
+      },
+      { replace: true },
+    )
   }
 
   return (

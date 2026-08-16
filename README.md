@@ -39,6 +39,7 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - Clear progress when logged out
 - "No detective" is "Standalone" on extras page
 - Clear password/username
+- Logged in formatting
 
 
 ## Todo
