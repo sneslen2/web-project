@@ -9,6 +9,7 @@ import Modal from 'react-bootstrap/Modal'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
+import { useAuth } from '../auth/AuthProvider.jsx'
 import { encodeSlug, useStories } from '../data/StoriesProvider.jsx'
 import { STATUS, useProgress } from '../progress/ProgressProvider.jsx'
 
@@ -29,7 +30,8 @@ function CompletionRow({ label, read, total }) {
 }
 
 function Statistics() {
-  const { records, get, reset, collectionStatus, summarize } = useProgress()
+  const { session } = useAuth()
+  const { records, get, reset, collectionStatus, summarize, syncError } = useProgress()
   const {
     stories,
     distinctWorks,
@@ -303,7 +305,14 @@ function Statistics() {
 
       <p className="text-muted small mt-4">
         {stats.notesCount > 0 && `${stats.notesCount} stories have notes. `}
-        Progress is currently saved in this browser only.
+        {session ? 'Progress is saved to your account.' : 'Progress is currently saved in this browser only.'}
+        {session && syncError && (
+          <span className="text-warning">
+            {' '}
+            Couldn't reach the server to save your latest change -- it's kept here and will sync once the
+            connection is back.
+          </span>
+        )}
       </p>
 
       <Modal show={confirming} onHide={() => setConfirming(false)} centered>

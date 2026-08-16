@@ -228,6 +228,16 @@ h1, h2, h3, h4, h5, .ch-display {
   background: var(--ch-wine-lt);
 }
 
+/* The signed-in username, next to Sign out. Same small-caps treatment as the
+   nav links so it reads as part of the bar rather than default Bootstrap
+   navbar text -- but no hover/active states, since it isn't a control. */
+.ch-nav-username {
+  color: var(--ch-muted) !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 /* A hairline rule with a centred fleuron. Used under page headings. */
 .ch-rule {
   width: 6rem;

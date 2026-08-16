@@ -89,10 +89,10 @@ function App() {
             <Nav>
               {session ? (
                 <div className="d-flex align-items-center gap-2">
-                  <Navbar.Text className="text-truncate" style={{ maxWidth: '14rem' }}>
+                  <Navbar.Text className="ch-nav-username text-truncate" style={{ maxWidth: '14rem' }}>
                     {username}
                   </Navbar.Text>
-                  <Button variant="outline-light" size="sm" onClick={handleSignOut}>
+                  <Button variant="outline-primary" size="sm" onClick={handleSignOut}>
                     Sign out
                   </Button>
                 </div>
