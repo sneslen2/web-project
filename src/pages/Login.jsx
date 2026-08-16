@@ -61,6 +61,11 @@ function Login() {
         return
       }
       navigate(destination, { replace: true })
+        // Clear rather than rely on unmount: the navigate above is async, so
+        // the password would otherwise sit in state for a moment (and, since
+        // React batches these, this line runs before the route actually
+        // changes) after the credential has already served its purpose.
+        setPassword('')
     } else {
       const { error: signUpError, needsEmailConfirmation } = await signUp(
         username,
@@ -88,14 +93,17 @@ function Login() {
       }
       // Confirmation is off, so signUp already returned a session.
       navigate(destination, { replace: true })
+      setPassword('')
     }
   }
 
   function switchMode(nextMode) {
-    setMode(nextMode)
-    setError(null)
-    setNotice(null)
-  }
+      setMode(nextMode)
+      setUsername('')
+      setPassword('')
+      setError(null)
+      setNotice(null)
+    }
 
   return (
     <Card className="mx-auto" style={{ maxWidth: '28rem' }}>

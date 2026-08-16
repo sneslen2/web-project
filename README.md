@@ -36,16 +36,17 @@ Built for CS571 (UW) as a React single-page app, hosted on GitHub Pages.
 - About page includes photo of Agatha Christie
 - Drop down menu appears on hover
 - Removed Ariadne Oliver from The Pale Horse. She is a character, but she's not the detective
+- Clear progress when logged out
+- "No detective" is "Standalone" on extras page
+- Clear password/username
 
 
 ## Todo
 
 Functional
-- Clear progress when logged out
 - Subtext on Home banner, liked the quote from one of the mockups
 - "Progress is currently saved in this browser only" message when I'm logged in
 - Inspired by prob should be distinct in the about page
-- "No detective" should be "Standalone" on extras page (or maybe get rid of standalone all together?)
 
 
 Design/UI
